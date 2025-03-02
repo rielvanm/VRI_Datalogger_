@@ -1,0 +1,76 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.16 Chrome/132.0.6834.196 Electron/34.2.0 Safari/537.36" version="26.0.16">
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+    <mxGraphModel dx="1235" dy="1958" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-2" value="" style="rounded=1;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=2;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;exitX=0.458;exitY=0.991;exitDx=0;exitDy=0;exitPerimeter=0;strokeColor=#3333FF;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-3" target="WIyWlLk6GJQsqaUBKTNV-6" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="190" y="69" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-3" value="&lt;font style=&quot;font-size: 20px; color: rgb(51, 51, 255);&quot;&gt;&lt;font style=&quot;color: rgb(51, 51, 255);&quot;&gt;&lt;b&gt;🔥&lt;/b&gt;&lt;/font&gt;&lt;/font&gt;&lt;span style=&quot;color: rgb(51, 51, 255); font-size: 20px;&quot;&gt;⚡&amp;nbsp;&lt;/span&gt;&lt;div&gt;&lt;font style=&quot;font-size: 20px; color: rgb(51, 51, 255);&quot;&gt;&lt;b style=&quot;&quot;&gt;EV-brand met slachtoffers&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=3;shadow=0;strokeColor=#3333FF;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="90" y="-10" width="210" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-4" value="&lt;font style=&quot;font-size: 20px; color: rgb(51, 51, 255);&quot;&gt;&lt;b style=&quot;&quot;&gt;Ja&lt;/b&gt;&lt;/font&gt;" style="rounded=1;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=2;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;strokeColor=#3333FF;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-6" target="WIyWlLk6GJQsqaUBKTNV-10" edge="1">
+          <mxGeometry x="-0.1895" y="20" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-5" value="&lt;font style=&quot;font-size: 20px; color: rgb(51, 51, 255);&quot;&gt;&lt;b style=&quot;&quot;&gt;Nee&lt;/b&gt;&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=2;shadow=0;labelBackgroundColor=none;strokeColor=#3333FF;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-6" edge="1">
+          <mxGeometry x="-0.6257" y="15" relative="1" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="400" y="111" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="350" y="195" />
+              <mxPoint x="350" y="111" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-6" value="&lt;font style=&quot;font-size: 20px; color: rgb(51, 51, 255);&quot;&gt;&lt;b style=&quot;&quot;&gt;🔥&amp;nbsp;&lt;/b&gt;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 20px; color: rgb(51, 51, 255);&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;span style=&quot;&quot; data-end=&quot;1656&quot; data-start=&quot;1638&quot;&gt;Brand&amp;nbsp;&lt;/span&gt;&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 20px; color: rgb(51, 51, 255);&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;span style=&quot;&quot; data-end=&quot;1656&quot; data-start=&quot;1638&quot;&gt;geblust?&lt;/span&gt;&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=12;align=center;strokeWidth=3;spacing=6;spacingTop=-4;rounded=1;strokeColor=#3333FF;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="110" y="120" width="160" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-7" value="&lt;div style=&quot;&quot;&gt;&lt;div&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;ul&gt;&lt;li data-end=&quot;294&quot; data-start=&quot;246&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;FOCO laat AGS en ademluchtmedewerkers komen.&lt;/font&gt;&lt;/li&gt;&lt;li data-end=&quot;354&quot; data-start=&quot;295&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Slachtoffers blijven in het voertuig, gefixeerd door ademluchtmedewerkers.&lt;/font&gt;&lt;/li&gt;&lt;li data-end=&quot;405&quot; data-start=&quot;355&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;AGS monitort de situatie en verricht metingen.&lt;/font&gt;&lt;/li&gt;&lt;li data-end=&quot;447&quot; data-start=&quot;406&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Voertuig gaat in een dompelcontainer.&lt;/font&gt;&lt;/li&gt;&lt;li data-end=&quot;499&quot; data-start=&quot;448&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Transport naar een veilige, afsluitbare plaats.&lt;/font&gt;&lt;/li&gt;&lt;li data-end=&quot;561&quot; data-start=&quot;500&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Slachtoffers worden pas geborgen als AGS het veilig acht.&lt;/font&gt;&lt;/li&gt;&lt;li data-end=&quot;561&quot; data-start=&quot;500&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Slachtoffers in vloeistofdichte bak of&amp;nbsp;dubbele transportzakken.&lt;/font&gt;&lt;/li&gt;&lt;li data-end=&quot;561&quot; data-start=&quot;500&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Voertuigonderzoek start &lt;/span&gt;&lt;strong style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot; data-end=&quot;613&quot; data-start=&quot;588&quot;&gt;minimaal 24 uur later&lt;/strong&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;.&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=4;shadow=0;align=left;fillColor=#f8cecc;strokeColor=#000000;direction=west;flipV=0;flipH=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="400" y="-10" width="360" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-8" value="&lt;font style=&quot;font-size: 20px; color: rgb(51, 51, 255);&quot;&gt;&lt;b style=&quot;&quot;&gt;Ja&lt;/b&gt;&lt;/font&gt;" style="rounded=1;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=2;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;strokeColor=#3333FF;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-10" target="WIyWlLk6GJQsqaUBKTNV-11" edge="1">
+          <mxGeometry x="-0.563" y="20" relative="1" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="190" y="710" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-9" value="&lt;b&gt;&lt;font style=&quot;font-size: 20px; color: rgb(51, 51, 255);&quot;&gt;Nee&lt;/font&gt;&lt;/b&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=2;shadow=0;labelBackgroundColor=none;strokeColor=#3333FF;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-10" target="WIyWlLk6GJQsqaUBKTNV-12" edge="1">
+          <mxGeometry x="-0.1847" y="15" relative="1" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="330" y="435" />
+              <mxPoint x="330" y="435" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-10" value="&lt;font style=&quot;font-size: 20px; color: rgb(51, 51, 255);&quot;&gt;⚡ &lt;strong style=&quot;&quot; data-end=&quot;1689&quot; data-start=&quot;1666&quot;&gt;Accupakket stabiel?&lt;/strong&gt;&lt;/font&gt;" style="rhombus;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=12;align=center;strokeWidth=3;spacing=6;spacingTop=-4;rounded=1;strokeColor=#3333FF;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="115" y="360" width="150" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-11" value="&lt;ul&gt;&lt;li data-end=&quot;1230&quot; data-start=&quot;1189&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;FOCO neemt deel aan het COPI-overleg.&lt;/font&gt;&lt;/li&gt;&lt;li data-end=&quot;1277&quot; data-start=&quot;1231&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Brandweer monitort temperatuur&amp;nbsp;accupakket.&lt;/font&gt;&lt;/li&gt;&lt;li data-end=&quot;1330&quot; data-start=&quot;1278&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Brandweer verwijdert voertuigdelen indien nodig.&lt;/font&gt;&lt;/li&gt;&lt;li data-end=&quot;1380&quot; data-start=&quot;1331&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;FO-medewerkers bergen slachtoffers met PBM’s volgens richtlijnen.&lt;/font&gt;&lt;/li&gt;&lt;li data-end=&quot;1448&quot; data-start=&quot;1381&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Slachtoffers in vloeistofdichte bak of dubbele transportzakken.&lt;/font&gt;&lt;/li&gt;&lt;li data-end=&quot;1499&quot; data-start=&quot;1449&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Voertuig wordt in een watercontainer vervoerd.&lt;/font&gt;&lt;/li&gt;&lt;li data-end=&quot;1554&quot; data-start=&quot;1500&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Voertuigonderzoek start &lt;strong style=&quot;&quot; data-end=&quot;1551&quot; data-start=&quot;1526&quot;&gt;minimaal 24 uur later&lt;/strong&gt;.&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=3;shadow=0;fillColor=#33FF33;strokeColor=#000000;align=left;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="400" y="620" width="360" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-12" value="&lt;div&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 206, 186);&quot;&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;ul&gt;&lt;li data-end=&quot;294&quot; data-start=&quot;246&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;FOCO laat AGS en ademluchtmedewerkers komen.&lt;/font&gt;&lt;/li&gt;&lt;li data-end=&quot;354&quot; data-start=&quot;295&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Slachtoffers blijven in het voertuig, gefixeerd&amp;nbsp;door ademluchtmedewerkers.&lt;/font&gt;&lt;/li&gt;&lt;li data-end=&quot;405&quot; data-start=&quot;355&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;AGS monitort de situatie en verricht metingen.&lt;/font&gt;&lt;/li&gt;&lt;li data-end=&quot;447&quot; data-start=&quot;406&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Voertuig gaat in een dompelcontainer.&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Op aangeven van de AGS of aangewezen persoon, worden slachtoffers geborgen door ademlucht medewerkers op de plaats delict;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Slachtoffers in vloeistofdichte bak of&amp;nbsp;dubbele transportzakken;&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 14px;&quot;&gt;Voertuigonderzoek start&amp;nbsp;&lt;/span&gt;&lt;strong style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 14px;&quot; data-end=&quot;613&quot; data-start=&quot;588&quot;&gt;minimaal 24 uur later&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=3;shadow=0;align=left;fillColor=#fff2cc;strokeColor=#000000;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="400" y="300" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="NLI2WRZ3Rpe_sllsz2Z8-2" value="&lt;font style=&quot;font-size: 20px; color: rgb(51, 51, 255);&quot;&gt;&lt;b style=&quot;&quot;&gt;Scenario 1&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=3;shadow=0;fillColor=#FFFFFF;strokeColor=#3333FF;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="610" y="-40" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="NLI2WRZ3Rpe_sllsz2Z8-4" value="&lt;font style=&quot;font-size: 20px; color: rgb(51, 51, 255);&quot;&gt;&lt;b style=&quot;&quot;&gt;Scenario 2&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=3;shadow=0;strokeColor=#3333FF;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="610" y="270" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="NLI2WRZ3Rpe_sllsz2Z8-5" value="&lt;font style=&quot;font-size: 20px; color: rgb(51, 51, 255);&quot;&gt;&lt;b style=&quot;&quot;&gt;Scenario 3&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=3;shadow=0;strokeColor=#3333FF;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="610" y="580" width="130" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
