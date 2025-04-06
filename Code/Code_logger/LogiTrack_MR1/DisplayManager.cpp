@@ -43,7 +43,7 @@ void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset) {
     break;
 
     case DisplayState::Menu:
-    showMenu();
+    showMenu(gps);
     break;
 
     case DisplayState::GpsDisplay:
@@ -52,10 +52,11 @@ void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset) {
   }
 }
 
-void DisplayManager::showMenu() {
+void DisplayManager::showMenu(TinyGPSPlus& gps) {
   oled.clearDisplay();
   oled.setTextSize(1);
   oled.setTextColor(WHITE);
+
   oled.setCursor(0, 56);
   oled.println(F("Start"));
   oled.setCursor(36, 56);
@@ -67,10 +68,14 @@ void DisplayManager::showMenu() {
 
   oled.setCursor(0, 0);
   oled.print(F("T:21"));
+
   oled.setCursor(31, 0);
-  oled.print(F("km/h:161"));
+  oled.print(F("km/h:"));
+  oled.print((int)gps.speed.kmph());
+
   oled.setCursor(86, 0);
-  oled.print(F("GPS:Ok"));
+  oled.print(F("GPS:"));
+  oled.print(gps.location.isValid() ? F("Ok") : F("No"));
   
   oled.setCursor(0, 45);
   oled.print(F("Time:00:00:00;000"));

@@ -18,10 +18,9 @@ private:
   Menu,
   GpsDisplay
 };
-  void showMenu();                                          /// list for the menu
+  void showMenu(TinyGPSPlus& gps);                                          /// list for the menu
   void showGps(TinyGPSPlus& gps, int timeZoneOffset);       /// signing de location and the time
   Adafruit_SSD1306 oled;                                    /// OLED screen object from adafruit  
-  
   DisplayState currentState;                                ///  
   unsigned long stateStartTime;                             /// 
 };

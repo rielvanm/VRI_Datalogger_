@@ -27,6 +27,22 @@ void setup() {
   display.showIntro(arduino_icon);                  // Show INTRO
   buttons.begin(); 
   sensorTrigger.begin(D3);
+ /*
+  Serial.begin(9600);
+  delay(1000); // wacht even tot seriële monitor start
+
+  // Grootte van de sketch (code)
+  Serial.print("Sketch size: ");
+  Serial.println(ESP.getSketchSize());
+
+  // Vrije ruimte voor een nieuwe sketch
+  Serial.print("Free sketch space: ");
+  Serial.println(ESP.getFreeSketchSpace());
+
+  // Totale vrije heap (RAM)
+  Serial.print("Free heap: ");
+  Serial.println(ESP.getFreeHeap());
+*/
 }
 
 void loop() {
@@ -47,7 +63,7 @@ void loop() {
       display.showMessage("Save pressed!");
       break;
       case DELETE_ACTION:
-      display.showMessage("DELET pressed!");
+      display.showMessage("Delete pressed!");
       break;
       case STOP:
       display.showMessage("Stop pressed!");
