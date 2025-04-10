@@ -1,15 +1,19 @@
 #include "DisplayManager.h"                                     /// headerfile 
 #include "Utils.h"
+#include <RTClib.h>
+#include "RTC.h"              
 
-#define OLED_WIDTH 128                                           /// macro width OLED 128 pix 
-#define OLED_HEIGHT 64                                           /// macro hight OLED 64 pix  
+#define OLED_WIDTH 128                                            /// macro width OLED 128 pix 
+#define OLED_HEIGHT 64                                            /// macro hight OLED 64 pix  
 
-DisplayManager::DisplayManager()                                 /// init OLED variable 
-: oled(OLED_WIDTH, OLED_HEIGHT, &Wire, -1) {}                    /// with hight en width on I2C-bus and no reset pin (-1)
+extern RTCManager rtcManager;
+
+DisplayManager::DisplayManager()                                  /// init OLED variable 
+: oled(OLED_WIDTH, OLED_HEIGHT, &Wire, -1) {}                     /// with hight en width on I2C-bus and no reset pin (-1)
 
 void DisplayManager::begin() {                                    /// init OLED-screen
   if (!oled.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {                  /// if init NOT commplete then
-    oled.println(F("Failed to initialize SSD1306 OLED"));       /// print fail
+    oled.println(F("Failed to initialize SSD1306 OLED"));         /// print fail
     while (1);                                                    /// 
   }
   oled.clearDisplay();                                            /// Clean en erase
@@ -33,7 +37,7 @@ void DisplayManager::showIntro(const unsigned char* logo) {
   // delay(1500);                                                      
 }
 
-void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset) {
+void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset, DateTime rtcNow) {
   switch (currentState) {
     case DisplayState::Intro:
     if (millis() - stateStartTime > 2000) {
@@ -43,7 +47,7 @@ void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset) {
     break;
 
     case DisplayState::Menu:
-    showMenu(gps);
+    showMenu(gps, rtcNow);
     break;
 
     case DisplayState::GpsDisplay:
@@ -52,7 +56,7 @@ void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset) {
   }
 }
 
-void DisplayManager::showMenu(TinyGPSPlus& gps) {
+void DisplayManager::showMenu(TinyGPSPlus& gps, DateTime rtcNow) {
   oled.clearDisplay();
   oled.setTextSize(1);
   oled.setTextColor(WHITE);
@@ -76,9 +80,24 @@ void DisplayManager::showMenu(TinyGPSPlus& gps) {
   oled.setCursor(86, 0);
   oled.print(F("GPS:"));
   oled.print(gps.location.isValid() ? F("Ok") : F("No"));
+
+  unsigned long ms = rtcManager.elapsMillis();
+  ms = ms % 1000;
   
   oled.setCursor(0, 45);
-  oled.print(F("Time:00:00:00;000"));
+  oled.print(F("Time: "));
+  if (rtcNow.hour() < 10) oled.print("0");
+  oled.print(rtcNow.hour());
+  oled.print(":");
+  if (rtcNow.minute() < 10) oled.print("0");
+  oled.print(rtcNow.minute());
+  oled.print(":");
+  if (rtcNow.second() < 10) oled.print("0");
+  oled.print(rtcNow.second());
+  oled.print(";");
+  if (ms < 10) oled.print("00");
+  else if (ms < 100) oled.print("0");
+  oled.print(ms);
 
   oled.setCursor(0, 28); 
   oled.println(F("TEST SENSOR: "));

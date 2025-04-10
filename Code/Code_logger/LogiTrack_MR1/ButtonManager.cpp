@@ -1,10 +1,10 @@
 #include "ButtonManager.h"
 
-ButtonManager::ButtonManager() {
-  for (int i = 0; i < 4; i++) {
-    lastDebounceTime[i] = 0;
+ButtonManager::ButtonManager() {      // Constructor
+  for (int i = 0; i < 4; i++) {       // Debouncing       
+    lastDebounceTime[i] = 0;          // Last
     lastButtonState[i] = HIGH;
-    buttonState[i]; HIGH;
+    buttonState[i] = HIGH;
   }
 }
 
