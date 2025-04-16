@@ -23,7 +23,7 @@ class ButtonManager {
   unsigned long lastDebounceTime[4];
   bool lastButtonState[4];
   bool buttonState[4];
-  static const unsigned long debounceDelay = 50;
+  static const unsigned long debounceDelay = 20;
 
 };
 

@@ -26,10 +26,10 @@ void RTCManager::stopAndReset() {                       /// Object stopAndReset
 }
 
 DateTime RTCManager::now() {                            ///  
-  return running ? rtc.now() : startTime;               ///   
+  return running ? rtc.now() : startTime;               /// If clock is running rtc.now time returns else startTime give time stops   
 }
 
 unsigned long RTCManager::elapsMillis() {                ///
-  return running ? millis() - startMillis : 0;           /// 
+  return running ? millis() - startMillis : 0;           /// If clock is running then return ms -startms, else 0. 
 }
 

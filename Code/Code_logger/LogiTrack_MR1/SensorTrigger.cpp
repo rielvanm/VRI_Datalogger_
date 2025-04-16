@@ -1,6 +1,6 @@
 #include "SensorTrigger.h"
 
-volatile bool SensorTrigger::triggered = false;
+volatile int SensorTrigger::triggerCount = 0;
 
 void SensorTrigger::begin(uint8_t pin) {
   pinMode(pin, INPUT_PULLUP);
@@ -8,12 +8,12 @@ void SensorTrigger::begin(uint8_t pin) {
 }
 
 void IRAM_ATTR SensorTrigger::handleInterrupt() {
-  triggered = true;
+  triggerCount++;
 }
 
 bool SensorTrigger::wasTriggered() {
-  if (triggered) {
-    triggered = false;
+  if (triggerCount > 0) {
+    triggerCount--;
     return true;
   }
   return false;

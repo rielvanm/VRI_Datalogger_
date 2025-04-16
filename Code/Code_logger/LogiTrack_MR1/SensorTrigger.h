@@ -6,10 +6,10 @@
 class SensorTrigger {
 public:
   void begin(uint8_t pin);
-  bool wasTriggered();  // LET OP: correcte spelling
+  bool wasTriggered();  
 
 private:
-  static volatile bool triggered;
+  static volatile int triggerCount;
   static void IRAM_ATTR handleInterrupt();
 };
 

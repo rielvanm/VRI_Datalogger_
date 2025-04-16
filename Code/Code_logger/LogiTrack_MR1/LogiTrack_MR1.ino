@@ -5,11 +5,15 @@
 #include "ButtonManager.h"                          // Buttonpress
 #include "SensorTrigger.h"                          // React on trigger interrupt sensor
 #include "RTC.h"
+#include "SDManager.h"
+#include "TriggerBuffer.h"
 
 // GPS-pinnen
 #define RX0PIN D0                                   // Res (UART) data from GPS PIN D0
 #define TX0PIN D1                                   // Tran (UART) data to GPS PIN D1
 
+TriggerBuffer triggerBuffer;
+SDManager sd(4);
 RTCManager rtcManager;
 SensorTrigger sensorTrigger;                        // Object react on interrupt
 ButtonManager buttons;                              // Object reading buttons
@@ -21,15 +25,25 @@ GpsHandler gpsHandler(RX0PIN, TX0PIN, timeZoneOffset); // GPS-handler pins and t
 // Externe bitmap (logo)
 extern const unsigned char arduino_icon[];          // extern bitmap (array LOGO) 
 
-void setup() {                                      
+void setup() {                                    
   rtcManager.begin();
-  Serial.begin(9600);                               // Start USB-serial comm on baudrate 9600 bits/s
+  Serial.begin(115200);                             // Start USB-serial comm on baudrate 9600 bits/s
   Wire.begin();                                     // Start I2C-bus for OLED and RTC
   gpsHandler.begin();                               // Start GPS-module
   display.begin();                                  // Start OLED
   display.showIntro(arduino_icon);                  // Show INTRO
   buttons.begin();                                  // Init buttons
   sensorTrigger.begin(D3);                          // Init interrupt sensor to D3
+  DateTime nu = rtcManager.now();
+  printDateTimeToSerial(nu);  
+
+  if (!sd.begin()) {
+    Serial.println("SD-kaart initialisatie mislukt.");
+  } else {
+    Serial.println("SD-kaart succesvol geïnitialiseerd.");
+  }
+  }
+  
  /*
   Serial.begin(9600);
   delay(1000); // wait til ser monitor starts
@@ -46,24 +60,31 @@ void setup() {
   Serial.print("Free heap: ");
   Serial.println(ESP.getFreeHeap());
 */
-}
 
 void loop() {
   gpsHandler.update();                                       // Read new GPS data
   display.update(gpsHandler.getGps(), timeZoneOffset, rtcManager.now());       // Update display with new gps-data incl 1 hour summertime
   
-  if (sensorTrigger.wasTriggered()) {                         // If interrupt was set               
-    display.showMessage("Sensor triggered time is stopped!"); // Show message on OLED
-    // here comes the code to stop the RTC-timer
+if (sensorTrigger.wasTriggered()) {
+  if (rtcManager.now().unixtime() != 946684800) {
+    DateTime now = rtcManager.now();
+    unsigned long ms = rtcManager.elapsMillis() % 1000;
+    triggerBuffer.add(now, ms);
   }
+}
+
+if (triggerBuffer.hasPending()) {
+  triggerBuffer.processNext(sd);
+}
+
   ButtonAction action = buttons.readButtons();                
   if (action != NONE) {
     switch (action) {
       case START:
-      display.showMessage("Start pressed!");                  // Place holders! No functions for the buttons yet
+      display.showMessage("Start pressed!");                  
       rtcManager.start();
       break;
-      case SAVE:
+      case SAVE:                                      // Place holders! No functions for the buttons yet
       display.showMessage("Save pressed!");
       break;
       case DELETE_ACTION:
@@ -77,5 +98,5 @@ void loop() {
       break;
     }
   }
-  delay(100);
+  delay(50);
 }
