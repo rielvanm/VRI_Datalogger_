@@ -66,13 +66,12 @@ void loop() {
   display.update(gpsHandler.getGps(), timeZoneOffset, rtcManager.now());       // Update display with new gps-data incl 1 hour summertime
   
 if (sensorTrigger.wasTriggered()) {
-  if (rtcManager.now().unixtime() != 946684800) {
-    DateTime now = rtcManager.now();
-    unsigned long ms = rtcManager.elapsMillis() % 1000;
-    triggerBuffer.add(now, ms);
-  }
+  DateTime now = rtcManager.now();
+  unsigned long ms = rtcManager.elapsMillis() % 1000;
+  triggerBuffer.addFromISR(now, ms); // Veilig
 }
 
+triggerBuffer.transferPending(); // veilig kopiëren
 if (triggerBuffer.hasPending()) {
   triggerBuffer.processNext(sd);
 }
