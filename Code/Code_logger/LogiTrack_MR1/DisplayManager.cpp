@@ -1,59 +1,155 @@
-#include "DisplayManager.h"                                     /// headerfile 
+#include "DisplayManager.h"
 #include "Utils.h"
 #include <RTClib.h>
-#include "RTC.h"              
+#include "RTC.h"
+#include <SD.h>
 
-#define OLED_WIDTH 128                                            /// macro width OLED 128 pix 
-#define OLED_HEIGHT 64                                            /// macro hight OLED 64 pix  
+#define OLED_WIDTH 128
+#define OLED_HEIGHT 64
+#define SD_CS_PIN 4
+#define SENSOR_PIN 5
 
 extern RTCManager rtcManager;
+extern volatile uint32_t interruptCounter;
+extern uint32_t ritTeller;
 
-DisplayManager::DisplayManager()                                  /// init OLED variable 
-: oled(OLED_WIDTH, OLED_HEIGHT, &Wire, -1) {}                     /// with hight en width on I2C-bus and no reset pin (-1)
+DisplayManager::DisplayManager()
+: oled(OLED_WIDTH, OLED_HEIGHT, &Wire, -1), sdAvailable(false) {}
 
-void DisplayManager::begin() {                                    /// init OLED-screen
-  if (!oled.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {                  /// if init NOT commplete then
-    oled.println(F("Failed to initialize SSD1306 OLED"));         /// print fail
-    while (1);                                                    /// 
+void DisplayManager::begin() {
+  if (!oled.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    oled.println(F("Failed to initialize SSD1306 OLED"));
+    while (1);
   }
-  oled.clearDisplay();                                            /// Clean en erase
-  oled.display();                                                 /// 
+  oled.clearDisplay();
+  oled.display();
+
+  sdAvailable = SD.begin(SD_CS_PIN);
+  pinMode(SENSOR_PIN, INPUT);
 }
 
-void DisplayManager::showIntro(const unsigned char* logo) {      
-  currentState = DisplayState::Intro;
+void DisplayManager::setState(DisplayState newState) {
+  currentState = newState;
   stateStartTime = millis();
+}
 
-  for (int x = 128; x > -80; x--) {                                /// moving the printed text 
-    oled.clearDisplay();                                           /// Clear display 
-    oled.drawBitmap(0, 0, logo, 128, 64, WHITE);                   /// (0, 0) left corner, logo = arduino_icon[], 128 x 64 pi, white is collor 
-    oled.setTextSize(1);                                           /// text size
-    oled.setTextColor(WHITE);                                      /// text collor
-    oled.setCursor(x, 55);                                         /// x moving text        
-    oled.println("LogiTrack MR1");                                 /// is text 
-    oled.display();                                                /// Show on screen 
-    delay(50);                                                     /// delay for frame (moving text is smooth) 
-  }
-  // delay(1500);                                                      
+DisplayManager::DisplayState DisplayManager::getState() const {
+  return currentState;
 }
 
 void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset, DateTime rtcNow) {
+  // Elke 2 seconden SD-kaart opnieuw checken
+  if (millis() - lastStatusCheckTime > 2000) {
+    bool currentSdStatus = SD.begin(SD_CS_PIN);
+    writable = false;
+
+    if (currentSdStatus) {
+      File testFile = SD.open("/_test.txt", FILE_WRITE);
+      if (testFile) {
+        testFile.println("test");
+        testFile.close();
+        SD.remove("/_test.txt");
+        writable = true;
+      }
+    }
+    delay(10);
+    if (currentSdStatus != lastSdStatus) {
+      lastSdStatus = currentSdStatus;
+      sdAvailable = currentSdStatus;
+    }
+
+    // Sensorstatus checken
+    bool currentSensorStatus = digitalRead(SENSOR_PIN) == HIGH;
+    if (currentSensorStatus != lastSensorStatus) {
+      lastSensorStatus = currentSensorStatus;
+    }
+
+    lastStatusCheckTime = millis();
+  }
+
+  static uint32_t lastInterruptCounter = 0;
+  interruptDetected = (interruptCounter != lastInterruptCounter);
+  lastInterruptCounter = interruptCounter;
+
   switch (currentState) {
     case DisplayState::Intro:
-    if (millis() - stateStartTime > 2000) {
-      currentState = DisplayState::Menu;
-      stateStartTime = millis();
-    }
-    break;
+      if (millis() - stateStartTime > 1000) {
+        setState(DisplayState::Menu);
+      }
+      break;
 
     case DisplayState::Menu:
-    showMenu(gps, rtcNow);
-    break;
+      showMenu(gps, rtcNow);
+      break;
+
+  case DisplayState::TimeSet:
+  showTimeSetScreen(timeFields, selectedField);
+  break;
+
+    case DisplayState::Logging:
+      showLoggingScreen(gps);
+      break;
+
+    case DisplayState::Stopped:
+      showSummaryScreen();
+      break;
 
     case DisplayState::GpsDisplay:
-    showGps(gps, timeZoneOffset);
-    break;
+      showGps(gps, timeZoneOffset);
+      break;
   }
+}
+
+void DisplayManager::addUserMessage(const String& message) {
+  for (int i = MAX_MESSAGES - 1; i > 0; i--) {
+    userMessages[i] = userMessages[i - 1];
+  }
+  userMessages[0] = message;
+}
+
+void DisplayManager::showIntro(const unsigned char* logo) {
+  setState(DisplayState::Intro);
+  for (int x = 128; x > -80; x--) {
+    oled.clearDisplay();
+    oled.drawBitmap(0, 0, logo, 128, 64, WHITE);
+    oled.setTextSize(1);
+    oled.setTextColor(WHITE);
+    oled.setCursor(0, 52);
+    oled.print(F("v1.0 | LogiTrack MR1"));
+    oled.display();
+    delay(10);
+  }
+}
+
+void DisplayManager::showTimeSetScreen(int timeFields[5], int selectedField) {
+  oled.clearDisplay();
+  oled.setTextSize(1);
+  oled.setTextColor(WHITE);
+  oled.setCursor(0, 0);
+  oled.println(F("Stel tijd in:"));
+
+  oled.setCursor(0, 20);
+  for (int i = 0; i < 5; i++) {
+    if (i == selectedField)
+      oled.setTextColor(BLACK, WHITE);
+    else
+      oled.setTextColor(WHITE, BLACK);
+
+    if (i == 2)
+      oled.print(timeFields[i]); // Jaar
+    else
+      printDigits(oled, timeFields[i]);
+
+    if (i == 0 || i == 1) oled.print(F("-"));
+    else if (i == 2) oled.print(F(" "));
+    else if (i == 3) oled.print(F(":"));
+  }
+
+  oled.setTextColor(WHITE);
+  oled.setCursor(0, 45);
+  oled.print(F("Save = + / Delete = >"));
+
+  oled.display();
 }
 
 void DisplayManager::showMenu(TinyGPSPlus& gps, DateTime rtcNow) {
@@ -61,46 +157,62 @@ void DisplayManager::showMenu(TinyGPSPlus& gps, DateTime rtcNow) {
   oled.setTextSize(1);
   oled.setTextColor(WHITE);
 
-  oled.setCursor(0, 56);
-  oled.println(F("Start"));
-  oled.setCursor(36, 56);
-  oled.println(F("Save"));
-  oled.setCursor(66, 56);
-  oled.println(F("Delet"));
-  oled.setCursor(102, 56);
-  oled.println(F("Stop"));
+  oled.drawFastVLine(96, 0, 54, WHITE);
+  oled.drawLine(0, 54, 128, 54, WHITE);
 
+  oled.setCursor(1, 56);    oled.print(F("Start"));
+  oled.setCursor(41, 56);   oled.print(F("Uur"));
+  oled.setCursor(73, 56);   oled.print(F("Min"));
+  oled.setCursor(104, 56);  oled.print(F("Stop"));
+
+  oled.drawFastVLine(32, 54, 10, WHITE);
+  oled.drawFastVLine(64, 54, 10, WHITE);
+  oled.drawFastVLine(96, 54, 10, WHITE);
+
+  oled.setTextSize(1);
+  for (int i = 0; i < MAX_MESSAGES; i++) {
+    oled.setCursor(0, 10 + i * 10);
+    oled.print(userMessages[i]);
+  }
+
+  oled.setCursor(100, 0);
+  oled.print(F("SD:"));
+  oled.print(sdAvailable ? (writable ? F("I") : F("L")) : F("O"));
+
+  oled.setCursor(100, 10);
+  oled.print(F("IR:"));
+  oled.print(interruptDetected ? F("I") : F("O"));
+
+  oled.setCursor(100, 24);
+  oled.print(F("Rit:"));
+  oled.setTextSize(2);
+  oled.setCursor(100, 35);
+  oled.print(ritTeller);
+
+  oled.display();
+}
+
+void DisplayManager::showLoggingScreen(TinyGPSPlus& gps) {
+  oled.clearDisplay();
+  oled.setTextSize(1);
+  oled.setTextColor(WHITE);
   oled.setCursor(0, 0);
-  oled.print(F("T:21"));
+  oled.println(F("Logging..."));
 
-  oled.setCursor(31, 0);
-  oled.print(F("km/h:"));
+  oled.print(F("km/h: "));
   oled.print((int)gps.speed.kmph());
+  oled.display();
+}
 
-  oled.setCursor(86, 0);
-  oled.print(F("GPS:"));
-  oled.print(gps.location.isValid() ? F("Ok") : F("No"));
-
-  unsigned long ms = rtcManager.elapsMillis();
-  ms = ms % 1000;
-  
-  oled.setCursor(0, 45);
-  oled.print(F("Time: "));
-  if (rtcNow.hour() < 10) oled.print("0");
-  oled.print(rtcNow.hour());
-  oled.print(":");
-  if (rtcNow.minute() < 10) oled.print("0");
-  oled.print(rtcNow.minute());
-  oled.print(":");
-  if (rtcNow.second() < 10) oled.print("0");
-  oled.print(rtcNow.second());
-  oled.print(";");
-  if (ms < 10) oled.print("00");
-  else if (ms < 100) oled.print("0");
-  oled.print(ms);
-
-  oled.setCursor(0, 28); 
-  oled.println(F("TEST SENSOR: "));
+void DisplayManager::showSummaryScreen() {
+  oled.clearDisplay();
+  oled.setTextSize(1);
+  oled.setTextColor(WHITE);
+  oled.setCursor(0, 0);
+  oled.println(F("Meting gestopt"));
+  oled.println();
+  oled.print(F("Totaal detecties: "));
+  oled.println(interruptCounter);
   oled.display();
 }
 
@@ -112,19 +224,17 @@ void DisplayManager::showMessage(const char* message) {
   oled.clearDisplay();
   oled.setTextSize(1);
   oled.setTextColor(WHITE);
-  oled.setCursor(0, 10);  // midden van het scherm ongeveer
+  oled.setCursor(0, 10);
   oled.println(message);
   oled.display();
-  delay(1000);  // Laat de tekst even zichtbaar staan
+  delay(1000);
 }
 
-/// erease screen, init text-collor, cursor at begin
 void DisplayManager::updateDisplay(TinyGPSPlus& gps, int timeZoneOffset) {
-    oled.clearDisplay();              // Wis het scherm (zwart)
-    oled.setTextSize(1);             // Tekstgrootte op standaard zetten (klein)
-    oled.setTextColor(WHITE);        // Tekstkleur = wit (pixels aan)
-    oled.setCursor(0, 0);            // Cursor linksboven zetten
-
+  oled.clearDisplay();
+  oled.setTextSize(1);
+  oled.setTextColor(WHITE);
+  oled.setCursor(0, 0);
 
   if (gps.location.isValid()) {
     oled.print(F("Lat: "));
@@ -142,7 +252,7 @@ void DisplayManager::updateDisplay(TinyGPSPlus& gps, int timeZoneOffset) {
     oled.print(F("Date: "));
     printDigits(oled, gps.date.day());
     oled.print(F("-"));
-    printDigits(oled,gps.date.month());
+    printDigits(oled, gps.date.month());
     oled.print(F("-"));
     oled.println(gps.date.year());
 

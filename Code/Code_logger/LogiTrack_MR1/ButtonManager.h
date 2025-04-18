@@ -2,7 +2,7 @@
 #define BUTTONMANAGER_H
 
 #include <Arduino.h>
-
+#include "DisplayManager.h"
 
 enum ButtonAction {
   NONE,
@@ -17,6 +17,7 @@ class ButtonManager {
   ButtonManager();
   void begin();
   ButtonAction readButtons();
+  //DisplayState getState() const;
 
   private:
   const int buttonPins[4] = {6, 7, 8, 9};

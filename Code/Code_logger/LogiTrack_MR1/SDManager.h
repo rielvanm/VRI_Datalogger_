@@ -5,13 +5,13 @@
 
 class SDManager {
   public:
-  SDManager(int csPin);
-  bool begin();
-  bool writeLine(const String& filename, const String& data);
-  bool fileExists(const String& filename);
+    SDManager(int csPin);
+    bool begin();
+    bool writeLine(const String& filename, const String& data);  // 👈 declaratie
+    bool fileExists(const String& filename);
 
   private:
-  int _csPin;
+    int _csPin;
 };
 
 #endif

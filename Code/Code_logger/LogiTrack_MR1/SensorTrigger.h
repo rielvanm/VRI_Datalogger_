@@ -11,6 +11,8 @@ public:
 private:
   static volatile int triggerCount;
   static void IRAM_ATTR handleInterrupt();
+  static unsigned long lastInterruptTime;
+
 };
 
 #endif

@@ -5,7 +5,6 @@
 #include <RTClib.h>
 #include "SDManager.h"
 
-
 struct TriggerMoment {
   DateTime time;
   unsigned long ms;

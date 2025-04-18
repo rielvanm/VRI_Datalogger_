@@ -2,6 +2,8 @@
 #include <SD.h>
 #include <SPI.h>
 
+#define SD_CS_PIN 4
+
 SDManager::SDManager(int csPin) : _csPin(csPin) {}
 
 bool SDManager::begin() {
@@ -14,15 +16,15 @@ bool SDManager::begin() {
 }
 
 bool SDManager::writeLine(const String& filename, const String& data) {
-  File file = SD.open("/" + filename, FILE_APPEND);
-  if (!file) {
-    Serial.println("Fout bij openen van bestand.");
+  File file = SD.open(filename, FILE_APPEND);
+  if (file) {
+    file.println(data);
+    file.close();
+    return true;
+  } else {
+    Serial.println("Fout bij openen bestand: " + filename);
     return false;
   }
-
-  file.println (data);
-  file.close();
-  return true;
 }
 
 bool SDManager::fileExists(const String& filename) {

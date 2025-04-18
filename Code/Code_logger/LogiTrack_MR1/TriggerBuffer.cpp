@@ -1,6 +1,9 @@
 #include "TriggerBuffer.h"
 #include <Arduino.h>
 #include <vector>
+#include "SDManager.h"
+
+extern SDManager sd;
 
 void TriggerBuffer::addFromISR(DateTime time, unsigned long ms) {
   if (isrIndex < MAX_ISR_BUFFER) {
@@ -35,20 +38,15 @@ bool TriggerBuffer::hasPending() const {
 }
 
 void TriggerBuffer::processNext(SDManager& sd) {
-  if (mainBuffer.empty()) return;
+  if (!hasPending()) return;
 
-  TriggerMoment m = mainBuffer.front();
+  TriggerMoment evt = mainBuffer.front();
   mainBuffer.erase(mainBuffer.begin());
 
-  String ts;
-  ts.reserve(20);
-  //ts += (m.time.hour()   < 10 ? "0" : "") + String(m.time.hour()) + ":";
-  ts += (m.time.minute() < 10 ? "0" : "") + String(m.time.minute()) + ":";
-  ts += (m.time.second() < 10 ? "0" : "") + String(m.time.second()) + ".";
-  if (m.ms < 10) ts += "00";
-  else if (m.ms < 100) ts += "0";
-  ts += String(m.ms);
+char tijd[16];
+snprintf(tijd, sizeof(tijd), "%02d:%02d:%02d.%03lu",
+         evt.time.hour(), evt.time.minute(), evt.time.second(),
+         evt.ms);
 
-  sd.writeLine("trigger_log.txt", ts);
-  Serial.println("Buffered trigger opgeslagen: " + ts);
+sd.writeLine("metingen.csv", tijd);
 }

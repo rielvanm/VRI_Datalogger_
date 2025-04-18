@@ -10,6 +10,7 @@ class RTCManager {                        /// Class RTCManager
   void stopAndReset();                    /// Object stops timer en reset time to 00:00:00 and running == false
   DateTime now();                         /// returns the realtime if false stoptime, true returns real time   
   unsigned long elapsMillis();            /// Returns milliseconds after start
+  void setDateTime(int year, int month, int day, int hour, int minute);
 
   private:
   RTC_DS3231 rtc;                         /// Object of adafruit DS3231 class

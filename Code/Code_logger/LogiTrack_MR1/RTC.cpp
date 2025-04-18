@@ -3,17 +3,24 @@
 
 RTC_DS3231 rtc;                                         /// Communicate DS3231 with I2C
 
-void RTCManager::begin() {                              /// Object in class RTCManager  
-  if (!rtc.begin()) {                                   /// checks RTC ready on I2C
-    Serial.println("RTC not found!");
-    while(1);                                           /// Endless loop 
+void RTCManager::begin() {
+  if (!rtc.begin()) {
+    Serial.println("RTC niet gevonden!");
+    while(1);
   }
-  rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));       /// Systemtime  
+
+  if (rtc.lostPower()) {
+    Serial.println("RTC verloren stroom — opnieuw instellen...");
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  }
 }
 
+void RTCManager::setDateTime(int year, int month, int day, int hour, int minute) {
+  rtc.adjust(DateTime(year, month, day, hour, minute, 0));
+}
+
+
 void RTCManager::start() {                              /// Object start   
-  rtc.adjust(DateTime(2000, 1, 1, 0, 0, 0));            /// Reset clock to 0
-  delay(10);                                            /// Delay for stablisation
   running = true;                                       /// Intern flag stopwatch is running
   startTime = rtc.now();                                /// This is the start
   startMillis = millis();                               /// Saves systemtime in ms 
@@ -21,7 +28,6 @@ void RTCManager::start() {                              /// Object start
 
 void RTCManager::stopAndReset() {                       /// Object stopAndReset
   running = false;                                      /// Intern flag f clock isn't running
-  rtc.adjust(DateTime(2000, 1, 1, 0, 0, 0));            /// Set DS3231 back to 0
   startTime = DateTime(2000, 1, 1, 0, 0, 0);            /// Local memory startTime to 0
 }
 
