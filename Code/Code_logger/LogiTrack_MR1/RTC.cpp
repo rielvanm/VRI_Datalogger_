@@ -15,10 +15,10 @@ void RTCManager::begin() {
   }
 }
 
-void RTCManager::setDateTime(int year, int month, int day, int hour, int minute) {
-  rtc.adjust(DateTime(year, month, day, hour, minute, 0));
+void RTCManager::setTime(int jaar, int maand, int dag, int uur, int minuut) {
+  DateTime nieuweTijd(jaar, maand, dag, uur, minuut, 0);
+  rtc.adjust(nieuweTijd);
 }
-
 
 void RTCManager::start() {                              /// Object start   
   running = true;                                       /// Intern flag stopwatch is running

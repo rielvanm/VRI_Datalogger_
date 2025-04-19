@@ -30,12 +30,14 @@ public:
   void addUserMessage(const String& message);
   void showTimeSetScreen(int timeFields[5], int selectedField);
   DisplayState getState() const;
+  int timeFields[5] = {1, 1, 2025, 0, 0}; // dag, maand, jaar, uur, minuut
+  int selectedField = 0;
+  bool sdAvailable = false;
 
 private:
   Adafruit_SSD1306 oled;
   static const int MAX_MESSAGES = 4;
   String userMessages[MAX_MESSAGES];
-  bool sdAvailable = false;
   bool lastSdStatus = false;
   bool lastSensorStatus = false;
   unsigned long lastSdCheckTime = 0;
@@ -47,8 +49,6 @@ private:
   bool writable = false;
   bool interruptDetected = false;
   uint32_t lastInterruptCounter = 0;
-  int timeFields[5] = {1, 1, 2025, 0, 0}; // dag, maand, jaar, uur, minuut
-  int selectedField = 0;
   bool timeSetConfirmed = false;
 
 

@@ -128,6 +128,14 @@ void DisplayManager::showTimeSetScreen(int timeFields[5], int selectedField) {
   oled.setCursor(0, 0);
   oled.println(F("Stel tijd in:"));
 
+  //oled.drawFastVLine(96, 0, 54, WHITE);
+  oled.drawLine(0, 54, 128, 54, WHITE);
+
+  oled.setCursor(1, 56);    oled.print(F(" + "));
+  oled.setCursor(38, 56);   oled.print(F(" > "));
+  oled.setCursor(73, 56);   oled.print(F("OK"));
+  oled.setCursor(104, 56);  oled.print(F(" - "));
+
   oled.setCursor(0, 20);
   for (int i = 0; i < 5; i++) {
     if (i == selectedField)
@@ -144,11 +152,11 @@ void DisplayManager::showTimeSetScreen(int timeFields[5], int selectedField) {
     else if (i == 2) oled.print(F(" "));
     else if (i == 3) oled.print(F(":"));
   }
-
+/*
   oled.setTextColor(WHITE);
   oled.setCursor(0, 45);
   oled.print(F("Save = + / Delete = >"));
-
+*/
   oled.display();
 }
 
@@ -161,9 +169,9 @@ void DisplayManager::showMenu(TinyGPSPlus& gps, DateTime rtcNow) {
   oled.drawLine(0, 54, 128, 54, WHITE);
 
   oled.setCursor(1, 56);    oled.print(F("Start"));
-  oled.setCursor(41, 56);   oled.print(F("Uur"));
-  oled.setCursor(73, 56);   oled.print(F("Min"));
-  oled.setCursor(104, 56);  oled.print(F("Stop"));
+  oled.setCursor(38, 56);   oled.print(F("Klok"));
+  oled.setCursor(73, 56);   oled.print(F("GPS"));
+  oled.setCursor(100, 56);  oled.print(F("Stop"));
 
   oled.drawFastVLine(32, 54, 10, WHITE);
   oled.drawFastVLine(64, 54, 10, WHITE);

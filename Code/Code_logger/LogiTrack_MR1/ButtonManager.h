@@ -7,9 +7,13 @@
 enum ButtonAction {
   NONE,
   START,
-  SAVE,
-  DELETE_ACTION,
-  STOP
+  KLOK,
+  SHOW_GPS,
+  STOP,
+  PLUS,
+  MIN,
+  NEXT,
+  RETURN
 };
 
 class ButtonManager {
@@ -17,6 +21,7 @@ class ButtonManager {
   ButtonManager();
   void begin();
   ButtonAction readButtons();
+  ButtonAction readSecondButtons();
   //DisplayState getState() const;
 
   private:
