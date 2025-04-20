@@ -16,13 +16,18 @@ bool SDManager::begin() {
 }
 
 bool SDManager::writeLine(const String& filename, const String& data) {
-  File file = SD.open(filename, FILE_APPEND);
+  String fullPath = "/" + filename;
+  Serial.print("Probeer bestand te openen: ");
+  Serial.println(fullPath);
+
+  File file = SD.open(fullPath.c_str(), FILE_APPEND);
   if (file) {
     file.println(data);
     file.close();
+    Serial.println("Gegevens succesvol geschreven.");
     return true;
   } else {
-    Serial.println("Fout bij openen bestand: " + filename);
+    Serial.println("Fout bij openen bestand: " + fullPath);
     return false;
   }
 }

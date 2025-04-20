@@ -7,6 +7,8 @@
 #include "RTC.h"
 #include "SDManager.h"
 #include "TriggerBuffer.h"
+#include <SPI.h>
+#include <SD.h>
 
 // GPS-pinnen
 #define RX0PIN D0                                   // Res (UART) data from GPS PIN D0
@@ -18,7 +20,6 @@
 
 bool metingGestart = false;
 bool metingGestopt = false;
-int ritnummer = 0;
 uint32_t ritTeller = 0; // Telt het aantal volledige metingen
 volatile uint32_t interruptCounter = 0;  // externe teller
 TriggerBuffer triggerBuffer;
@@ -37,7 +38,7 @@ extern const unsigned char arduino_icon[];          // extern bitmap (array LOGO
 
 void setup() {                                    
   rtcManager.begin();
-  Serial.begin(115200);                             // Start USB-serial comm on baudrate 9600 bits/s
+  Serial.begin(9600);                             // Start USB-serial comm on baudrate 9600 bits/s
   Wire.begin();                                     // Start I2C-bus for OLED and RTC
   gpsHandler.begin();                               // Start GPS-module
   displayManager.begin();                           // Start OLED
@@ -49,13 +50,24 @@ void setup() {
   pinMode(PIN_START, INPUT_PULLUP);
   pinMode(PIN_STOP, INPUT_PULLUP);
 
-  if (!sd.begin()) {
-    Serial.println("SD-kaart initialisatie mislukt.");
+/*
+if (!sd.begin()) {
+  Serial.println("SD-kaart initialisatie mislukt.");
+} else {
+  Serial.println("SD-kaart succesvol geïnitialiseerd.");
+
+  File f = SD.open("/test.txt", FILE_WRITE);
+  if (f) {
+    f.println("SD test OK");
+    f.close();
+    Serial.println("Testbestand geschreven.");
   } else {
-    Serial.println("SD-kaart succesvol geïnitialiseerd.");
+    Serial.println("Kon testbestand niet openen.");
   }
-  }
-  
+}
+}
+ */
+ 
  /*
   Serial.begin(9600);
   delay(1000); // wait til ser monitor starts
@@ -87,22 +99,7 @@ triggerBuffer.transferPending(); // veilig kopiëren
 if (triggerBuffer.hasPending()) {
   triggerBuffer.processNext(sd);
 }
-/*
-bool startKnopIngedrukt = digitalRead(PIN_START) == LOW;
-bool stopKnopIngedrukt  = digitalRead(PIN_STOP)  == LOW;
-//bool KlokKnopIngedrukt = digitalRead(PIN_KLOK) == LOW;
-//bool ReturnKnopIngedrukt  = digitalRead(PIN_RETURN)  == LOW;
 
-if (startKnopIngedrukt) {
-  interruptCounter = 0;  // teller resetten
-  displayManager.setState(DisplayManager::DisplayState::Logging);
-}
-
-if (stopKnopIngedrukt) {
-  displayManager.setState(DisplayManager::DisplayState::Stopped);
-}
-
-*/
 if (displayManager.getState() == DisplayManager::DisplayState::TimeSet) {
   ButtonAction clkAction = buttons.readSecondButtons();
   if (clkAction != NONE) {
@@ -149,12 +146,17 @@ case START:
   metingGestopt = false;
   // CSV-kopregel schrijven
 
+Serial.println("START-knop gedetecteerd");                                        /// debug info
+Serial.print("metingGestart = "); Serial.println(metingGestart);
+Serial.print("sdAvailable = "); Serial.println(displayManager.sdAvailable);
+
     DateTime now = rtcManager.now();  // tijd vastleggen
     char header[64];
     snprintf(header, sizeof(header), "Rit %d, %d-%02d-%02d, %02d:%02d:%02d",
-             ritnummer,
+             ritTeller,
              now.year(), now.month(), now.day(),
              now.hour(), now.minute(), now.second());
+       Serial.println(header);                                                  /// debug info
     sd.writeLine("metingen.csv", header);
   } else if (!displayManager.sdAvailable) {
     displayManager.addUserMessage("Plaats SD-kaart"); 
