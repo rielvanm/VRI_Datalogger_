@@ -1,41 +1,75 @@
-#include "RTC.h"                                        /// Own header file
-#include <RTClib.h>                                     /// Adafruit libr DS3231 (RTC_DS3231 class and DateTime)
+#include "RTC.h"             // Own header file for RTCManager
+#include <RTClib.h>          // Adafruit RTClib (provides RTC_DS3231 and DateTime)
 
-RTC_DS3231 rtc;                                         /// Communicate DS3231 with I2C
+// Internal RTC object (connected via I2C)
+RTC_DS3231 rtc;
 
+/**
+ * @brief Initializes the DS3231 RTC module.
+ * If the RTC is not found, the program will stop.
+ * Also checks for power loss and notifies the user.
+ */
 void RTCManager::begin() {
   if (!rtc.begin()) {
-    Serial.println("RTC niet gevonden!");
-    while(1);
+    Serial.println("RTC not found!");
+    while (1); // Halt execution if RTC is missing
   }
 
-if (rtc.lostPower()) {
-  Serial.println("RTC heeft stroom verloren. Tijd moet handmatig worden ingesteld.");
-  // evt. een flag zetten dat de gebruiker de klok moet instellen
-}
-}
-
-void RTCManager::setTime(int jaar, int maand, int dag, int uur, int minuut) {
-  DateTime nieuweTijd(jaar, maand, dag, uur, minuut, 0);
-  rtc.adjust(nieuweTijd);
+  // If RTC lost power, the time may be invalid and needs to be set manually
+  if (rtc.lostPower()) {
+    Serial.println("RTC lost power. Time must be set manually.");
+    // You could set a flag here to prompt user interaction
+  }
 }
 
-void RTCManager::start() {                              /// Object start   
-  running = true;                                       /// Intern flag stopwatch is running
-  startTime = rtc.now();                                /// This is the start
-  startMillis = millis();                               /// Saves systemtime in ms 
+/**
+ * @brief Manually sets the date and time of the RTC.
+ * Seconds are set to 0.
+ * 
+ * @param year   Full year (e.g., 2025)
+ * @param month  Month (1–12)
+ * @param day    Day of the month (1–31)
+ * @param hour   Hour (0–23)
+ * @param minute Minute (0–59)
+ */
+void RTCManager::setTime(int year, int month, int day, int hour, int minute) {
+  DateTime newTime(year, month, day, hour, minute, 0);
+  rtc.adjust(newTime);
 }
 
-void RTCManager::stopAndReset() {                       /// Object stopAndReset
-  running = false;                                      /// Intern flag f clock isn't running
-  startTime = DateTime(2000, 1, 1, 0, 0, 0);            /// Local memory startTime to 0
+/**
+ * @brief Starts the timer logic by saving current time from RTC and system clock.
+ */
+void RTCManager::start() {
+  running = true;
+  startTime = rtc.now();        // Capture real time at start
+  startMillis = millis();       // Save system uptime at start
 }
 
-DateTime RTCManager::now() {                            ///  
-  return rtc.now();               /// If clock is running rtc.now time returns else startTime give time stops   
+/**
+ * @brief Stops the timer and resets the stored start time.
+ * Sets the internal running flag to false.
+ */
+void RTCManager::stopAndReset() {
+  running = false;
+  startTime = DateTime(2000, 1, 1, 0, 0, 0); // Reset to a neutral time (used as placeholder)
 }
 
-unsigned long RTCManager::elapsMillis() {                ///
-  return millis() - startMillis;           /// If clock is running then return ms -startms, else 0. 
+/**
+ * @brief Returns current time from RTC.
+ * Note: In current implementation, always returns rtc.now().
+ * 
+ * @return DateTime representing the current time.
+ */
+DateTime RTCManager::now() {
+  return rtc.now();  // You could return startTime if running == false, for frozen-time logic
 }
 
+/**
+ * @brief Calculates the milliseconds elapsed since start() was called.
+ * 
+ * @return Elapsed milliseconds.
+ */
+unsigned long RTCManager::elapsMillis() {
+  return millis() - startMillis;
+}

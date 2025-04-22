@@ -1,80 +1,89 @@
-#include "GpsHandler.h"                               /// loading headerfile with class GPShandler
-#include <HardwareSerial.h>                           /// loading HardwareSerial class
+#include "GpsHandler.h"           // Include header for GpsHandler class
+#include <HardwareSerial.h>       // Include HardwareSerial for ESP32 serial port usage
 
-GpsHandler::GpsHandler(int rx, int tx, int tz) {      /// constructor GpsHandler
+// Constructor: saves the RX, TX pin numbers and time zone offset
+GpsHandler::GpsHandler(int rx, int tx, int tz) {
   rxPin = rx;
   txPin = tx;
   timeZoneOffset = tz;
 }
 
-void GpsHandler::begin() {                            /// Init serial commincation
-  GPS.begin(9600, SERIAL_8N1, rxPin, txPin);          /// begin 
+// Initialize serial communication with the GPS module
+void GpsHandler::begin() {
+  GPS.begin(9600, SERIAL_8N1, rxPin, txPin);  // Start GPS serial communication at 9600 baud
 }
 
+// Return reference to internal TinyGPS++ instance
 TinyGPSPlus& GpsHandler::getGps() {
   return gps;
 }
 
-void GpsHandler::update() {                           /// reading all char form the GPS en parsing by TinyGPS++
-  while (GPS.available()) {                           /// Checking if readinformation is
-    gps.encode(GPS.read());                           /// read char and building GPS-information
+// Read all available characters from GPS and feed them to the TinyGPS++ parser
+void GpsHandler::update() {
+  while (GPS.available()) {
+    gps.encode(GPS.read());  // Feed characters into GPS parser
   }
 }
 
 /*
-void GpsHandler::printData() {                        /// print all usefull GPS-information to serial monitor
-  if (gps.location.isValid()) {                       /// checking if location is valid
-    Serial.print(F("- latitude: "));                  /// printing latitude
-    Serial.println(gps.location.lat(), 6);            /// printing latitude coordinates 6 decimals 
+// Print useful GPS data to the serial monitor for debugging
+void GpsHandler::printData() {
+  // Check if location data is valid
+  if (gps.location.isValid()) {
+    Serial.print(F("- Latitude: "));
+    Serial.println(gps.location.lat(), 6);  // 6 decimal precision
 
-    Serial.print(F("- longitude: "));                 /// printing longitude
-    Serial.println(gps.location.lng(), 6);            /// printing longitude coordinates 6 decimals
+    Serial.print(F("- Longitude: "));
+    Serial.println(gps.location.lng(), 6);
 
-    Serial.print(F("- altitude: "));                  /// printing altitude
-    if (gps.altitude.isValid())                       /// if valid
-      Serial.println(gps.altitude.meters());          /// printing altitude hight  
-    else  
-      Serial.println(F("INVALID"));                   /// else print invalid
+    Serial.print(F("- Altitude: "));
+    if (gps.altitude.isValid())
+      Serial.println(gps.altitude.meters());
+    else
+      Serial.println(F("INVALID"));
   } else {
-    Serial.println(F("- location: INVALID"));
+    Serial.println(F("- Location: INVALID"));
   }
 
-  Serial.print(F("- speed: "));                        /// printing speed    
-  if (gps.speed.isValid()) {                           /// If data is valid 
-    Serial.print(gps.speed.kmph());                    /// print speed data 
-    Serial.println(F(" km/h"));                        /// printing km/h 
-  } else {                                             /// else print invalid 
+  // Speed in km/h
+  Serial.print(F("- Speed: "));
+  if (gps.speed.isValid()) {
+    Serial.print(gps.speed.kmph());
+    Serial.println(F(" km/h"));
+  } else {
     Serial.println(F("INVALID"));
   }
 
-  Serial.print(F("- GPS lokale tijd: "));                   /// printing GPS time (local)
-  if (gps.date.isValid() && gps.time.isValid()) {           /// if date and time is valid
-    int correctedHour = gps.time.hour() + timeZoneOffset;   /// correcthour is time + 1 hour (local time)
-    if (correctedHour >= 24) correctedHour -= 24;           /// if correcthour +24h is -24 becouse 24 / 25 h doesn't exist
+  // Date and time output (corrected with timezone offset)
+  Serial.print(F("- Local GPS Time: "));
+  if (gps.date.isValid() && gps.time.isValid()) {
+    int correctedHour = gps.time.hour() + timeZoneOffset;
+    if (correctedHour >= 24) correctedHour -= 24;
 
-    Serial.print(gps.date.year());                          /// print year                          
-    Serial.print(F("-"));                                   /// print -
-    printDigits(gps.date.month());                          /// print month
-    Serial.print(F("-"));                                   
-    printDigits(gps.date.day());                            /// print day    
+    Serial.print(gps.date.year());
+    Serial.print(F("-"));
+    printDigits(gps.date.month());
+    Serial.print(F("-"));
+    printDigits(gps.date.day());
     Serial.print(F(" "));
-    printDigits(correctedHour);                             /// print correct hour
+    printDigits(correctedHour);
     Serial.print(F(":"));
-    printDigits(gps.time.minute());                         /// print minute
+    printDigits(gps.time.minute());
     Serial.print(F(":"));
-    printDigits(gps.time.second());                         /// print second
-    Serial.print(F("."));                                     
-    Serial.println(gps.time.centisecond());                 /// print centisecond
+    printDigits(gps.time.second());
+    Serial.print(F("."));
+    Serial.println(gps.time.centisecond());
   } else {
-    Serial.println(F("INVALID"));                           /// else print INVALID
+    Serial.println(F("INVALID"));
   }
 
-  Serial.println("\n");                                      /// visual space between GPS-blocks 
+  Serial.println("\n"); // Empty line for readability
 }
 
-void GpsHandler::printDigits(int digits) {                   ///  
-  if (digits < 10)                                           /// if the number is smaller then 10 
-    Serial.print('0');                                       /// print first 0 
-  Serial.print(digits);                                      /// then print the number by it self 
+// Print helper: ensures leading zero for values < 10
+void GpsHandler::printDigits(int digits) {
+  if (digits < 10)
+    Serial.print('0');
+  Serial.print(digits);
 }
 */

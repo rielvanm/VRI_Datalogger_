@@ -4,39 +4,53 @@
 #include "RTC.h"
 #include <SD.h>
 
+// OLED display dimensions
 #define OLED_WIDTH 128
 #define OLED_HEIGHT 64
+
+// SD card and sensor pins
 #define SD_CS_PIN 4
 #define SENSOR_PIN 5
 
+// External objects shared across the system
 extern RTCManager rtcManager;
 extern volatile uint32_t interruptCounter;
-extern uint32_t ritTeller;
+extern uint32_t tripCounter;
 
+// Constructor: initialize display and SD card availability
 DisplayManager::DisplayManager()
 : oled(OLED_WIDTH, OLED_HEIGHT, &Wire, -1), sdAvailable(false) {}
 
 void DisplayManager::begin() {
+  // Initialize the OLED screen; halt if it fails
   if (!oled.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     oled.println(F("Failed to initialize SSD1306 OLED"));
     while (1);
   }
+
+  // Clear screen at startup
   oled.clearDisplay();
   oled.display();
 
+  // Initialize SD card
   sdAvailable = SD.begin(SD_CS_PIN);
+
+  // Configure sensor input pin
   pinMode(SENSOR_PIN, INPUT);
 }
 
+// Update the display state and note the time of state change
 void DisplayManager::setState(DisplayState newState) {
   currentState = newState;
   stateStartTime = millis();
 }
 
+// Return the current display state
 DisplayManager::DisplayState DisplayManager::getState() const {
   return currentState;
 }
 
+// Display date and time from the RTC or GPS
 void DisplayManager::showDateTimeInfo(const DateTime& dt) {
   char buffer[32];
   snprintf(buffer, sizeof(buffer), "Dat: %04d-%02d-%02d", dt.year(), dt.month(), dt.day());
@@ -45,8 +59,9 @@ void DisplayManager::showDateTimeInfo(const DateTime& dt) {
   addUserMessage(buffer);
 }
 
+// Update the display content based on the system state
 void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset, DateTime rtcNow) {
-  // Elke 2 seconden SD-kaart opnieuw checken
+  // Check SD card and sensor status every 2 seconds
   if (millis() - lastStatusCheckTime > 2000) {
     bool currentSdStatus = SD.begin(SD_CS_PIN);
     writable = false;
@@ -60,13 +75,16 @@ void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset, DateTime rtcNo
         writable = true;
       }
     }
-    delay(10);
+
+    delay(10); // short pause before applying changes
+
+    // Update SD availability flag if it changed
     if (currentSdStatus != lastSdStatus) {
       lastSdStatus = currentSdStatus;
       sdAvailable = currentSdStatus;
     }
 
-    // Sensorstatus checken
+    // Update sensor status if it changed
     bool currentSensorStatus = digitalRead(SENSOR_PIN) == HIGH;
     if (currentSensorStatus != lastSensorStatus) {
       lastSensorStatus = currentSensorStatus;
@@ -75,15 +93,17 @@ void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset, DateTime rtcNo
     lastStatusCheckTime = millis();
   }
 
-    static uint32_t lastInterruptCounter = 0;
-    if (interruptCounter != lastInterruptCounter) {
+  // Track when the last interrupt occurred
+  static uint32_t lastInterruptCounter = 0;
+  if (interruptCounter != lastInterruptCounter) {
     lastIrTriggerTime = millis();
     lastInterruptCounter = interruptCounter;
   }
 
-  // Zet de IR-indicator 1 seconde lang aan
+  // Show IR trigger icon on display for 1 second
   interruptDetected = (millis() - lastIrTriggerTime) < 1000;
 
+  // Update screen content based on the current state
   switch (currentState) {
     case DisplayState::Intro:
       if (millis() - stateStartTime > 1000) {
@@ -95,9 +115,9 @@ void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset, DateTime rtcNo
       showMenu(gps, rtcNow);
       break;
 
-  case DisplayState::TimeSet:
-  showTimeSetScreen(timeFields, selectedField);
-  break;
+    case DisplayState::TimeSet:
+      showTimeSetScreen(timeFields, selectedField);
+      break;
 
     case DisplayState::Stopped:
       showSummaryScreen();
@@ -109,6 +129,7 @@ void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset, DateTime rtcNo
   }
 }
 
+// Scroll new user messages into view, discarding the oldest
 void DisplayManager::addUserMessage(const String& message) {
   for (int i = MAX_MESSAGES - 1; i > 0; i--) {
     userMessages[i] = userMessages[i - 1];
@@ -116,6 +137,7 @@ void DisplayManager::addUserMessage(const String& message) {
   userMessages[0] = message;
 }
 
+// Animated intro screen with sliding logo
 void DisplayManager::showIntro(const unsigned char* logo) {
   setState(DisplayState::Intro);
   for (int x = 128; x > -80; x--) {
@@ -130,6 +152,7 @@ void DisplayManager::showIntro(const unsigned char* logo) {
   }
 }
 
+// Time-setting interface with navigation and selection highlighting
 void DisplayManager::showTimeSetScreen(int timeFields[5], int selectedField) {
   oled.clearDisplay();
   oled.setTextSize(1);
@@ -137,7 +160,6 @@ void DisplayManager::showTimeSetScreen(int timeFields[5], int selectedField) {
   oled.setCursor(0, 0);
   oled.println(F("Stel tijd in:"));
 
-  //oled.drawFastVLine(96, 0, 54, WHITE);
   oled.drawLine(0, 54, 128, 54, WHITE);
 
   oled.setCursor(1, 56);    oled.print(F(" + "));
@@ -148,12 +170,12 @@ void DisplayManager::showTimeSetScreen(int timeFields[5], int selectedField) {
   oled.setCursor(0, 20);
   for (int i = 0; i < 5; i++) {
     if (i == selectedField)
-      oled.setTextColor(BLACK, WHITE);
+      oled.setTextColor(BLACK, WHITE); // Highlight selection
     else
       oled.setTextColor(WHITE, BLACK);
 
     if (i == 2)
-      oled.print(timeFields[i]); // Jaar
+      oled.print(timeFields[i]); // Year
     else
       printDigits(oled, timeFields[i]);
 
@@ -165,6 +187,7 @@ void DisplayManager::showTimeSetScreen(int timeFields[5], int selectedField) {
   oled.display();
 }
 
+// Main menu display with user messages and system status
 void DisplayManager::showMenu(TinyGPSPlus& gps, DateTime rtcNow) {
   oled.clearDisplay();
   oled.setTextSize(1);
@@ -173,6 +196,7 @@ void DisplayManager::showMenu(TinyGPSPlus& gps, DateTime rtcNow) {
   oled.drawFastVLine(96, 0, 54, WHITE);
   oled.drawLine(0, 54, 128, 54, WHITE);
 
+  // Menu button labels
   oled.setCursor(1, 56);    oled.print(F("Start"));
   oled.setCursor(38, 56);   oled.print(F("Klok"));
   oled.setCursor(73, 56);   oled.print(F("GPS"));
@@ -182,44 +206,35 @@ void DisplayManager::showMenu(TinyGPSPlus& gps, DateTime rtcNow) {
   oled.drawFastVLine(64, 54, 10, WHITE);
   oled.drawFastVLine(96, 54, 10, WHITE);
 
-  oled.setTextSize(1);
+  // Show recent user messages
   for (int i = 0; i < MAX_MESSAGES; i++) {
     oled.setCursor(0, 10 + i * 10);
     oled.print(userMessages[i]);
   }
 
+  // SD card status
   oled.setCursor(100, 0);
   oled.print(F("SD:"));
-  if (sdAvailable) {
   oled.setTextColor(WHITE);
-  oled.print(writable ? "O" : "X");
-    } else {
-  oled.setTextColor(WHITE);
-  oled.print("X");
-  }
-  oled.setTextColor(WHITE); // herstel
+  oled.print(sdAvailable ? (writable ? "O" : "X") : "X");
 
+  // IR sensor detection
   oled.setCursor(100, 10);
   oled.print(F("IR:"));
-  if (interruptDetected) {
-  oled.setTextColor(WHITE);
-  oled.print("O");
-    } else {
-  oled.setTextColor(WHITE);
-  oled.print("X");
-  }
-  oled.setTextColor(WHITE); // herstel
+  oled.print(interruptDetected ? "O" : "X");
 
+  // Show trip number
   oled.setCursor(100, 24);
   oled.print(F("Rit:"));
   oled.setTextSize(2);
   oled.setCursor(100, 35);
-  if (ritTeller < 10) oled.print("0");
-  oled.print(ritTeller);
+  if (tripCounter < 10) oled.print("0");
+  oled.print(tripCounter);
 
   oled.display();
 }
 
+// Simple summary screen after measurement is stopped
 void DisplayManager::showSummaryScreen() {
   oled.clearDisplay();
   oled.setTextSize(1);
@@ -232,10 +247,12 @@ void DisplayManager::showSummaryScreen() {
   oled.display();
 }
 
+// Show GPS data (delegates to updateDisplay)
 void DisplayManager::showGps(TinyGPSPlus& gps, int timeZoneOffset) {
   updateDisplay(gps, timeZoneOffset);
 }
 
+// Show a short single-line message on screen
 void DisplayManager::showMessage(const char* message) {
   oled.clearDisplay();
   oled.setTextSize(1);
@@ -246,6 +263,7 @@ void DisplayManager::showMessage(const char* message) {
   delay(1000);
 }
 
+// Display live GPS position and time information
 void DisplayManager::updateDisplay(TinyGPSPlus& gps, int timeZoneOffset) {
   oled.clearDisplay();
   oled.setTextSize(1);

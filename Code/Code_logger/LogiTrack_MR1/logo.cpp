@@ -1,7 +1,17 @@
-#include <Arduino.h>
-#include "logo.h"
+#include <Arduino.h>        // Core Arduino definitions
+#include "logo.h"           // Header file that declares the logo array (optional, good for reuse)
 
-const unsigned char arduino_icon [] PROGMEM = {
+/**
+ * @brief Bitmap image of the Arduino logo (128x64 pixels).
+ * 
+ * Stored in PROGMEM to keep it out of SRAM and reduce RAM usage.
+ * Each byte represents 8 vertical pixels (for use with displays like SSD1306).
+ * This image can be displayed using display libraries such as Adafruit_SSD1306:
+ * 
+ * Example usage:
+ *   display.drawBitmap(0, 0, arduino_icon, 128, 64, WHITE);
+ */
+const unsigned char arduino_icon[] PROGMEM = {
   // 'arduino-icon', 128x64px
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 0x00, 0x00, 0x00, 0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
