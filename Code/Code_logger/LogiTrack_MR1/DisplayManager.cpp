@@ -37,6 +37,14 @@ DisplayManager::DisplayState DisplayManager::getState() const {
   return currentState;
 }
 
+void DisplayManager::showDateTimeInfo(const DateTime& dt) {
+  char buffer[32];
+  snprintf(buffer, sizeof(buffer), "Dat: %04d-%02d-%02d", dt.year(), dt.month(), dt.day());
+  addUserMessage(buffer);
+  snprintf(buffer, sizeof(buffer), "Tijd: %02d:%02d:%02d", dt.hour(), dt.minute(), dt.second());
+  addUserMessage(buffer);
+}
+
 void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset, DateTime rtcNow) {
   // Elke 2 seconden SD-kaart opnieuw checken
   if (millis() - lastStatusCheckTime > 2000) {
@@ -67,9 +75,14 @@ void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset, DateTime rtcNo
     lastStatusCheckTime = millis();
   }
 
-  static uint32_t lastInterruptCounter = 0;
-  interruptDetected = (interruptCounter != lastInterruptCounter);
-  lastInterruptCounter = interruptCounter;
+    static uint32_t lastInterruptCounter = 0;
+    if (interruptCounter != lastInterruptCounter) {
+    lastIrTriggerTime = millis();
+    lastInterruptCounter = interruptCounter;
+  }
+
+  // Zet de IR-indicator 1 seconde lang aan
+  interruptDetected = (millis() - lastIrTriggerTime) < 1000;
 
   switch (currentState) {
     case DisplayState::Intro:
@@ -85,10 +98,6 @@ void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset, DateTime rtcNo
   case DisplayState::TimeSet:
   showTimeSetScreen(timeFields, selectedField);
   break;
-
-    case DisplayState::Logging:
-      showLoggingScreen(gps);
-      break;
 
     case DisplayState::Stopped:
       showSummaryScreen();
@@ -152,11 +161,7 @@ void DisplayManager::showTimeSetScreen(int timeFields[5], int selectedField) {
     else if (i == 2) oled.print(F(" "));
     else if (i == 3) oled.print(F(":"));
   }
-/*
-  oled.setTextColor(WHITE);
-  oled.setCursor(0, 45);
-  oled.print(F("Save = + / Delete = >"));
-*/
+
   oled.display();
 }
 
@@ -185,30 +190,33 @@ void DisplayManager::showMenu(TinyGPSPlus& gps, DateTime rtcNow) {
 
   oled.setCursor(100, 0);
   oled.print(F("SD:"));
-  oled.print(sdAvailable ? (writable ? F("I") : F("L")) : F("O"));
+  if (sdAvailable) {
+  oled.setTextColor(WHITE);
+  oled.print(writable ? "O" : "X");
+    } else {
+  oled.setTextColor(WHITE);
+  oled.print("X");
+  }
+  oled.setTextColor(WHITE); // herstel
 
   oled.setCursor(100, 10);
   oled.print(F("IR:"));
-  oled.print(interruptDetected ? F("I") : F("O"));
+  if (interruptDetected) {
+  oled.setTextColor(WHITE);
+  oled.print("O");
+    } else {
+  oled.setTextColor(WHITE);
+  oled.print("X");
+  }
+  oled.setTextColor(WHITE); // herstel
 
   oled.setCursor(100, 24);
   oled.print(F("Rit:"));
   oled.setTextSize(2);
   oled.setCursor(100, 35);
+  if (ritTeller < 10) oled.print("0");
   oled.print(ritTeller);
 
-  oled.display();
-}
-
-void DisplayManager::showLoggingScreen(TinyGPSPlus& gps) {
-  oled.clearDisplay();
-  oled.setTextSize(1);
-  oled.setTextColor(WHITE);
-  oled.setCursor(0, 0);
-  oled.println(F("Logging..."));
-
-  oled.print(F("km/h: "));
-  oled.print((int)gps.speed.kmph());
   oled.display();
 }
 

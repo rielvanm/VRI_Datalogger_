@@ -30,7 +30,7 @@ class ButtonManager {
   bool lastButtonState[4];
   bool buttonState[4];
   static const unsigned long debounceDelay = 20;
-
+  unsigned long lastInterruptTimeDisplay = 0;  
 };
 
 #endif

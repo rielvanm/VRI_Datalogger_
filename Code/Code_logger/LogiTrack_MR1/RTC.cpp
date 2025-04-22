@@ -9,10 +9,10 @@ void RTCManager::begin() {
     while(1);
   }
 
-  if (rtc.lostPower()) {
-    Serial.println("RTC verloren stroom — opnieuw instellen...");
-    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-  }
+if (rtc.lostPower()) {
+  Serial.println("RTC heeft stroom verloren. Tijd moet handmatig worden ingesteld.");
+  // evt. een flag zetten dat de gebruiker de klok moet instellen
+}
 }
 
 void RTCManager::setTime(int jaar, int maand, int dag, int uur, int minuut) {

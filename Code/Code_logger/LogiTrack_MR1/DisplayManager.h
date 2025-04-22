@@ -1,28 +1,28 @@
-#ifndef DISPLAYMANAGER_H                                    /// Guard
-#define DISPLAYMANAGER_H                                    
+#ifndef DISPLAYMANAGER_H
+#define DISPLAYMANAGER_H
 
-#include <Adafruit_SSD1306.h>                               /// Libr SSD1306 OLED 128x64 for Adrduino
-#include <TinyGPS++.h> 
-#include <RTClib.h>                                         /// Libr for GPS
+#include <Adafruit_SSD1306.h>
+#include <TinyGPS++.h>
+#include <RTClib.h>
 
-class DisplayManager {                                      /// Class DisplayManager
-public:  
-  enum class DisplayState {                                 /// states of the system
-  Intro,
-  TimeSet,
-  Menu,
-  Logging,
-  Stopped,
-  GpsDisplay
-};
+class DisplayManager {
+public:
+  enum class DisplayState {
+    Intro,
+    TimeSet,
+    Menu,
+    Logging,
+    Stopped,
+    GpsDisplay
+  };
 
-  DisplayManager();                                         /// Constructor                                       
+  DisplayManager();
 
-  void begin();                                             /// Start OLED and erase 
-  void showIntro(const unsigned char* logo);                /// Intro with logo
-  void updateDisplay(TinyGPSPlus& gps, int timeZoneOffset); /// Freshes screen with actual GPS-data
+  void begin();
+  void showIntro(const unsigned char* logo);
+  void updateDisplay(TinyGPSPlus& gps, int timeZoneOffset);
   void update(TinyGPSPlus& gps, int timeZoneOffset, DateTime rtcNow);
-  void showMessage(const char* message);                    /// PLACEHOLDER 
+  void showMessage(const char* message);
   void setState(DisplayState newState);
   void showLoggingScreen(TinyGPSPlus& gps);
   void showSummaryScreen();
@@ -30,9 +30,11 @@ public:
   void addUserMessage(const String& message);
   void showTimeSetScreen(int timeFields[5], int selectedField);
   DisplayState getState() const;
-  int timeFields[5] = {1, 1, 2025, 0, 0}; // dag, maand, jaar, uur, minuut
+  int timeFields[5] = {1, 1, 2025, 0, 0};
   int selectedField = 0;
-  bool sdAvailable = false;
+  bool isSdWritable() const { return writable; }
+  bool isSdAvailable() const { return sdAvailable; }
+  void showDateTimeInfo(const DateTime& dt);
 
 private:
   Adafruit_SSD1306 oled;
@@ -47,10 +49,11 @@ private:
   unsigned long stateStartTime;
   unsigned long lastStatusCheckTime = 0;
   bool writable = false;
+  bool sdAvailable = false;
   bool interruptDetected = false;
   uint32_t lastInterruptCounter = 0;
   bool timeSetConfirmed = false;
-
+  unsigned long lastIrTriggerTime = 0;
 
   enum class TimeField { DAY, MONTH, YEAR, HOUR, MINUTE };
   TimeField currentField = TimeField::DAY;

@@ -7,7 +7,7 @@ class SDManager {
   public:
     SDManager(int csPin);
     bool begin();
-    bool writeLine(const String& filename, const String& data);  // 👈 declaratie
+    bool writeLine(const String& filename, const String& data);  // declaratie
     bool fileExists(const String& filename);
 
   private:
