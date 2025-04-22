@@ -1,50 +1,44 @@
-// Includes necessary libraries for GPS, Display, Buttons, RTC, SD, and utility functions
-#include <TinyGPS++.h>                               // GPS parsing library (NMEA)
-#include "DisplayManager.h"                          // OLED display management
-#include "GpsHandler.h"                              // GPS module handler
-#include "Utils.h"                                   // Utility functions (e.g., printing digits)
-#include "ButtonManager.h"                           // Button input management
-#include "SensorTrigger.h"                           // Sensor interrupt handling
-#include "RTC.h"                                     // Real-time clock management
-#include "SDManager.h"                               // SD card file management
-#include "TriggerBuffer.h"                           // Buffer for interrupts/events
+ #include <TinyGPS++.h>                              // Lyb for translating NMEA data 
+#include "DisplayManager.h"                         // Header-file for OLED
+#include "GpsHandler.h"                             // GPS-module
+#include "Utils.h"                                  // Helpfunction (printing digits)
+#include "ButtonManager.h"                          // Buttonpress
+#include "SensorTrigger.h"                          // React on trigger interrupt sensor
+#include "RTC.h"
+#include "SDManager.h"
+#include "TriggerBuffer.h"
 #include <SPI.h>
 #include <SD.h>
-#include "SdFailureHandler.h"                        // SD error handling
+#include "SdFailureHandler.h"
 
-// Pin definitions
-#define RX0PIN D0                                    // UART RX (GPS data receive)
-#define TX0PIN D1                                    // UART TX (GPS data transmit)
+// GPS-pinnen
+#define RX0PIN D0                                   // Res (UART) data from GPS PIN D0
+#define TX0PIN D1                                   // Tran (UART) data to GPS PIN D1
 #define PIN_START 6
 #define PIN_STOP  9
 #define PIN_KLOK 7
-#define PIN_RETURN 8
+#define PIN_RETURN 8 
 
-// Global states for logging and counters
 bool loggingStarted = false;
 bool loggingStopped = false;
-uint32_t tripCounter = 0;                            // Counts number of completed measurements
-volatile uint32_t interruptCounter = 0;              // External interrupt event counter
-
-// Class object instantiations
+uint32_t tripCounter = 0; // Telt het aantal volledige metingen
+volatile uint32_t interruptCounter = 0;  // externe teller
 TriggerBuffer triggerBuffer;
-SDManager sd(4);                                     // SD card manager (CS pin = 4)
+SDManager sd(4);
 RTCManager rtcManager;
-SensorTrigger sensorTrigger;
-ButtonManager buttons;
+SensorTrigger sensorTrigger;                        // Object react on interrupt
+ButtonManager buttons;                              // Object reading buttons
 DisplayManager displayManager;
-HardwareSerial GPS(1);                               // GPS on Serial1
-const int timeZoneOffset = 1;                        // Local timezone offset (UTC+1)
-GpsHandler gpsHandler(RX0PIN, TX0PIN, timeZoneOffset);
+HardwareSerial GPS(1);                              // Serial 1
+const int timeZoneOffset = 1;                       // Using local time = UTC + 1
+GpsHandler gpsHandler(RX0PIN, TX0PIN, timeZoneOffset); // GPS-handler pins and timezone
 
-// External bitmap (logo)
-extern const unsigned char arduino_icon[];           // Logo bitmap
+// Externe bitmap (logo)
+extern const unsigned char arduino_icon[];          // extern bitmap (array LOGO) 
 
-// Timing variables for button debouncing
 unsigned long lastButtonCheck = 0;
 const unsigned long buttonInterval = 20;
 
-// Function to calculate the number of days in a month, including leap years
 int daysInMonth(int month, int year) {
   if (month == 2) {
     bool leapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
@@ -54,17 +48,15 @@ int daysInMonth(int month, int year) {
   return 31;
 }
 
-// Blinks the error message on the display to attract attention
-void BlinkingDisplayByError(const String& errorMessage) {
+void BlinkingDisplayByError(const String& foutmelding) {
   for (int i = 0; i < 2; i++) {
-    displayManager.showMessage(errorMessage.c_str());
+    displayManager.showMessage(foutmelding.c_str());
     delay(150);
     displayManager.showMessage(" ");
     delay(150);
   }
 }
 
-// Arduino initial setup routine
 void setup() {                                    
   rtcManager.begin();
   Serial.begin(9600);
@@ -73,52 +65,42 @@ void setup() {
   displayManager.begin();
   displayManager.showIntro(arduino_icon);
   buttons.begin();
-  sensorTrigger.begin(D3);                         // Sensor interrupt pin
-
-  // Initialize current time and display it
-  DateTime now = rtcManager.now();
-  displayManager.showDateTimeInfo(now);
-  printDateTimeToSerial(now);
-
-  // Initialize button pins
+  sensorTrigger.begin(D3);
+  DateTime nu = rtcManager.now();
+  displayManager.showDateTimeInfo(nu);
+  printDateTimeToSerial(nu);  
   pinMode(PIN_START, INPUT_PULLUP);
   pinMode(PIN_STOP, INPUT_PULLUP);
 
-  // Initialize SD card
   if (!sd.begin()) {
-    Serial.println("SD initialization failed.");
-    displayManager.addUserMessage("Insert SD");
+    Serial.println("SD-kaart initialisatie mislukt.");
+    displayManager.addUserMessage("Plaats SD");
   } else {
-    Serial.println("SD initialized successfully.");
-    displayManager.addUserMessage("SD ready");
+    Serial.println("SD-kaart succesvol geïnitialiseerd.");
+    displayManager.addUserMessage("SD gereed");
   }
 }
 
-// Arduino main loop
 void loop() {
   handleSdFailureDuringLogging();
   displayManager.update(gpsHandler.getGps(), timeZoneOffset, rtcManager.now());
 
-  // Check for sensor interrupts
   if (sensorTrigger.wasTriggered()) {
     DateTime now = rtcManager.now();
     unsigned long ms = rtcManager.elapsMillis() % 1000;
     triggerBuffer.addFromISR(now, ms);
   }
 
-  // Transfer interrupts to processing buffer and process them
   triggerBuffer.transferPending();
   if (triggerBuffer.hasPending()) {
     triggerBuffer.processNext(sd);
   }
 
-  // Button polling (debounced)
   unsigned long now = millis();
   if (now - lastButtonCheck >= buttonInterval) {
     lastButtonCheck = now;
 
     if (displayManager.getState() == DisplayManager::DisplayState::TimeSet) {
-      // Handle button presses for time setting
       ButtonAction clkAction = buttons.readSecondButtons();
       if (clkAction != NONE) {
         switch (clkAction) {
@@ -141,28 +123,104 @@ void loop() {
             int hour = displayManager.timeFields[3];
             int minute = displayManager.timeFields[4];
 
-            bool valid = true;
-            String errorMessage = "";
+            bool geldig = true;
+            String foutmelding = "";
 
-            if (year < 2020 || year > 2099) { valid = false; errorMessage = "Invalid year"; }
-            else if (month < 1 || month > 12) { valid = false; errorMessage = "Invalid month"; }
-            else if (day < 1 || day > daysInMonth(month, year)) { valid = false; errorMessage = "Invalid day"; }
-            else if (hour < 0 || hour > 23) { valid = false; errorMessage = "Invalid hour"; }
-            else if (minute < 0 || minute > 59) { valid = false; errorMessage = "Invalid minute"; }
+            if (year < 2020 || year > 2099) { geldig = false; foutmelding = "Jaar ongeldig"; }
+            else if (month < 1 || month > 12) { geldig = false; foutmelding = "Maand ongeldig"; }
+            else if (day < 1 || day > daysInMonth(month, year)) { geldig = false; foutmelding = "Dag ongeldig"; }
+            else if (hour < 0 || hour > 23) { geldig = false; foutmelding = "Uur ongeldig"; }
+            else if (minute < 0 || minute > 59) { geldig = false; foutmelding = "Minuut ongeldig"; }
 
-            if (valid) {
+            if (geldig) {
               rtcManager.setTime(year, month, day, hour, minute);
               displayManager.setState(DisplayManager::DisplayState::Menu);
-              displayManager.addUserMessage("Time updated");
+              displayManager.addUserMessage("Tijd aangepast");
             } else {
-              BlinkingDisplayByError(errorMessage);
+              BlinkingDisplayByError(foutmelding);
             }
             break;
           }
+
           default:
             break;
         }
       }
-    } 
+    } else {
+      ButtonAction action = buttons.readButtons();
+      if (action != NONE) {
+        switch (action) {
+          case START:
+            if (!displayManager.isSdAvailable() || !displayManager.isSdWritable()) {
+              displayManager.addUserMessage("Plaats SD-kaart");
+              break;
+            }
+
+            if (!loggingStarted) {
+              displayManager.addUserMessage("Meting gestart");
+              rtcManager.start();
+              tripCounter++;
+              loggingStarted = true;
+              loggingStopped = false;
+
+              DateTime now = rtcManager.now();
+              char header[64];
+              snprintf(header, sizeof(header), "Rit %d, %d-%02d-%02d, %02d:%02d:%02d",
+                       tripCounter,
+                       now.year(), now.month(), now.day(),
+                       now.hour(), now.minute(), now.second());
+
+              Serial.println(header);
+              sd.writeLine("metingen.csv", header);
+            } else {
+              displayManager.addUserMessage("Meting loopt");
+            }
+            break;
+
+          case KLOK:
+            if (loggingStarted) {
+              displayManager.addUserMessage("Niet beschikbaar");
+            } else {
+              DateTime nu = rtcManager.now();
+              displayManager.timeFields[0] = nu.day();
+              displayManager.timeFields[1] = nu.month();
+              displayManager.timeFields[2] = nu.year();
+              displayManager.timeFields[3] = nu.hour();
+              displayManager.timeFields[4] = nu.minute();
+
+              displayManager.setState(DisplayManager::DisplayState::TimeSet);
+            }
+            break;
+
+          case SHOW_GPS:
+            if (loggingStarted) {
+              displayManager.addUserMessage("Niet beschikbaar");
+            } else {
+              displayManager.addUserMessage("Nog geen GPS");
+            }
+            break;
+
+          case STOP:
+            if (!loggingStopped) {
+              displayManager.addUserMessage("Meting gestopt");
+              displayManager.addUserMessage("Detecties: " + String(interruptCounter));
+              interruptCounter = 0;
+              rtcManager.stopAndReset();
+              sd.writeLine("metingen.csv", "");
+              displayManager.addUserMessage("Opgeslagen");
+              loggingStopped = true;
+              loggingStarted = false;
+            } else {
+              displayManager.addUserMessage("Was al gestopt");
+            }
+            break;
+
+          default:
+            break;
+        }
+      }
+    }
   }
 }
+
+
