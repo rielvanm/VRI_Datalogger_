@@ -207,7 +207,7 @@ void loop() {
               interruptCounter = 0;
               rtcManager.stopAndReset();
               sd.writeLine("metingen.csv", "");
-              displayManager.addUserMessage("Opgeslagen");
+              displayManager.addUserMessage("Opgeslagen op sd");
               loggingStopped = true;
               loggingStarted = false;
             } else {

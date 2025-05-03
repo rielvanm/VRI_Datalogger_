@@ -100,8 +100,8 @@ void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset, DateTime rtcNo
     lastInterruptCounter = interruptCounter;
   }
 
-  // Show IR trigger icon on display for 1 second
-  interruptDetected = (millis() - lastIrTriggerTime) < 1000;
+  // Show IR trigger icon on display for 0,5 second
+  interruptDetected = (millis() - lastIrTriggerTime) < 500;
 
   // Update screen content based on the current state
   switch (currentState) {
