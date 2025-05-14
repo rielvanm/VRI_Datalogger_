@@ -1,0 +1,10 @@
+Data Translation Filewriter V1.0.0.20113 copyright 2012 Data Translation GmbH
+
+Description:
+
+
+Measured Time [Sec]:
+17,7555
+1,2164
+1,1627
+1,1073

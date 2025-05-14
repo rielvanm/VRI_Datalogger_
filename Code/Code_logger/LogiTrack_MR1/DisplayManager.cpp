@@ -78,6 +78,24 @@ void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset, DateTime rtcNo
 
     delay(10); // short pause before applying changes
 
+  // Show message SD 
+  if (!currentSdStatus && !sdErrorShown) {
+  addUserMessage("Plaats SD");
+  sdErrorShown = true;
+  }
+
+  if (currentSdStatus && sdErrorShown) {
+  // Old "Plaats SD"-message ereasing
+  for (int i = 0; i < MAX_MESSAGES; ++i) {
+    if (userMessages[i] == "Plaats SD") {
+      userMessages[i] = "";
+    }
+  }
+
+  addUserMessage("SD gereed");
+  sdErrorShown = false;
+}
+
     // Update SD availability flag if it changed
     if (currentSdStatus != lastSdStatus) {
       lastSdStatus = currentSdStatus;
@@ -126,6 +144,8 @@ void DisplayManager::update(TinyGPSPlus& gps, int timeZoneOffset, DateTime rtcNo
     case DisplayState::GpsDisplay:
       showGps(gps, timeZoneOffset);
       break;
+    case DisplayState::Logging:
+      break;  
   }
 }
 
@@ -151,6 +171,32 @@ void DisplayManager::showIntro(const unsigned char* logo) {
     delay(10);
   }
 }
+
+void DisplayManager::clearUserInfoExceptStart() {
+  bool found = false;
+
+  // Check on "Meting gestart" 
+  for (int i = 0; i < MAX_MESSAGES; ++i) {
+    if (userMessages[i] == "Meting gestart") {
+      found = true;
+      break;
+    }
+  }
+
+  // Erease all message
+  for (int i = 0; i < MAX_MESSAGES; ++i) {
+    userMessages[i] = "";
+  }
+
+  // "Meting gestart" back on top
+  if (found) {
+    userMessages[0] = "Meting gestart";
+  }
+
+  // Menu or display will by updating after `update()`
+}
+
+
 
 // Time-setting interface with navigation and selection highlighting
 void DisplayManager::showTimeSetScreen(int timeFields[5], int selectedField) {

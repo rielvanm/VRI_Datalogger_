@@ -55,6 +55,9 @@ public:
   // Optional screen shown during initialization
   void showInitScreen();
 
+  // Clear the userinfo after push button Start
+  void clearUserInfoExceptStart();
+
   // Add a user message to be displayed in the menu (top-down scroll)
   void addUserMessage(const String& message);
 
@@ -125,6 +128,9 @@ private:
 
   // Set to true when user has confirmed time setting
   bool timeSetConfirmed = false;
+
+  /// Set to true when SD is placed
+  bool sdErrorShown = false;
 
   // Timestamp of the last IR trigger
   unsigned long lastIrTriggerTime = 0;
