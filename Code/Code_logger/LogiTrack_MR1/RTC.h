@@ -54,8 +54,8 @@ public:
   void setTime(int year, int month, int day, int hour, int minute);
 
 private:
-  RTC_DS3231 rtc;             ///< Instance of Adafruit DS3231 RTC
-  unsigned long startMillis = 0; ///< Time in milliseconds when `start()` was called
+  RTC_DS3231 rtc;                 ///< Instance of Adafruit DS3231 RTC
+  unsigned long startMillis = 0;  ///< Time in milliseconds when `start()` was called
   bool running = false;           ///< Whether the timer is actively running
   DateTime startTime;             ///< Stores the time when `start()` was called
 };

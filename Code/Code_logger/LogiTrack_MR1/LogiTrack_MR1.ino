@@ -30,8 +30,8 @@ SensorTrigger sensorTrigger;                        // Object react on interrupt
 ButtonManager buttons;                              // Object reading buttons
 DisplayManager displayManager;
 HardwareSerial GPS(1);                              // Serial 1
-//const int timeZoneOffset = 1;                       // Using local time = UTC + 1
-//GpsHandler gpsHandler(RX0PIN, TX0PIN, timeZoneOffset); // GPS-handler pins and timezone
+const int timeZoneOffset = 1;                       // Using local time = UTC + 1
+GpsHandler gpsHandler(RX0PIN, TX0PIN, timeZoneOffset); // GPS-handler pins and timezone
 
 // Externe bitmap (logo)
 extern const unsigned char arduino_icon[];          // extern bitmap (array LOGO) 

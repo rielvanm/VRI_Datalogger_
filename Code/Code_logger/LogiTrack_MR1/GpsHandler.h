@@ -4,13 +4,8 @@
 #include <TinyGPS++.h>
 #include <HardwareSerial.h>
 
-// External declaration of the GPS serial object (usually Serial1 or Serial2 on ESP32)
+// External declaration of the GPS serial object (Serial1)
 extern HardwareSerial GPS;
-
-/*
-// If you need to access a global instance of this class, you can uncomment this line:
-extern class GpsHandler gpsHandler;
-*/
 
 //
 // GpsHandler class
