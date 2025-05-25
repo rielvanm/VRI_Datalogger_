@@ -1,0 +1,26 @@
+@startuml
+start
+:Start;
+:Setup();
+
+repeat
+  :loop();
+  :Check SD card 
+  handleSdFailureDuringLogging();
+  :Update display
+  displayManager.update();
+
+if (TriggerBuffer not empty?) then (yes)
+  :Read timestamp;
+  :Write to SD via SDManager;
+  else (no action)
+endif
+
+  if (Button Pressed?) then (yes)
+    :Check GPS and RTC status;
+    :Display user information;
+    else (no action)
+  endif
+  
+repeat while
+@enduml

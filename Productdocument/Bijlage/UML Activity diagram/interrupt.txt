@@ -1,0 +1,10 @@
+@startuml
+start
+:Interrupt on Pin D3;
+:Interrupt Service Routine
+(handleInterrupt);
+:Increment interruptCounter;
+:Store timestamp in TriggerBuffer;
+:Set dataReady flag / Buffer filled;
+stop
+@enduml
