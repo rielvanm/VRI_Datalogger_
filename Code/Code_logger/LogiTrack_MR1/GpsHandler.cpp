@@ -1,37 +1,54 @@
-#include "GpsHandler.h"           // Include header for GpsHandler class
-#include <HardwareSerial.h>       // Include HardwareSerial for ESP32 serial port usage
+/**
+ * @file GpsHandler.cpp
+ * @brief Implementation of the GpsHandler class to manage GPS data reception and parsing.
+ */
 
-// Constructor: saves the RX, TX pin numbers and time zone offset
-GpsHandler::GpsHandler(int rx, int tx, int tz) {
-  rxPin = rx;
-  txPin = tx;
-  timeZoneOffset = tz;
+#include "GpsHandler.h"           ///< Include header for GpsHandler class
+#include <HardwareSerial.h>       ///< Include HardwareSerial for ESP32 serial port usage
+
+
+GpsHandler::GpsHandler(int rxPin, int txPin, int timeZone) {
+  rxPin = rxPin;
+  txPin = txPin;
+  timeZoneOffset = timeZone;
 }
 
-// Initialize serial communication with the GPS module
+/**
+ * @brief Initializes serial communication with the GPS module.
+ *
+ * Sets up the UART interface using the provided RX and TX pins
+ * and starts communication at 9600 baud.
+ */
 void GpsHandler::begin() {
-  GPS.begin(9600, SERIAL_8N1, rxPin, txPin);  // Start GPS serial communication at 9600 baud
+  GPS.begin(9600, SERIAL_8N1, rxPin, txPin);
 }
 
-// Return reference to internal TinyGPS++ instance
+/**
+ * @brief Returns a reference to the internal TinyGPSPlus instance.
+ * @return Reference to TinyGPSPlus object.
+ */
 TinyGPSPlus& GpsHandler::getGps() {
   return gps;
 }
 
-// Read all available characters from GPS and feed them to the TinyGPS++ parser
+/**
+ * @brief Reads available characters from the GPS module and parses them.
+ *
+ * Continuously reads from the GPS serial buffer and passes the characters
+ * to the TinyGPS++ parser.
+ */
 void GpsHandler::update() {
   while (GPS.available()) {
-    gps.encode(GPS.read());  // Feed characters into GPS parser
+    gps.encode(GPS.read());
   }
 }
 
 /*
-// Print useful GPS data to the serial monitor for debugging
+// Debugging utility: Print GPS data to Serial monitor
 void GpsHandler::printData() {
-  // Check if location data is valid
   if (gps.location.isValid()) {
     Serial.print(F("- Latitude: "));
-    Serial.println(gps.location.lat(), 6);  // 6 decimal precision
+    Serial.println(gps.location.lat(), 6);
 
     Serial.print(F("- Longitude: "));
     Serial.println(gps.location.lng(), 6);
@@ -45,7 +62,6 @@ void GpsHandler::printData() {
     Serial.println(F("- Location: INVALID"));
   }
 
-  // Speed in km/h
   Serial.print(F("- Speed: "));
   if (gps.speed.isValid()) {
     Serial.print(gps.speed.kmph());
@@ -54,7 +70,6 @@ void GpsHandler::printData() {
     Serial.println(F("INVALID"));
   }
 
-  // Date and time output (corrected with timezone offset)
   Serial.print(F("- Local GPS Time: "));
   if (gps.date.isValid() && gps.time.isValid()) {
     int correctedHour = gps.time.hour() + timeZoneOffset;
@@ -77,10 +92,10 @@ void GpsHandler::printData() {
     Serial.println(F("INVALID"));
   }
 
-  Serial.println("\n"); // Empty line for readability
+  Serial.println("\n");
 }
 
-// Print helper: ensures leading zero for values < 10
+// Helper: Add leading zero to single-digit numbers
 void GpsHandler::printDigits(int digits) {
   if (digits < 10)
     Serial.print('0');

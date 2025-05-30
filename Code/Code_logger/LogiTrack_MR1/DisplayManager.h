@@ -1,3 +1,11 @@
+/**
+ * @file DisplayManager.h
+ * @brief Declaration of the DisplayManager class for controlling the OLED display.
+ *
+ * This class handles different display states, shows system status, user feedback,
+ * GPS and RTC data, and user interaction screens for time configuration.
+ */
+
 #ifndef DISPLAYMANAGER_H
 #define DISPLAYMANAGER_H
 
@@ -5,142 +13,90 @@
 #include <TinyGPS++.h>
 #include <RTClib.h>
 
-//
-// DisplayManager class
-// --------------------
-// Responsible for managing display output to a 128x64 OLED screen (SSD1306),
-// including screen states (menu, intro, time setting, GPS info, summary),
-// user messages, and feedback about system components such as SD card and IR sensor.
-//
-
+/**
+ * @class DisplayManager
+ * @brief Manages OLED output and display logic for system states and user interaction.
+ */
 class DisplayManager {
 public:
-  // All possible display modes/states
+  /**
+   * @enum DisplayState
+   * @brief Defines possible display states.
+   */
   enum class DisplayState {
-    Intro,       // Intro animation with logo
-    TimeSet,     // Manual time setting screen
-    Menu,        // Main menu with status info
-    Logging,     // Measurement in progress (optional screen)
-    Stopped,     // Summary after logging
-    GpsDisplay   // Shows GPS data (lat/lng, time)
+    Intro,       ///< Intro animation with logo
+    TimeSet,     ///< Manual time setting screen
+    Menu,        ///< Main menu with status info
+    Logging,     ///< Measurement in progress (optional screen)
+    Stopped,     ///< Summary after logging
+    GpsDisplay   ///< Shows GPS data (lat/lng, time)
   };
 
-  // Constructor
-  DisplayManager();
+  DisplayManager();                          ///< Constructor
+  void begin();                              ///< Initialize the OLED display and SD card
+  void showIntro(const unsigned char* logo); ///< Intro screen with logo animation
+  void updateDisplay(TinyGPSPlus& gps, int timeZoneOffset); ///< Show current GPS data
+  void update(TinyGPSPlus& gps, int timeZoneOffset, DateTime rtcNow); ///< Main update handler
+  void showMessage(const char* message);    ///< Display a short message
+  void setState(DisplayState newState);     ///< Set the current display state
+  void showLoggingScreen(TinyGPSPlus& gps); ///< Optional: show GPS data while logging
+  void showSummaryScreen();                 ///< Show summary screen after logging
+  void showInitScreen();                    ///< Optional initialization screen
+  void clearUserInfoExceptStart();          ///< Clear all messages except "Meting gestart"
+  void addUserMessage(const String& message); ///< Add user feedback to menu
+  void showTimeSetScreen(int timeFields[5], int selectedField); ///< Show time-setting interface
+  DisplayState getState() const;            ///< Get current display state
+  void showDateTimeInfo(const DateTime& dt);///< Show RTC date and time in message list
 
-  // Initialize the OLED display and SD card
-  void begin();
+  int timeFields[5] = {1, 1, 2025, 0, 0};    ///< Time-setting values: day, month, year, hour, minute
+  int selectedField = 0;                    ///< Selected index in timeFields array
 
-  // Intro screen with logo animation
-  void showIntro(const unsigned char* logo);
-
-  // Display current GPS data (lat, lng, date, time)
-  void updateDisplay(TinyGPSPlus& gps, int timeZoneOffset);
-
-  // Main update loop, responds to state and updates screen accordingly
-  void update(TinyGPSPlus& gps, int timeZoneOffset, DateTime rtcNow);
-
-  // Simple message display (centered text, 1 second delay)
-  void showMessage(const char* message);
-
-  // Set the current display state
-  void setState(DisplayState newState);
-
-  // Optional screen: shows GPS data while logging
-  void showLoggingScreen(TinyGPSPlus& gps);
-
-  // Show summary screen after measurement is stopped
-  void showSummaryScreen();
-
-  // Optional screen shown during initialization
-  void showInitScreen();
-
-  // Clear the userinfo after push button Start
-  void clearUserInfoExceptStart();
-
-  // Add a user message to be displayed in the menu (top-down scroll)
-  void addUserMessage(const String& message);
-
-  // Display the interface to manually set the time
-  void showTimeSetScreen(int timeFields[5], int selectedField);
-
-  // Get the current display state
-  DisplayState getState() const;
-
-  // Holds the current time-setting fields: day, month, year, hour, minute
-  int timeFields[5] = {1, 1, 2025, 0, 0};
-
-  // Index of currently selected time-setting field
-  int selectedField = 0;
-
-  // SD card status helpers
-  bool isSdWritable() const { return writable; }
-  bool isSdAvailable() const { return sdAvailable; }
-
-  // Add current RTC date and time to user messages
-  void showDateTimeInfo(const DateTime& dt);
+  bool isSdWritable() const { return writable; }   ///< Check if SD is writable
+  bool isSdAvailable() const { return sdAvailable; } ///< Check if SD is inserted
 
 private:
-  // The OLED display instance (SSD1306 over I2C)
-  Adafruit_SSD1306 oled;
+  Adafruit_SSD1306 oled;                    ///< OLED screen interface
+  static const int MAX_MESSAGES = 4;        ///< Max number of stored messages
+  String userMessages[MAX_MESSAGES];        ///< Scrollable message buffer
 
-  // Maximum number of lines for user messages in the menu
-  static const int MAX_MESSAGES = 4;
+  bool lastSdStatus = false;                ///< Last known SD status
+  bool lastSensorStatus = false;            ///< Last known sensor status
+  unsigned long lastSdCheckTime = 0;        ///< Last SD check timestamp
+  DisplayState currentState;                ///< Current display state
+  void showMenu(TinyGPSPlus& gps, DateTime rtcNow); ///< Draw the main menu
+  void showGps(TinyGPSPlus& gps, int timeZoneOffset); ///< Draw GPS status screen
+  unsigned long stateStartTime;             ///< When the current state started
+  unsigned long lastStatusCheckTime = 0;    ///< Last global status check timestamp
+  bool writable = false;                    ///< True if SD is writable
+  bool sdAvailable = false;                 ///< True if SD card is available
+  bool interruptDetected = false;           ///< Whether IR trigger was detected
+  uint32_t lastInterruptCounter = 0;        ///< Last seen IR counter value
+  bool timeSetConfirmed = false;            ///< True if time setting confirmed
+  bool sdErrorShown = false;                ///< True if SD error has been displayed
+  unsigned long lastIrTriggerTime = 0;      ///< Time of last IR trigger
 
-  // Circular buffer of user messages (newest first)
-  String userMessages[MAX_MESSAGES];
+/**
+* @enum TimeField
+* @brief Represents editable fields in date/time setting mode.
+* 
+* This enum is used in the clock setting menu to indicated which part of the data or time
+* is currently selected for adjustment by the user.
+*/
+  enum class TimeField { 
+    DAY,    ///< Day of the month (1-31)
+    MONTH,  ///< Month of the year (1-12)
+    YEAR,   ///< Year (e.g. 2025)
+    HOUR,   ///< Hour of the day (0-23)
+    MINUTE  ///< Minute of the hour (0-59)
+  };
+/**
+* @brief Currently selected time field in the clock-setting interface.
+*
+* Used te track wich part datetime is being edited (e.g., day, month, year).
+*/
+  TimeField currentField = TimeField::DAY; 
 
-  // Tracks SD card status for change detection
-  bool lastSdStatus = false;
-
-  // Tracks sensor pin status for change detection
-  bool lastSensorStatus = false;
-
-  // Time when SD card status was last checked
-  unsigned long lastSdCheckTime = 0;
-
-  // The current state of the display
-  DisplayState currentState;
-
-  // Show the main menu interface
-  void showMenu(TinyGPSPlus& gps, DateTime rtcNow);
-
-  // Show live GPS position and time
-  void showGps(TinyGPSPlus& gps, int timeZoneOffset);
-
-  // Timestamp of when the current state started
-  unsigned long stateStartTime;
-
-  // Timestamp for the last general status check
-  unsigned long lastStatusCheckTime = 0;
-
-  // Indicates whether the SD card is currently writable
-  bool writable = false;
-
-  // Indicates whether the SD card is available at all
-  bool sdAvailable = false;
-
-  // Set to true if a recent IR interrupt occurred
-  bool interruptDetected = false;
-
-  // Last seen value of the interrupt counter
-  uint32_t lastInterruptCounter = 0;
-
-  // Set to true when user has confirmed time setting
-  bool timeSetConfirmed = false;
-
-  /// Set to true when SD is placed
-  bool sdErrorShown = false;
-
-  // Timestamp of the last IR trigger
-  unsigned long lastIrTriggerTime = 0;
-
-  // Enum for internal tracking of selected time field
-  enum class TimeField { DAY, MONTH, YEAR, HOUR, MINUTE };
-  TimeField currentField = TimeField::DAY;
-
-  // Temporary DateTime value used during time setting
-  DateTime tempDate = DateTime(2025, 1, 1, 12, 0, 0);
+  DateTime tempDate = DateTime(2025, 1, 1, 12, 0, 0); ///< Temporary DateTime object used during time setting.
 };
 
-#endif
+#endif // DISPLAYMANAGER_H

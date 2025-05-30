@@ -1,0 +1,37 @@
+\hypertarget{_sensor_trigger_8h_source}{}\doxysection{Sensor\+Trigger.\+h}
+\label{_sensor_trigger_8h_source}\index{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/SensorTrigger.h@{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/SensorTrigger.h}}
+\mbox{\hyperlink{_sensor_trigger_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#ifndef\ SENSORTRIGGER\_H}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ SENSORTRIGGER\_H}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//}}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ SensorTrigger\ class}}
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ This\ class\ handles\ hardware\ interrupt-\/based\ detection\ from\ a\ digital\ sensor.}}
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ It\ includes\ basic\ software\ debounce\ and\ a\ simple\ buffer\ mechanism\ to\ check\ for\ triggers}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ from\ the\ main\ loop\ without\ missing\ interrupts.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_sensor_trigger}{SensorTrigger}}\ \{}
+\DoxyCodeLine{00031\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00036\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_sensor_trigger_adc4d44dbb510c59f2d8f77f47d5f547d}{begin}}(uint8\_t\ pin);}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00043\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_sensor_trigger_af2f30969cdaba80a1c753b6fc58d6403}{wasTriggered}}();\ \ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00046\ \ \ \textcolor{comment}{//\ Static\ volatile\ counter\ for\ number\ of\ valid\ sensor\ triggers}}
+\DoxyCodeLine{00047\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{volatile}\ \textcolor{keywordtype}{int}\ triggerCount;}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00053\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ IRAM\_ATTR\ \mbox{\hyperlink{class_sensor_trigger_a604b54c87e975c289a64f2db8ce1c6de}{handleInterrupt}}();}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \textcolor{comment}{//\ Stores\ timestamp\ of\ last\ valid\ trigger\ to\ implement\ debounce}}
+\DoxyCodeLine{00056\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ lastInterruptTime;}
+\DoxyCodeLine{00057\ \};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,41 @@
+\hypertarget{_trigger_buffer_8h_source}{}\doxysection{Trigger\+Buffer.\+h}
+\label{_trigger_buffer_8h_source}\index{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/TriggerBuffer.h@{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/TriggerBuffer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ TRIGGERBUFFER\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ TRIGGERBUFFER\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <RTClib.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}SDManager.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_trigger_moment}{TriggerMoment}}\ \{}
+\DoxyCodeLine{00016\ \ \ DateTime\ \mbox{\hyperlink{struct_trigger_moment_a574dc3880e0e3f3bdd6eb34d151e863d}{time}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00017\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{struct_trigger_moment_a97ea5502588a1ecbaaaf86f1c7c9b63f}{ms}};\ \ \ \ \ \ }
+\DoxyCodeLine{00018\ \};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_trigger_buffer}{TriggerBuffer}}\ \{}
+\DoxyCodeLine{00029\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00036\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_trigger_buffer_a8f894ab24e243f46bd1700c1f5ab4015}{addFromISR}}(DateTime\ time,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ ms);}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00042\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_trigger_buffer_ae2659471e6e639962aad26afd360e3f7}{transferPending}}();\ \textcolor{comment}{//\ Copies\ from\ isrBuffer\ to\ mainBuffer}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00050\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_trigger_buffer_a6720f9c8fa8dfa0766d9eb836e45098a}{processNext}}(\mbox{\hyperlink{class_s_d_manager}{SDManager}}\&\ sd);}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00057\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_trigger_buffer_ae6f86711044cff322f684391058f1906}{hasPending}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00060\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_trigger_buffer_ab323fedeb41f8f42cd384cd26bd1ef55}{MAX\_ISR\_BUFFER}}\ =\ 10;\ \ }
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \textcolor{comment}{//\ Buffer\ for\ ISR\ context\ (static\ allocation)}}
+\DoxyCodeLine{00063\ \ \ \mbox{\hyperlink{struct_trigger_moment}{TriggerMoment}}\ isrBuffer[\mbox{\hyperlink{class_trigger_buffer_ab323fedeb41f8f42cd384cd26bd1ef55}{MAX\_ISR\_BUFFER}}];}
+\DoxyCodeLine{00064\ \ \ \textcolor{keyword}{volatile}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_trigger_buffer_ae4751aa8d6f6a22acff8a09c3e5110d1}{isrIndex}}\ =\ 0;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \textcolor{keyword}{volatile}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_trigger_buffer_aab687871bb63eab0692b1e4cd1869a78}{pending}}\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \textcolor{comment}{//\ Main\ application\ buffer\ (dynamic,\ safe\ to\ use\ outside\ ISR)}}
+\DoxyCodeLine{00068\ \ \ std::vector<TriggerMoment>\ mainBuffer;}
+\DoxyCodeLine{00069\ \};}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

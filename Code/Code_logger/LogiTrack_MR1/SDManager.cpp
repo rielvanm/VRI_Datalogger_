@@ -29,10 +29,6 @@ bool SDManager::begin() {
  * 
  * Automatically prepends '/' to the filename and opens the file in append mode.
  * Closes the file after writing to avoid corruption.
- *
- * @param filename The name of the file to write to (without leading '/')
- * @param data     The line of data to write
- * @return true if the operation succeeded, false otherwise
  */
 bool SDManager::writeLine(const String& filename, const String& data) {
   String fullPath = "/" + filename;

@@ -1,0 +1,92 @@
+\hypertarget{class_sensor_trigger}{}\doxysection{Sensor\+Trigger Class Reference}
+\label{class_sensor_trigger}\index{SensorTrigger@{SensorTrigger}}
+
+
+class for handling sensor input via hardware interrupts.  
+
+
+
+
+{\ttfamily \#include $<$Sensor\+Trigger.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_sensor_trigger_adc4d44dbb510c59f2d8f77f47d5f547d}{begin}} (uint8\+\_\+t pin)
+\begin{DoxyCompactList}\small\item\em Initialize the sensor input pin and attach an interrupt. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_sensor_trigger_af2f30969cdaba80a1c753b6fc58d6403}{was\+Triggered}} ()
+\begin{DoxyCompactList}\small\item\em Check if the sensor was triggered since the last call. Decrements the internal trigger count. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void IRAM\+\_\+\+ATTR \mbox{\hyperlink{class_sensor_trigger_a604b54c87e975c289a64f2db8ce1c6de}{handle\+Interrupt}} ()
+\begin{DoxyCompactList}\small\item\em Interrupt service routine (ISR) to be called when sensor is triggered. Handles basic software debouncing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_sensor_trigger_ad52aad4d22106b392e782002e1ba4748}\label{class_sensor_trigger_ad52aad4d22106b392e782002e1ba4748}} 
+static volatile int {\bfseries trigger\+Count} = 0
+\item 
+\mbox{\Hypertarget{class_sensor_trigger_ae336adaa76a8df4e801ad1962669831d}\label{class_sensor_trigger_ae336adaa76a8df4e801ad1962669831d}} 
+static unsigned long {\bfseries last\+Interrupt\+Time} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+class for handling sensor input via hardware interrupts. 
+
+This class provides functionality to initialize a sensor pin and handle trigger events using interrupts. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_sensor_trigger_adc4d44dbb510c59f2d8f77f47d5f547d}\label{class_sensor_trigger_adc4d44dbb510c59f2d8f77f47d5f547d}} 
+\index{SensorTrigger@{SensorTrigger}!begin@{begin}}
+\index{begin@{begin}!SensorTrigger@{SensorTrigger}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily void Sensor\+Trigger\+::begin (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{pin }\end{DoxyParamCaption})}
+
+
+
+Initialize the sensor input pin and attach an interrupt. 
+
+Initialize the sensor pin and attach an interrupt to it.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pin} & The GPIO pin connected to the sensor. Must support interrupts.\\
+\hline
+{\em pin} & The GPIO pin number connected to the sensor. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_sensor_trigger_a604b54c87e975c289a64f2db8ce1c6de}\label{class_sensor_trigger_a604b54c87e975c289a64f2db8ce1c6de}} 
+\index{SensorTrigger@{SensorTrigger}!handleInterrupt@{handleInterrupt}}
+\index{handleInterrupt@{handleInterrupt}!SensorTrigger@{SensorTrigger}}
+\doxysubsubsection{\texorpdfstring{handleInterrupt()}{handleInterrupt()}}
+{\footnotesize\ttfamily void IRAM\+\_\+\+ATTR Sensor\+Trigger\+::handle\+Interrupt (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Interrupt service routine (ISR) to be called when sensor is triggered. Handles basic software debouncing. 
+
+Interrupt service routine (ISR) that runs on sensor trigger. This is marked with IRAM\+\_\+\+ATTR to place it in IRAM for ESP32 compatibility. \mbox{\Hypertarget{class_sensor_trigger_af2f30969cdaba80a1c753b6fc58d6403}\label{class_sensor_trigger_af2f30969cdaba80a1c753b6fc58d6403}} 
+\index{SensorTrigger@{SensorTrigger}!wasTriggered@{wasTriggered}}
+\index{wasTriggered@{wasTriggered}!SensorTrigger@{SensorTrigger}}
+\doxysubsubsection{\texorpdfstring{wasTriggered()}{wasTriggered()}}
+{\footnotesize\ttfamily bool Sensor\+Trigger\+::was\+Triggered (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Check if the sensor was triggered since the last call. Decrements the internal trigger count. 
+
+Check if the sensor was triggered since the last call. This method consumes one trigger from the buffer if available.
+
+\begin{DoxyReturn}{Returns}
+true if a new trigger was detected, false otherwise.
+
+true if there was a trigger, false otherwise. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/\mbox{\hyperlink{_sensor_trigger_8h}{Sensor\+Trigger.\+h}}\item 
+C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/Sensor\+Trigger.\+cpp\end{DoxyCompactItemize}

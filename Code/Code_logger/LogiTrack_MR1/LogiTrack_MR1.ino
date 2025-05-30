@@ -1,44 +1,57 @@
-#include <TinyGPS++.h>                              // Lyb for translating NMEA data 
-#include "DisplayManager.h"                         // Header-file for OLED
-#include "GpsHandler.h"                             // GPS-module
-#include "Utils.h"                                  // Helpfunction (printing digits)
-#include "ButtonManager.h"                          // Buttonpress
-#include "SensorTrigger.h"                          // React on trigger interrupt sensor
-#include "RTC.h"
-#include "SDManager.h"
-#include "TriggerBuffer.h"
+/**
+ * @file LogiTrack_MR1.ino
+ * @brief Main application file for the LogiTrack data logger.
+ * 
+ * This file initializes the system components and manages the runtime logic,
+ * including GPS reading, RTC handling, button interactions, and SD card logging.
+ */
+
+#include <TinyGPS++.h>              ///< Library for parsing NMEA GPS data
+#include "DisplayManager.h"         ///< Manages OLED display output
+#include "GpsHandler.h"             ///< Handles GPS communication
+#include "Utils.h"                  ///< Helper functions for formatting output
+#include "ButtonManager.h"          ///< Reads and processes button presses
+#include "SensorTrigger.h"          ///< Handles trigger sensor interrupts
+#include "RTC.h"                    ///< Manages RTC timekeeping
+#include "SDManager.h"              ///< Handles SD card read/write
+#include "TriggerBuffer.h"          ///< Buffers sensor events with timestamps
 #include <SPI.h>
 #include <SD.h>
-#include "SdFailureHandler.h"
+#include "SdFailureHandler.h"      ///< Handles SD card errors
 
-// GPS-pinnen
-#define RX0PIN D0                                   // Res (UART) data from GPS PIN D0
-#define TX0PIN D1                                   // Tran (UART) data to GPS PIN D1
-#define PIN_START 6
-#define PIN_STOP  9
-#define PIN_KLOK 7
-#define PIN_RETURN 8 
+// --- GPS and Button Pin Definitions ---
+#define RX0PIN D0                   ///< GPS RX pin
+#define TX0PIN D1                   ///< GPS TX pin
+#define PIN_START 6                ///< Start button pin
+#define PIN_STOP  9                ///< Stop button pin
+#define PIN_KLOK 7                 ///< Clock set button pin
+#define PIN_RETURN 8               ///< Return button pin
 
-bool loggingStarted = false;
-bool loggingStopped = false;
-uint32_t tripCounter = 0; // Telt het aantal volledige metingen
-volatile uint32_t interruptCounter = 0;  // externe teller
-TriggerBuffer triggerBuffer;
-SDManager sd(4);
-RTCManager rtcManager;
-SensorTrigger sensorTrigger;                        // Object react on interrupt
-ButtonManager buttons;                              // Object reading buttons
-DisplayManager displayManager;
-HardwareSerial GPS(1);                              // Serial 1
-const int timeZoneOffset = 1;                       // Using local time = UTC + 1
-GpsHandler gpsHandler(RX0PIN, TX0PIN, timeZoneOffset); // GPS-handler pins and timezone
+// --- Global Variables ---
+bool loggingStarted = false;                     ///< Indicates if logging is active
+bool loggingStopped = false;                     ///< Indicates if logging is stopped
+uint32_t tripCounter = 0;                        ///< Counts full logging sessions
+volatile uint32_t interruptCounter = 0;          ///< Interrupt detection counter
+TriggerBuffer triggerBuffer;                    ///< Buffer for sensor triggers
+SDManager sd(4);                                 ///< SD card interface
+RTCManager rtcManager;                           ///< RTC timekeeper
+SensorTrigger sensorTrigger;                     ///< Manages sensor interrupts
+ButtonManager buttons;                           ///< Button input handler
+DisplayManager displayManager;                   ///< Manages display output
+HardwareSerial GPS(1);                           ///< UART interface for GPS
+const int timeZoneOffset = 1;                    ///< Local time offset from UTC
+GpsHandler gpsHandler(RX0PIN, TX0PIN, timeZoneOffset); ///< GPS handler object
+extern const unsigned char arduino_icon[];       ///< Startup logo bitmap
 
-// Externe bitmap (logo)
-extern const unsigned char arduino_icon[];          // extern bitmap (array LOGO) 
+unsigned long lastButtonCheck = 0;               ///< Timestamp for last button poll
+const unsigned long buttonInterval = 20;         ///< Minimum interval between button polls
 
-unsigned long lastButtonCheck = 0;
-const unsigned long buttonInterval = 20;
-
+/**
+ * @brief Returns number of days in a given month/year.
+ * @param month The month (1-12)
+ * @param year The full year (e.g., 2024)
+ * @return Number of days in the given month
+ */
 int daysInMonth(int month, int year) {
   if (month == 2) {
     bool leapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
@@ -48,6 +61,10 @@ int daysInMonth(int month, int year) {
   return 31;
 }
 
+/**
+ * @brief Displays an error message in a blinking fashion.
+ * @param foutmelding The message to display.
+ */
 void BlinkingDisplayByError(const String& foutmelding) {
   for (int i = 0; i < 2; i++) {
     displayManager.showMessage(foutmelding.c_str());
@@ -57,7 +74,13 @@ void BlinkingDisplayByError(const String& foutmelding) {
   }
 }
 
-void setup() {                                    
+/**
+ * @brief Initializes all subsystems.
+ * @details
+ * This function sets up the RTC, serial communication, GPS, buttons, display,
+ * sensor triggers, and SD card. It also prints the current time to the serial monitor.
+ */
+void setup() {
   rtcManager.begin();
   Serial.begin(9600);
   Wire.begin();
@@ -66,9 +89,11 @@ void setup() {
   displayManager.showIntro(arduino_icon);
   buttons.begin();
   sensorTrigger.begin(D3);
+
   DateTime nu = rtcManager.now();
   displayManager.showDateTimeInfo(nu);
-  printDateTimeToSerial(nu);  
+  printDateTimeToSerial(nu);
+
   pinMode(PIN_START, INPUT_PULLUP);
   pinMode(PIN_STOP, INPUT_PULLUP);
 
@@ -80,26 +105,41 @@ void setup() {
     displayManager.addUserMessage("SD gereed");
   }
 }
-
+/**
+ * @brief Main program loop.
+ * @details
+ * Performs the following:
+ * - Updates the display with GPS and RTC data
+ * - Buffers sensor interrupts with timestamps
+ * - Processes buttons for time-setting and menu navigation
+ * - Starts/stops logging sessions
+ * - Writes to the SD card if applicable
+ */
 void loop() {
-  handleSdFailureDuringLogging();
+  handleSdFailureDuringLogging();///< Check and handle SD card errors
+
+  // Update display with current GPS and time info
   displayManager.update(gpsHandler.getGps(), timeZoneOffset, rtcManager.now());
 
+  // Check for sensor trigger and buffer timestamp
   if (sensorTrigger.wasTriggered()) {
     DateTime now = rtcManager.now();
     unsigned long ms = rtcManager.elapsMillis() % 1000;
     triggerBuffer.addFromISR(now, ms);
   }
 
+  // Move any buffered triggers to main buffer and log if needed
   triggerBuffer.transferPending();
   if (triggerBuffer.hasPending()) {
     triggerBuffer.processNext(sd);
   }
-
+  
+  // Poll buttons at defined interval
   unsigned long now = millis();
   if (now - lastButtonCheck >= buttonInterval) {
     lastButtonCheck = now;
 
+    // Handle clock-setting mode
     if (displayManager.getState() == DisplayManager::DisplayState::TimeSet) {
       ButtonAction clkAction = buttons.readSecondButtons();
       if (clkAction != NONE) {
@@ -147,6 +187,7 @@ void loop() {
         }
       }
     } else {
+       // Handle main menu button actions
       ButtonAction action = buttons.readButtons();
       if (action != NONE) {
         switch (action) {

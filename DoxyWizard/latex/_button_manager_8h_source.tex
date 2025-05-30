@@ -1,0 +1,45 @@
+\hypertarget{_button_manager_8h_source}{}\doxysection{Button\+Manager.\+h}
+\label{_button_manager_8h_source}\index{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/ButtonManager.h@{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/ButtonManager.h}}
+\mbox{\hyperlink{_button_manager_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ BUTTONMANAGER\_H}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ BUTTONMANAGER\_H}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_display_manager_8h}{DisplayManager.h}}"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7}{ButtonAction}}\ \{}
+\DoxyCodeLine{00017\ \ \ \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7ac157bdf0b85a40d2619cbc8bc1ae5fe2}{NONE}},\ \ \ \ \ \ }
+\DoxyCodeLine{00018\ \ \ \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a13d000b4d7dc70d90239b7430d1eb6b2}{START}},\ \ \ \ \ }
+\DoxyCodeLine{00019\ \ \ \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7aad57bc9da02c194ee2d50b599a5d5362}{KLOK}},\ \ \ \ \ \ }
+\DoxyCodeLine{00020\ \ \ \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a5e4d37a017e89f8ea502f28400c2adc1}{SHOW\_GPS}},\ \ }
+\DoxyCodeLine{00021\ \ \ \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a679ee5320d66c8322e310daeb2ee99b8}{STOP}},\ \ \ \ \ \ }
+\DoxyCodeLine{00022\ \ \ \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a87fe59ef12c3d13dc2a4d14c9b16c1f9}{PLUS}},\ \ \ \ \ \ }
+\DoxyCodeLine{00023\ \ \ \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a957e8250f68e7b5677b22397c2c1b51e}{MIN}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00024\ \ \ \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7ab13b96bf99a409e019f70dc1602532fd}{NEXT}},\ \ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a520e09ffec033636dba711f3441cc600}{RETURN}}\ \ \ \ \ }
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_button_manager}{ButtonManager}}\ \{}
+\DoxyCodeLine{00036\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{class_button_manager_adcecc58a5498e83dba9503e3785d44ec}{ButtonManager}}();}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_manager_a1da1e558b18e177c25adbee7164d402a}{begin}}();}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7}{ButtonAction}}\ \mbox{\hyperlink{class_button_manager_a0d0f6a7bb9f726d7c77007019367089a}{readButtons}}();}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7}{ButtonAction}}\ \mbox{\hyperlink{class_button_manager_a4b7268e7b22a0fc07c6fc8c9f42c8364}{readSecondButtons}}();}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_button_manager_ab4164c0cfa491b372179165fc482aeec}{buttonPins}}[4]\ =\ \{6,\ 7,\ 8,\ 9\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{class_button_manager_aa0bc82c4062b1f2e5506b22c9af98eb8}{lastDebounceTime}}[4];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_manager_a8ec5db287b98e816edb44022c5e127e9}{lastButtonState}}[4];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_manager_a166d814964d92d4014b4522efc62d616}{buttonState}}[4];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{class_button_manager_a69a8b224b5cb09b8077f95df6660082b}{debounceDelay}}\ =\ 20;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{class_button_manager_aa758964836e84fc99237daf0a958972a}{lastInterruptTimeDisplay}}\ =\ 0;\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00066\ \};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ BUTTONMANAGER\_H}}
+
+\end{DoxyCode}

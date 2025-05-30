@@ -1,3 +1,11 @@
+/***
+* @file SensorTrigger.cpp
+* @brief Implematation of the SensorTrigger class
+* 
+* This file contains the implemantation of the SensorTrigger class,
+* wich manages detection and counting of sensor-triggered interrupts 
+*/
+
 #include "SensorTrigger.h"
 
 // Static variable to track the number of valid sensor triggers
@@ -26,7 +34,7 @@ void IRAM_ATTR SensorTrigger::handleInterrupt() {
   unsigned long now = millis();
 
   // Basic software debounce: only accept triggers spaced by > 50ms
-  if (now - lastInterruptTime > 50) {
+  if (now - lastInterruptTime > 20) {
     triggerCount++;         // Local counter (for this class)
     interruptCounter++;     // Global counter (for logging or display)
     lastInterruptTime = now;

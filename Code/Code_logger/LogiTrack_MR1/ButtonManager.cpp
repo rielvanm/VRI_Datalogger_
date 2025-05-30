@@ -1,38 +1,53 @@
-// Updated ButtonManager class implementation with useful comments
+/**
+ * @file ButtonManager.cpp
+ * @brief Implements debounced button handling for primary and secondary actions.
+ */
+
 #include "ButtonManager.h"
 
-// Constructor: initializes button states and debounce variables
+/**
+ * @brief Constructs the ButtonManager and initializes internal state.
+ */
 ButtonManager::ButtonManager() {
   for (int i = 0; i < 4; i++) {
-    lastDebounceTime[i] = 0;         // Timestamp of the last debounce
-    lastButtonState[i] = HIGH;       // Last known button state
-    buttonState[i] = HIGH;           // Current stable button state
+    lastDebounceTime[i] = 0;         ///< Timestamp of the last debounce event
+    lastButtonState[i] = HIGH;       ///< Last read state of the button
+    buttonState[i] = HIGH;           ///< Stable button state after debouncing
   }
 }
 
-// Initializes button pins as inputs with internal pull-up resistors
+/**
+ * @brief Initializes all button pins as INPUT_PULLUP.
+ */
 void ButtonManager::begin() {
   for (int i = 0; i < 4; i++) {
     pinMode(buttonPins[i], INPUT_PULLUP);
   }
 }
 
-// Reads and processes button states for primary button actions with debounce logic
+/**
+ * @brief Reads button states and returns a primary ButtonAction if pressed.
+ *
+ * Uses debounce logic to ensure stable input. Mapped to actions:
+ * - Index 0: START
+ * - Index 1: KLOK
+ * - Index 2: SHOW_GPS
+ * - Index 3: STOP
+ *
+ * @return ButtonAction representing the pressed button, or NONE if no action.
+ */
 ButtonAction ButtonManager::readButtons() {
   for (int i = 0; i < 4; i++) {
     int reading = digitalRead(buttonPins[i]);
 
-    // Detect button state changes
     if (reading != lastButtonState[i]) {
       lastDebounceTime[i] = millis();
     }
 
-    // Debounce check
     if ((millis() - lastDebounceTime[i]) > debounceDelay) {
       if (reading != buttonState[i]) {
         buttonState[i] = reading;
 
-        // Button pressed action
         if (buttonState[i] == LOW) {
           switch (i) {
             case 0: return START;
@@ -43,27 +58,34 @@ ButtonAction ButtonManager::readButtons() {
         }
       }
     }
-    lastButtonState[i] = reading; // Update last state for next loop iteration
+    lastButtonState[i] = reading;
   }
   return NONE;
 }
 
-// Reads and processes button states for secondary button actions (e.g., time adjustments)
+/**
+ * @brief Reads button states and returns a secondary ButtonAction if pressed.
+ *
+ * Used in time-setting modes. Mapped to actions:
+ * - Index 0: PLUS
+ * - Index 1: NEXT
+ * - Index 2: RETURN
+ * - Index 3: MIN
+ *
+ * @return ButtonAction representing the pressed button, or NONE if no action.
+ */
 ButtonAction ButtonManager::readSecondButtons() {
   for (int i = 0; i < 4; i++) {
     int reading = digitalRead(buttonPins[i]);
 
-    // Detect button state changes
     if (reading != lastButtonState[i]) {
       lastDebounceTime[i] = millis();
     }
 
-    // Debounce check
     if ((millis() - lastDebounceTime[i]) > debounceDelay) {
       if (reading != buttonState[i]) {
         buttonState[i] = reading;
 
-        // Button pressed action
         if (buttonState[i] == LOW) {
           switch (i) {
             case 0: return PLUS;
@@ -74,7 +96,7 @@ ButtonAction ButtonManager::readSecondButtons() {
         }
       }
     }
-    lastButtonState[i] = reading; // Update last state for next loop iteration
+    lastButtonState[i] = reading;
   }
   return NONE;
 }

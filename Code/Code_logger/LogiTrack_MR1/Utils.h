@@ -1,3 +1,8 @@
+/**
+ * @file Utils.h
+ * @brief Utility functions for consistent time and date formatting.
+ */
+
 #ifndef UTILS_H
 #define UTILS_H
 

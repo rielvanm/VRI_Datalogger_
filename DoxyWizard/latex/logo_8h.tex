@@ -1,0 +1,29 @@
+\hypertarget{logo_8h}{}\doxysection{C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/logo.h File Reference}
+\label{logo_8h}\index{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/logo.h@{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/logo.h}}
+
+
+Contains a bitmap of the Arduino logo for OLED displays.  
+
+
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{logo_8h_ab8bd07961f1865719157e734a921dba3}\label{logo_8h_ab8bd07961f1865719157e734a921dba3}} 
+const unsigned char {\bfseries arduino\+\_\+icon} \mbox{[}$\,$\mbox{]}
+\begin{DoxyCompactList}\small\item\em Extern declaration of 128x64 Arduino logo bitmap. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Contains a bitmap of the Arduino logo for OLED displays. 
+
+Declaration of a 128x64 monochrome bitmap for display on OLED.
+
+This header defines a statically stored bitmap image of the Arduino logo, stored in PROGMEM to save RAM. The image is 128x64 pixels and suitable for use with OLED displays such as the SSD1306.
+
+The bitmap can be rendered using libraries like Adafruit\+\_\+\+SSD1306 or U8g2.
+
+This header declares the external Arduino logo bitmap array, which is stored in PROGMEM in a corresponding .cpp file (typically logo.\+cpp).
+
+The bitmap can be displayed using functions like draw\+Bitmap() from libraries such as Adafruit\+\_\+\+SSD1306 or U8g2.
+
+Example usage\+: display.\+draw\+Bitmap(0, 0, arduino\+\_\+icon, 128, 64, WHITE); 

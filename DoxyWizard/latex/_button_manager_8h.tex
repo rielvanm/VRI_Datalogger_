@@ -1,0 +1,87 @@
+\hypertarget{_button_manager_8h}{}\doxysection{C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/\+Button\+Manager.h File Reference}
+\label{_button_manager_8h}\index{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/ButtonManager.h@{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/ButtonManager.h}}
+
+
+Handles input from buttons using debouncing and interprets them into user actions.  
+
+
+{\ttfamily \#include $<$Arduino.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}Display\+Manager.\+h\char`\"{}}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_button_manager}{Button\+Manager}}
+\begin{DoxyCompactList}\small\item\em Manages button input using software debouncing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7}{Button\+Action}} \{ \newline
+\mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7ac157bdf0b85a40d2619cbc8bc1ae5fe2}{NONE}}
+, \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a13d000b4d7dc70d90239b7430d1eb6b2}{START}}
+, \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7aad57bc9da02c194ee2d50b599a5d5362}{KLOK}}
+, \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a5e4d37a017e89f8ea502f28400c2adc1}{SHOW\+\_\+\+GPS}}
+, \newline
+\mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a679ee5320d66c8322e310daeb2ee99b8}{STOP}}
+, \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a87fe59ef12c3d13dc2a4d14c9b16c1f9}{PLUS}}
+, \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a957e8250f68e7b5677b22397c2c1b51e}{MIN}}
+, \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7ab13b96bf99a409e019f70dc1602532fd}{NEXT}}
+, \newline
+\mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a520e09ffec033636dba711f3441cc600}{RETURN}}
+ \}
+\begin{DoxyCompactList}\small\item\em Represents the different possible actions triggered by button inputs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Handles input from buttons using debouncing and interprets them into user actions. 
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7}\label{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7}} 
+\index{ButtonManager.h@{ButtonManager.h}!ButtonAction@{ButtonAction}}
+\index{ButtonAction@{ButtonAction}!ButtonManager.h@{ButtonManager.h}}
+\doxysubsubsection{\texorpdfstring{ButtonAction}{ButtonAction}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7}{Button\+Action}}}
+
+
+
+Represents the different possible actions triggered by button inputs. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NONE@{NONE}!ButtonManager.h@{ButtonManager.h}}\index{ButtonManager.h@{ButtonManager.h}!NONE@{NONE}}}\mbox{\Hypertarget{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7ac157bdf0b85a40d2619cbc8bc1ae5fe2}\label{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7ac157bdf0b85a40d2619cbc8bc1ae5fe2}} 
+NONE&No action detected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{START@{START}!ButtonManager.h@{ButtonManager.h}}\index{ButtonManager.h@{ButtonManager.h}!START@{START}}}\mbox{\Hypertarget{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a13d000b4d7dc70d90239b7430d1eb6b2}\label{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a13d000b4d7dc70d90239b7430d1eb6b2}} 
+START&Start logging session. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{KLOK@{KLOK}!ButtonManager.h@{ButtonManager.h}}\index{ButtonManager.h@{ButtonManager.h}!KLOK@{KLOK}}}\mbox{\Hypertarget{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7aad57bc9da02c194ee2d50b599a5d5362}\label{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7aad57bc9da02c194ee2d50b599a5d5362}} 
+KLOK&Enter clock/time setting menu. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SHOW\_GPS@{SHOW\_GPS}!ButtonManager.h@{ButtonManager.h}}\index{ButtonManager.h@{ButtonManager.h}!SHOW\_GPS@{SHOW\_GPS}}}\mbox{\Hypertarget{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a5e4d37a017e89f8ea502f28400c2adc1}\label{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a5e4d37a017e89f8ea502f28400c2adc1}} 
+SHOW\+\_\+\+GPS&Show GPS status/info. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STOP@{STOP}!ButtonManager.h@{ButtonManager.h}}\index{ButtonManager.h@{ButtonManager.h}!STOP@{STOP}}}\mbox{\Hypertarget{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a679ee5320d66c8322e310daeb2ee99b8}\label{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a679ee5320d66c8322e310daeb2ee99b8}} 
+STOP&Stop logging session. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PLUS@{PLUS}!ButtonManager.h@{ButtonManager.h}}\index{ButtonManager.h@{ButtonManager.h}!PLUS@{PLUS}}}\mbox{\Hypertarget{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a87fe59ef12c3d13dc2a4d14c9b16c1f9}\label{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a87fe59ef12c3d13dc2a4d14c9b16c1f9}} 
+PLUS&Increment a value (e.\+g., date/time) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MIN@{MIN}!ButtonManager.h@{ButtonManager.h}}\index{ButtonManager.h@{ButtonManager.h}!MIN@{MIN}}}\mbox{\Hypertarget{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a957e8250f68e7b5677b22397c2c1b51e}\label{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a957e8250f68e7b5677b22397c2c1b51e}} 
+MIN&Decrement a value (e.\+g., date/time) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NEXT@{NEXT}!ButtonManager.h@{ButtonManager.h}}\index{ButtonManager.h@{ButtonManager.h}!NEXT@{NEXT}}}\mbox{\Hypertarget{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7ab13b96bf99a409e019f70dc1602532fd}\label{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7ab13b96bf99a409e019f70dc1602532fd}} 
+NEXT&Move to the next field (e.\+g., in time setting) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RETURN@{RETURN}!ButtonManager.h@{ButtonManager.h}}\index{ButtonManager.h@{ButtonManager.h}!RETURN@{RETURN}}}\mbox{\Hypertarget{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a520e09ffec033636dba711f3441cc600}\label{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7a520e09ffec033636dba711f3441cc600}} 
+RETURN&Confirm or exit menu. \\
+\hline
+
+\end{DoxyEnumFields}

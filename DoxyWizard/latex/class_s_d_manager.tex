@@ -1,0 +1,136 @@
+\hypertarget{class_s_d_manager}{}\doxysection{SDManager Class Reference}
+\label{class_s_d_manager}\index{SDManager@{SDManager}}
+
+
+Handles basic SD card operations such as initialization, writing, and file existence checks.  
+
+
+
+
+{\ttfamily \#include $<$SDManager.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_d_manager_afbe27b8fc78e55a7fb7538aae9faf28f}{SDManager}} (int cs\+Pin)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_d_manager_a32836ad316d7efdd4602d08716e3eb2c}{begin}} ()
+\begin{DoxyCompactList}\small\item\em Initializes communication with the SD card. Should be called in setup(). \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_d_manager_a7c28139f89c71e374598820d80da0288}{write\+Line}} (const String \&filename, const String \&data)
+\begin{DoxyCompactList}\small\item\em Appends a line of text to a file on the SD card. Creates the file if it doesn\textquotesingle{}t exist. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_d_manager_a0e29959e377bb1b4574cf8dac900fbd5}{file\+Exists}} (const String \&filename)
+\begin{DoxyCompactList}\small\item\em Checks whether a specific file exists on the SD card. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_s_d_manager_a83e5d271649cba8908e65e0ec1d98356}\label{class_s_d_manager_a83e5d271649cba8908e65e0ec1d98356}} 
+int {\bfseries \+\_\+cs\+Pin}
+\begin{DoxyCompactList}\small\item\em Chip Select pin number used for SD communication. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Handles basic SD card operations such as initialization, writing, and file existence checks. 
+
+This class simplifies interaction with an SD card using the Arduino SD library. It is intended for use with a CS (Chip Select) pin provided at construction. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_d_manager_afbe27b8fc78e55a7fb7538aae9faf28f}\label{class_s_d_manager_afbe27b8fc78e55a7fb7538aae9faf28f}} 
+\index{SDManager@{SDManager}!SDManager@{SDManager}}
+\index{SDManager@{SDManager}!SDManager@{SDManager}}
+\doxysubsubsection{\texorpdfstring{SDManager()}{SDManager()}}
+{\footnotesize\ttfamily SDManager\+::\+SDManager (\begin{DoxyParamCaption}\item[{int}]{cs\+Pin }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cs\+Pin} & The chip select (CS) pin used to communicate with the SD card. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_d_manager_a32836ad316d7efdd4602d08716e3eb2c}\label{class_s_d_manager_a32836ad316d7efdd4602d08716e3eb2c}} 
+\index{SDManager@{SDManager}!begin@{begin}}
+\index{begin@{begin}!SDManager@{SDManager}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily bool SDManager\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes communication with the SD card. Should be called in setup(). 
+
+Initializes SPI and attempts to initialize the SD card.
+
+\begin{DoxyReturn}{Returns}
+true if initialization was successful, false otherwise.
+\end{DoxyReturn}
+
+
+Uses explicit SPI pin mapping\+: SCK=13, MISO=12, MOSI=11 (for platforms like ESP32/\+ESP8266). You can modify these if using different hardware.
+
+\begin{DoxyReturn}{Returns}
+true if SD card initialization was successful, false otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_d_manager_a0e29959e377bb1b4574cf8dac900fbd5}\label{class_s_d_manager_a0e29959e377bb1b4574cf8dac900fbd5}} 
+\index{SDManager@{SDManager}!fileExists@{fileExists}}
+\index{fileExists@{fileExists}!SDManager@{SDManager}}
+\doxysubsubsection{\texorpdfstring{fileExists()}{fileExists()}}
+{\footnotesize\ttfamily bool SDManager\+::file\+Exists (\begin{DoxyParamCaption}\item[{const String \&}]{filename }\end{DoxyParamCaption})}
+
+
+
+Checks whether a specific file exists on the SD card. 
+
+Checks if a file exists on the SD card.
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & The file to check (e.\+g. \char`\"{}/config.\+txt\char`\"{}). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the file exists, false otherwise.
+\end{DoxyReturn}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Name of the file (without leading \textquotesingle{}/\textquotesingle{}) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the file exists, false otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_d_manager_a7c28139f89c71e374598820d80da0288}\label{class_s_d_manager_a7c28139f89c71e374598820d80da0288}} 
+\index{SDManager@{SDManager}!writeLine@{writeLine}}
+\index{writeLine@{writeLine}!SDManager@{SDManager}}
+\doxysubsubsection{\texorpdfstring{writeLine()}{writeLine()}}
+{\footnotesize\ttfamily bool SDManager\+::write\+Line (\begin{DoxyParamCaption}\item[{const String \&}]{filename,  }\item[{const String \&}]{data }\end{DoxyParamCaption})}
+
+
+
+Appends a line of text to a file on the SD card. Creates the file if it doesn\textquotesingle{}t exist. 
+
+Appends a line of text to a file on the SD card.
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & The name of the file (e.\+g. \char`\"{}/log.\+txt\char`\"{}). \\
+\hline
+{\em data} & The string to append to the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the write operation was successful, false otherwise.
+\end{DoxyReturn}
+
+
+Automatically prepends \textquotesingle{}/\textquotesingle{} to the filename and opens the file in append mode. Closes the file after writing to avoid corruption. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/SDManager.\+h\item 
+C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/SDManager.\+cpp\end{DoxyCompactItemize}

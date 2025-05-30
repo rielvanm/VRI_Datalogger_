@@ -1,0 +1,47 @@
+\hypertarget{_utils_8h_source}{}\doxysection{Utils.\+h}
+\label{_utils_8h_source}\index{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/Utils.h@{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/Utils.h}}
+\mbox{\hyperlink{_utils_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ UTILS\_H}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ UTILS\_H}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <Print.h>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <RTClib.h>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{//}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ Utils.h}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ Contains\ utility\ functions\ for\ formatting\ time\ and\ date\ output,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ especially\ for\ use\ with\ RTC\ and\ OLED/Serial\ displays.}}
+\DoxyCodeLine{00017\ \textcolor{comment}{//}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{_utils_8h_a84999914d8cf212855a2c64039048dbc}{printDigits}}(Print\&\ output,\ \textcolor{keywordtype}{int}\ digits)\ \{}
+\DoxyCodeLine{00027\ \ \ \textcolor{keywordflow}{if}\ (digits\ <\ 10)\ output.print(\textcolor{stringliteral}{"{}0"{}});}
+\DoxyCodeLine{00028\ \ \ output.print(digits);}
+\DoxyCodeLine{00029\ \}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{_utils_8h_a6e56aacc26e944c7ed0050ae9d093ff6}{printDateTimeToSerial}}(\textcolor{keyword}{const}\ DateTime\&\ dt)\ \{}
+\DoxyCodeLine{00038\ \ \ Serial.print(\textcolor{stringliteral}{"{}Datum:\ "{}});}
+\DoxyCodeLine{00039\ \ \ Serial.print(dt.year());}
+\DoxyCodeLine{00040\ \ \ Serial.print(\textcolor{stringliteral}{"{}-\/"{}});}
+\DoxyCodeLine{00041\ \ \ \textcolor{keywordflow}{if}\ (dt.month()\ <\ 10)\ Serial.print(\textcolor{stringliteral}{"{}0"{}});}
+\DoxyCodeLine{00042\ \ \ Serial.print(dt.month());}
+\DoxyCodeLine{00043\ \ \ Serial.print(\textcolor{stringliteral}{"{}-\/"{}});}
+\DoxyCodeLine{00044\ \ \ \textcolor{keywordflow}{if}\ (dt.day()\ <\ 10)\ Serial.print(\textcolor{stringliteral}{"{}0"{}});}
+\DoxyCodeLine{00045\ \ \ Serial.println(dt.day());}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ Serial.print(\textcolor{stringliteral}{"{}Tijd:\ "{}});}
+\DoxyCodeLine{00048\ \ \ \textcolor{keywordflow}{if}\ (dt.hour()\ <\ 10)\ Serial.print(\textcolor{stringliteral}{"{}0"{}});}
+\DoxyCodeLine{00049\ \ \ Serial.print(dt.hour());}
+\DoxyCodeLine{00050\ \ \ Serial.print(\textcolor{stringliteral}{"{}:"{}});}
+\DoxyCodeLine{00051\ \ \ \textcolor{keywordflow}{if}\ (dt.minute()\ <\ 10)\ Serial.print(\textcolor{stringliteral}{"{}0"{}});}
+\DoxyCodeLine{00052\ \ \ Serial.print(dt.minute());}
+\DoxyCodeLine{00053\ \ \ Serial.print(\textcolor{stringliteral}{"{}:"{}});}
+\DoxyCodeLine{00054\ \ \ \textcolor{keywordflow}{if}\ (dt.second()\ <\ 10)\ Serial.print(\textcolor{stringliteral}{"{}0"{}});}
+\DoxyCodeLine{00055\ \ \ Serial.println(dt.second());}
+\DoxyCodeLine{00056\ \}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

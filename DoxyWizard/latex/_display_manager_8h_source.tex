@@ -1,0 +1,81 @@
+\hypertarget{_display_manager_8h_source}{}\doxysection{Display\+Manager.\+h}
+\label{_display_manager_8h_source}\index{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/DisplayManager.h@{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/DisplayManager.h}}
+\mbox{\hyperlink{_display_manager_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#ifndef\ DISPLAYMANAGER\_H}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ DISPLAYMANAGER\_H}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <Adafruit\_SSD1306.h>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <TinyGPS++.h>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <RTClib.h>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_display_manager}{DisplayManager}}\ \{}
+\DoxyCodeLine{00021\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3ea}{DisplayState}}\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaa1cad35d4b3b9f624f82dbf237daaf188}{Intro}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaaec92cdc6b8bfca4aa459a426b4d031f1}{TimeSet}},\ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaab61541208db7fa7dba42c85224405911}{Menu}},\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaa8db7df66ab1d7ab5f1dc947acdb5fae4}{Logging}},\ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaac23e2b09ebe6bf4cb5e2a9abe85c0be2}{Stopped}},\ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaae8359f86b6b324cdf11ea248ede21c1d}{GpsDisplay}}\ \ \ }
+\DoxyCodeLine{00033\ \ \ \};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \mbox{\hyperlink{class_display_manager_aaa4cbf192d2e50fde0064472243558e9}{DisplayManager}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_display_manager_a64241a1df3344b3ad21c1e8662d825bd}{begin}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_display_manager_ae77f747ea9c9d627d2d5a665b6689c33}{showIntro}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ logo);\ }
+\DoxyCodeLine{00038\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_display_manager_ad0f31b8af70a07dc170e49248d1b216f}{updateDisplay}}(TinyGPSPlus\&\ gps,\ \textcolor{keywordtype}{int}\ timeZoneOffset);\ }
+\DoxyCodeLine{00039\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_display_manager_a92affd392a08eccf99cee30e3a5b8c45}{update}}(TinyGPSPlus\&\ gps,\ \textcolor{keywordtype}{int}\ timeZoneOffset,\ DateTime\ rtcNow);\ }
+\DoxyCodeLine{00040\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_display_manager_ac51deaefbb08ebe620d68a38ccc9a3e0}{showMessage}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ message);\ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_display_manager_ad03df3c7aed0b35e03b8fd6012553158}{setState}}(\mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3ea}{DisplayState}}\ newState);\ \ \ \ \ }
+\DoxyCodeLine{00042\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_display_manager_a6a8b4219f25e61be81aa2565976c4b75}{showLoggingScreen}}(TinyGPSPlus\&\ gps);\ }
+\DoxyCodeLine{00043\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_display_manager_a2c988307e31a87fa7929d1d9d7294236}{showSummaryScreen}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_display_manager_a0021b7b1785579f0e93a0ee80fc820a9}{showInitScreen}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_display_manager_af473080ccb391dde0b6bfdf9986ac597}{clearUserInfoExceptStart}}();\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_display_manager_ae0cf4c06eaf8d6c4482dc54a5ab9be5d}{addUserMessage}}(\textcolor{keyword}{const}\ String\&\ message);\ }
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_display_manager_a46a97fb3844b1ccba76e730c73b59ec3}{showTimeSetScreen}}(\textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_display_manager_a8acd5931aa62b5db151d0af6fda2936b}{timeFields}}[5],\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_display_manager_ad5896607e929c3e46628975c1b4c16e1}{selectedField}});\ }
+\DoxyCodeLine{00048\ \ \ \mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3ea}{DisplayState}}\ \mbox{\hyperlink{class_display_manager_a9dd508777e9e36121cd9a918ccc5d224}{getState}}()\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_display_manager_a69597019a1a7c5bb399272818e5f3b47}{showDateTimeInfo}}(\textcolor{keyword}{const}\ DateTime\&\ dt);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_display_manager_a8acd5931aa62b5db151d0af6fda2936b}{timeFields}}[5]\ =\ \{1,\ 1,\ 2025,\ 0,\ 0\};\ \ \ \ }
+\DoxyCodeLine{00052\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_display_manager_ad5896607e929c3e46628975c1b4c16e1}{selectedField}}\ =\ 0;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_display_manager_a219952a9881a08b269af9602d329a12d}{isSdWritable}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_display_manager_a8108844305c0007132c86659344b8ae9}{writable}};\ \}\ \ \ }
+\DoxyCodeLine{00055\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_display_manager_a485a03d78bc22cd8bc1c983e0bd26e46}{isSdAvailable}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_display_manager_a423a7db5a2a81f67ee28318fe4efbee7}{sdAvailable}};\ \}\ }
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00058\ \ \ Adafruit\_SSD1306\ \mbox{\hyperlink{class_display_manager_accbf8ad728c9410ae8892b4c11333265}{oled}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00059\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_display_manager_abca0e92a2cdd0a14e83ded6f300e9fab}{MAX\_MESSAGES}}\ =\ 4;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00060\ \ \ String\ \mbox{\hyperlink{class_display_manager_a8d9b508d63ee6c3a9046c418fa2be622}{userMessages}}[\mbox{\hyperlink{class_display_manager_abca0e92a2cdd0a14e83ded6f300e9fab}{MAX\_MESSAGES}}];\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_display_manager_ab7e8f59e8c972259c77bf72b571a2f6c}{lastSdStatus}}\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00063\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_display_manager_a9050d8638b074d4a8d1a613c57771365}{lastSensorStatus}}\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00064\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{class_display_manager_a8d9c528581ce416e81e091131d251a62}{lastSdCheckTime}}\ =\ 0;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3ea}{DisplayState}}\ \mbox{\hyperlink{class_display_manager_a92762b65129986444ea6224ee7909feb}{currentState}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_display_manager_af040f8202b9eb5cc761151a6104d0f33}{showMenu}}(TinyGPSPlus\&\ gps,\ DateTime\ rtcNow);\ }
+\DoxyCodeLine{00067\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_display_manager_af2d1fc79e1126c32b01839476339dd5c}{showGps}}(TinyGPSPlus\&\ gps,\ \textcolor{keywordtype}{int}\ timeZoneOffset);\ }
+\DoxyCodeLine{00068\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{class_display_manager_aeeac64dd88751b57948686be7fc3bfa4}{stateStartTime}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{class_display_manager_a563900d7a0462def82b2d13363c098f8}{lastStatusCheckTime}}\ =\ 0;\ \ \ \ }
+\DoxyCodeLine{00070\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_display_manager_a8108844305c0007132c86659344b8ae9}{writable}}\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00071\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_display_manager_a423a7db5a2a81f67ee28318fe4efbee7}{sdAvailable}}\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00072\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_display_manager_aa0ebb77e6e2c91df738eb4373815d52e}{interruptDetected}}\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00073\ \ \ uint32\_t\ \mbox{\hyperlink{class_display_manager_a21b1bd87c677758f752fb4eeec04df8d}{lastInterruptCounter}}\ =\ 0;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_display_manager_a700b66fb72f490b4eb706f3019046bcd}{timeSetConfirmed}}\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00075\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_display_manager_a6ea34df6cb787b1270a7de2244f7f20d}{sdErrorShown}}\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00076\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{class_display_manager_a45442c531412fdf0012e16ed529d04d6}{lastIrTriggerTime}}\ =\ 0;\ \ \ \ \ \ }
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00085\ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbe}{TimeField}}\ \{\ }
+\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbea5b1d59b5451c06afb65ab1bc2713cfb4}{DAY}},\ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbea383316922f2516abe5abe53370284a7f}{MONTH}},\ \ }
+\DoxyCodeLine{00088\ \ \ \ \ \mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbead18101729d290479023d5eceeb29c9cf}{YEAR}},\ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbeadd3f965174e8bb2f64523981626ced1a}{HOUR}},\ \ \ }
+\DoxyCodeLine{00090\ \ \ \ \ \mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbea46bda4cde2f10bdb9e51e3bbefa4a2bf}{MINUTE}}\ \ }
+\DoxyCodeLine{00091\ \ \ \};}
+\DoxyCodeLine{00097\ \ \ \mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbe}{TimeField}}\ \mbox{\hyperlink{class_display_manager_a0d8dbb20d52bb75e747a48edfd1135c1}{currentField}}\ =\ \mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbea5b1d59b5451c06afb65ab1bc2713cfb4}{TimeField::DAY}};\ }
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ DateTime\ \mbox{\hyperlink{class_display_manager_a1752b9965cd712fd97255cadd55fba0c}{tempDate}}\ =\ DateTime(2025,\ 1,\ 1,\ 12,\ 0,\ 0);\ }
+\DoxyCodeLine{00100\ \};}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ DISPLAYMANAGER\_H}}
+
+\end{DoxyCode}

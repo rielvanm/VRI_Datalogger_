@@ -1,3 +1,15 @@
+/**
+ * @file logo.h
+ * @brief Contains a bitmap of the Arduino logo for OLED displays.
+ *
+ * This header defines a statically stored bitmap image of the Arduino logo,
+ * stored in PROGMEM to save RAM. The image is 128x64 pixels and suitable for
+ * use with OLED displays such as the SSD1306.
+ *
+ * The bitmap can be rendered using libraries like Adafruit_SSD1306 or U8g2.
+ */
+
+
 #include <Arduino.h>        // Core Arduino definitions
 #include "logo.h"           // Header file that declares the logo array (optional, good for reuse)
 

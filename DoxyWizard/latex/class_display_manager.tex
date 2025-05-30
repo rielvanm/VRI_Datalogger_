@@ -1,0 +1,488 @@
+\hypertarget{class_display_manager}{}\doxysection{Display\+Manager Class Reference}
+\label{class_display_manager}\index{DisplayManager@{DisplayManager}}
+
+
+Manages OLED output and display logic for system states and user interaction.  
+
+
+
+
+{\ttfamily \#include $<$Display\+Manager.\+h$>$}
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3ea}{Display\+State}} \{ \newline
+\mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaa1cad35d4b3b9f624f82dbf237daaf188}{Intro}}
+, \mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaaec92cdc6b8bfca4aa459a426b4d031f1}{Time\+Set}}
+, \mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaab61541208db7fa7dba42c85224405911}{Menu}}
+, \mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaa8db7df66ab1d7ab5f1dc947acdb5fae4}{Logging}}
+, \newline
+\mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaac23e2b09ebe6bf4cb5e2a9abe85c0be2}{Stopped}}
+, \mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaae8359f86b6b324cdf11ea248ede21c1d}{Gps\+Display}}
+ \}
+\begin{DoxyCompactList}\small\item\em Defines possible display states. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_display_manager_aaa4cbf192d2e50fde0064472243558e9}{Display\+Manager}} ()
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_display_manager_a64241a1df3344b3ad21c1e8662d825bd}{begin}} ()
+\begin{DoxyCompactList}\small\item\em Initialize the OLED display and SD card. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_display_manager_ae77f747ea9c9d627d2d5a665b6689c33}{show\+Intro}} (const unsigned char $\ast$logo)
+\begin{DoxyCompactList}\small\item\em Intro screen with logo animation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_display_manager_ad0f31b8af70a07dc170e49248d1b216f}{update\+Display}} (Tiny\+GPSPlus \&gps, int time\+Zone\+Offset)
+\begin{DoxyCompactList}\small\item\em Show current GPS data. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_display_manager_a92affd392a08eccf99cee30e3a5b8c45}{update}} (Tiny\+GPSPlus \&gps, int time\+Zone\+Offset, Date\+Time rtc\+Now)
+\begin{DoxyCompactList}\small\item\em Main update handler. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_display_manager_ac51deaefbb08ebe620d68a38ccc9a3e0}{show\+Message}} (const char $\ast$message)
+\begin{DoxyCompactList}\small\item\em Display a short message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_display_manager_ad03df3c7aed0b35e03b8fd6012553158}{set\+State}} (\mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3ea}{Display\+State}} new\+State)
+\begin{DoxyCompactList}\small\item\em Set the current display state. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_a6a8b4219f25e61be81aa2565976c4b75}\label{class_display_manager_a6a8b4219f25e61be81aa2565976c4b75}} 
+void {\bfseries show\+Logging\+Screen} (Tiny\+GPSPlus \&gps)
+\begin{DoxyCompactList}\small\item\em Optional\+: show GPS data while logging. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_display_manager_a2c988307e31a87fa7929d1d9d7294236}{show\+Summary\+Screen}} ()
+\begin{DoxyCompactList}\small\item\em Show summary screen after logging. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_a0021b7b1785579f0e93a0ee80fc820a9}\label{class_display_manager_a0021b7b1785579f0e93a0ee80fc820a9}} 
+void {\bfseries show\+Init\+Screen} ()
+\begin{DoxyCompactList}\small\item\em Optional initialization screen. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_display_manager_af473080ccb391dde0b6bfdf9986ac597}{clear\+User\+Info\+Except\+Start}} ()
+\begin{DoxyCompactList}\small\item\em Clear all messages except \char`\"{}\+Meting gestart\char`\"{}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_display_manager_ae0cf4c06eaf8d6c4482dc54a5ab9be5d}{add\+User\+Message}} (const String \&message)
+\begin{DoxyCompactList}\small\item\em Add user feedback to menu. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_display_manager_a46a97fb3844b1ccba76e730c73b59ec3}{show\+Time\+Set\+Screen}} (int \mbox{\hyperlink{class_display_manager_a8acd5931aa62b5db151d0af6fda2936b}{time\+Fields}}\mbox{[}5\mbox{]}, int \mbox{\hyperlink{class_display_manager_ad5896607e929c3e46628975c1b4c16e1}{selected\+Field}})
+\begin{DoxyCompactList}\small\item\em Show time-\/setting interface. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3ea}{Display\+State}} \mbox{\hyperlink{class_display_manager_a9dd508777e9e36121cd9a918ccc5d224}{get\+State}} () const
+\begin{DoxyCompactList}\small\item\em Get current display state. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_display_manager_a69597019a1a7c5bb399272818e5f3b47}{show\+Date\+Time\+Info}} (const Date\+Time \&dt)
+\begin{DoxyCompactList}\small\item\em Show RTC date and time in message list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_a219952a9881a08b269af9602d329a12d}\label{class_display_manager_a219952a9881a08b269af9602d329a12d}} 
+bool {\bfseries is\+Sd\+Writable} () const
+\begin{DoxyCompactList}\small\item\em Check if SD is writable. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_a485a03d78bc22cd8bc1c983e0bd26e46}\label{class_display_manager_a485a03d78bc22cd8bc1c983e0bd26e46}} 
+bool {\bfseries is\+Sd\+Available} () const
+\begin{DoxyCompactList}\small\item\em Check if SD is inserted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_display_manager_a8acd5931aa62b5db151d0af6fda2936b}\label{class_display_manager_a8acd5931aa62b5db151d0af6fda2936b}} 
+int {\bfseries time\+Fields} \mbox{[}5\mbox{]} = \{1, 1, 2025, 0, 0\}
+\begin{DoxyCompactList}\small\item\em Time-\/setting values\+: day, month, year, hour, minute. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_ad5896607e929c3e46628975c1b4c16e1}\label{class_display_manager_ad5896607e929c3e46628975c1b4c16e1}} 
+int {\bfseries selected\+Field} = 0
+\begin{DoxyCompactList}\small\item\em Selected index in time\+Fields array. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbe}{Time\+Field}} \{ \newline
+\mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbea5b1d59b5451c06afb65ab1bc2713cfb4}{DAY}}
+, \mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbea383316922f2516abe5abe53370284a7f}{MONTH}}
+, \mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbead18101729d290479023d5eceeb29c9cf}{YEAR}}
+, \mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbeadd3f965174e8bb2f64523981626ced1a}{HOUR}}
+, \newline
+\mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbea46bda4cde2f10bdb9e51e3bbefa4a2bf}{MINUTE}}
+ \}
+\begin{DoxyCompactList}\small\item\em Represents editable fields in date/time setting mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_display_manager_af040f8202b9eb5cc761151a6104d0f33}{show\+Menu}} (Tiny\+GPSPlus \&gps, Date\+Time rtc\+Now)
+\begin{DoxyCompactList}\small\item\em Draw the main menu. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_display_manager_af2d1fc79e1126c32b01839476339dd5c}{show\+Gps}} (Tiny\+GPSPlus \&gps, int time\+Zone\+Offset)
+\begin{DoxyCompactList}\small\item\em Draw GPS status screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_display_manager_accbf8ad728c9410ae8892b4c11333265}\label{class_display_manager_accbf8ad728c9410ae8892b4c11333265}} 
+Adafruit\+\_\+\+SSD1306 {\bfseries oled}
+\begin{DoxyCompactList}\small\item\em OLED screen interface. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_a8d9b508d63ee6c3a9046c418fa2be622}\label{class_display_manager_a8d9b508d63ee6c3a9046c418fa2be622}} 
+String {\bfseries user\+Messages} \mbox{[}\mbox{\hyperlink{class_display_manager_abca0e92a2cdd0a14e83ded6f300e9fab}{MAX\+\_\+\+MESSAGES}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em Scrollable message buffer. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_ab7e8f59e8c972259c77bf72b571a2f6c}\label{class_display_manager_ab7e8f59e8c972259c77bf72b571a2f6c}} 
+bool {\bfseries last\+Sd\+Status} = false
+\begin{DoxyCompactList}\small\item\em Last known SD status. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_a9050d8638b074d4a8d1a613c57771365}\label{class_display_manager_a9050d8638b074d4a8d1a613c57771365}} 
+bool {\bfseries last\+Sensor\+Status} = false
+\begin{DoxyCompactList}\small\item\em Last known sensor status. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_a8d9c528581ce416e81e091131d251a62}\label{class_display_manager_a8d9c528581ce416e81e091131d251a62}} 
+unsigned long {\bfseries last\+Sd\+Check\+Time} = 0
+\begin{DoxyCompactList}\small\item\em Last SD check timestamp. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_a92762b65129986444ea6224ee7909feb}\label{class_display_manager_a92762b65129986444ea6224ee7909feb}} 
+\mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3ea}{Display\+State}} {\bfseries current\+State}
+\begin{DoxyCompactList}\small\item\em Current display state. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_aeeac64dd88751b57948686be7fc3bfa4}\label{class_display_manager_aeeac64dd88751b57948686be7fc3bfa4}} 
+unsigned long {\bfseries state\+Start\+Time}
+\begin{DoxyCompactList}\small\item\em When the current state started. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_a563900d7a0462def82b2d13363c098f8}\label{class_display_manager_a563900d7a0462def82b2d13363c098f8}} 
+unsigned long {\bfseries last\+Status\+Check\+Time} = 0
+\begin{DoxyCompactList}\small\item\em Last global status check timestamp. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_a8108844305c0007132c86659344b8ae9}\label{class_display_manager_a8108844305c0007132c86659344b8ae9}} 
+bool {\bfseries writable} = false
+\begin{DoxyCompactList}\small\item\em True if SD is writable. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_a423a7db5a2a81f67ee28318fe4efbee7}\label{class_display_manager_a423a7db5a2a81f67ee28318fe4efbee7}} 
+bool {\bfseries sd\+Available} = false
+\begin{DoxyCompactList}\small\item\em True if SD card is available. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_aa0ebb77e6e2c91df738eb4373815d52e}\label{class_display_manager_aa0ebb77e6e2c91df738eb4373815d52e}} 
+bool {\bfseries interrupt\+Detected} = false
+\begin{DoxyCompactList}\small\item\em Whether IR trigger was detected. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_a21b1bd87c677758f752fb4eeec04df8d}\label{class_display_manager_a21b1bd87c677758f752fb4eeec04df8d}} 
+uint32\+\_\+t {\bfseries last\+Interrupt\+Counter} = 0
+\begin{DoxyCompactList}\small\item\em Last seen IR counter value. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_a700b66fb72f490b4eb706f3019046bcd}\label{class_display_manager_a700b66fb72f490b4eb706f3019046bcd}} 
+bool {\bfseries time\+Set\+Confirmed} = false
+\begin{DoxyCompactList}\small\item\em True if time setting confirmed. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_a6ea34df6cb787b1270a7de2244f7f20d}\label{class_display_manager_a6ea34df6cb787b1270a7de2244f7f20d}} 
+bool {\bfseries sd\+Error\+Shown} = false
+\begin{DoxyCompactList}\small\item\em True if SD error has been displayed. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_a45442c531412fdf0012e16ed529d04d6}\label{class_display_manager_a45442c531412fdf0012e16ed529d04d6}} 
+unsigned long {\bfseries last\+Ir\+Trigger\+Time} = 0
+\begin{DoxyCompactList}\small\item\em Time of last IR trigger. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbe}{Time\+Field}} \mbox{\hyperlink{class_display_manager_a0d8dbb20d52bb75e747a48edfd1135c1}{current\+Field}} = \mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbea5b1d59b5451c06afb65ab1bc2713cfb4}{Time\+Field\+::\+DAY}}
+\begin{DoxyCompactList}\small\item\em Currently selected time field in the clock-\/setting interface. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_display_manager_a1752b9965cd712fd97255cadd55fba0c}\label{class_display_manager_a1752b9965cd712fd97255cadd55fba0c}} 
+Date\+Time {\bfseries temp\+Date} = Date\+Time(2025, 1, 1, 12, 0, 0)
+\begin{DoxyCompactList}\small\item\em Temporary Date\+Time object used during time setting. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_display_manager_abca0e92a2cdd0a14e83ded6f300e9fab}\label{class_display_manager_abca0e92a2cdd0a14e83ded6f300e9fab}} 
+static const int {\bfseries MAX\+\_\+\+MESSAGES} = 4
+\begin{DoxyCompactList}\small\item\em Max number of stored messages. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages OLED output and display logic for system states and user interaction. 
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_display_manager_aeb1de54e39fc0be568de185df65fa3ea}\label{class_display_manager_aeb1de54e39fc0be568de185df65fa3ea}} 
+\index{DisplayManager@{DisplayManager}!DisplayState@{DisplayState}}
+\index{DisplayState@{DisplayState}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{DisplayState}{DisplayState}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3ea}{Display\+Manager\+::\+Display\+State}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Defines possible display states. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Intro@{Intro}!DisplayManager@{DisplayManager}}\index{DisplayManager@{DisplayManager}!Intro@{Intro}}}\mbox{\Hypertarget{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaa1cad35d4b3b9f624f82dbf237daaf188}\label{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaa1cad35d4b3b9f624f82dbf237daaf188}} 
+Intro&Intro animation with logo. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TimeSet@{TimeSet}!DisplayManager@{DisplayManager}}\index{DisplayManager@{DisplayManager}!TimeSet@{TimeSet}}}\mbox{\Hypertarget{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaaec92cdc6b8bfca4aa459a426b4d031f1}\label{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaaec92cdc6b8bfca4aa459a426b4d031f1}} 
+Time\+Set&Manual time setting screen. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Menu@{Menu}!DisplayManager@{DisplayManager}}\index{DisplayManager@{DisplayManager}!Menu@{Menu}}}\mbox{\Hypertarget{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaab61541208db7fa7dba42c85224405911}\label{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaab61541208db7fa7dba42c85224405911}} 
+Menu&Main menu with status info. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Logging@{Logging}!DisplayManager@{DisplayManager}}\index{DisplayManager@{DisplayManager}!Logging@{Logging}}}\mbox{\Hypertarget{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaa8db7df66ab1d7ab5f1dc947acdb5fae4}\label{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaa8db7df66ab1d7ab5f1dc947acdb5fae4}} 
+Logging&Measurement in progress (optional screen) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Stopped@{Stopped}!DisplayManager@{DisplayManager}}\index{DisplayManager@{DisplayManager}!Stopped@{Stopped}}}\mbox{\Hypertarget{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaac23e2b09ebe6bf4cb5e2a9abe85c0be2}\label{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaac23e2b09ebe6bf4cb5e2a9abe85c0be2}} 
+Stopped&Summary after logging. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{GpsDisplay@{GpsDisplay}!DisplayManager@{DisplayManager}}\index{DisplayManager@{DisplayManager}!GpsDisplay@{GpsDisplay}}}\mbox{\Hypertarget{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaae8359f86b6b324cdf11ea248ede21c1d}\label{class_display_manager_aeb1de54e39fc0be568de185df65fa3eaae8359f86b6b324cdf11ea248ede21c1d}} 
+Gps\+Display&Shows GPS data (lat/lng, time) \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbe}\label{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbe}} 
+\index{DisplayManager@{DisplayManager}!TimeField@{TimeField}}
+\index{TimeField@{TimeField}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{TimeField}{TimeField}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbe}{Display\+Manager\+::\+Time\+Field}}\hspace{0.3cm}{\ttfamily [strong]}, {\ttfamily [private]}}
+
+
+
+Represents editable fields in date/time setting mode. 
+
+This enum is used in the clock setting menu to indicated which part of the data or time is currently selected for adjustment by the user. \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DAY@{DAY}!DisplayManager@{DisplayManager}}\index{DisplayManager@{DisplayManager}!DAY@{DAY}}}\mbox{\Hypertarget{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbea5b1d59b5451c06afb65ab1bc2713cfb4}\label{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbea5b1d59b5451c06afb65ab1bc2713cfb4}} 
+DAY&Day of the month (1-\/31) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MONTH@{MONTH}!DisplayManager@{DisplayManager}}\index{DisplayManager@{DisplayManager}!MONTH@{MONTH}}}\mbox{\Hypertarget{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbea383316922f2516abe5abe53370284a7f}\label{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbea383316922f2516abe5abe53370284a7f}} 
+MONTH&Month of the year (1-\/12) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{YEAR@{YEAR}!DisplayManager@{DisplayManager}}\index{DisplayManager@{DisplayManager}!YEAR@{YEAR}}}\mbox{\Hypertarget{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbead18101729d290479023d5eceeb29c9cf}\label{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbead18101729d290479023d5eceeb29c9cf}} 
+YEAR&Year (e.\+g. 2025) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HOUR@{HOUR}!DisplayManager@{DisplayManager}}\index{DisplayManager@{DisplayManager}!HOUR@{HOUR}}}\mbox{\Hypertarget{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbeadd3f965174e8bb2f64523981626ced1a}\label{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbeadd3f965174e8bb2f64523981626ced1a}} 
+HOUR&Hour of the day (0-\/23) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MINUTE@{MINUTE}!DisplayManager@{DisplayManager}}\index{DisplayManager@{DisplayManager}!MINUTE@{MINUTE}}}\mbox{\Hypertarget{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbea46bda4cde2f10bdb9e51e3bbefa4a2bf}\label{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbea46bda4cde2f10bdb9e51e3bbefa4a2bf}} 
+MINUTE&Minute of the hour (0-\/59) \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_display_manager_aaa4cbf192d2e50fde0064472243558e9}\label{class_display_manager_aaa4cbf192d2e50fde0064472243558e9}} 
+\index{DisplayManager@{DisplayManager}!DisplayManager@{DisplayManager}}
+\index{DisplayManager@{DisplayManager}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{DisplayManager()}{DisplayManager()}}
+{\footnotesize\ttfamily Display\+Manager\+::\+Display\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+Constructs the \mbox{\hyperlink{class_display_manager}{Display\+Manager}} and initializes display size and SD status. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_display_manager_ae0cf4c06eaf8d6c4482dc54a5ab9be5d}\label{class_display_manager_ae0cf4c06eaf8d6c4482dc54a5ab9be5d}} 
+\index{DisplayManager@{DisplayManager}!addUserMessage@{addUserMessage}}
+\index{addUserMessage@{addUserMessage}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{addUserMessage()}{addUserMessage()}}
+{\footnotesize\ttfamily void Display\+Manager\+::add\+User\+Message (\begin{DoxyParamCaption}\item[{const String \&}]{message }\end{DoxyParamCaption})}
+
+
+
+Add user feedback to menu. 
+
+Adds a user message to the message list shown on display.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to display. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_display_manager_a64241a1df3344b3ad21c1e8662d825bd}\label{class_display_manager_a64241a1df3344b3ad21c1e8662d825bd}} 
+\index{DisplayManager@{DisplayManager}!begin@{begin}}
+\index{begin@{begin}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily void Display\+Manager\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initialize the OLED display and SD card. 
+
+Initializes the OLED display and SD card. \mbox{\Hypertarget{class_display_manager_af473080ccb391dde0b6bfdf9986ac597}\label{class_display_manager_af473080ccb391dde0b6bfdf9986ac597}} 
+\index{DisplayManager@{DisplayManager}!clearUserInfoExceptStart@{clearUserInfoExceptStart}}
+\index{clearUserInfoExceptStart@{clearUserInfoExceptStart}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{clearUserInfoExceptStart()}{clearUserInfoExceptStart()}}
+{\footnotesize\ttfamily void Display\+Manager\+::clear\+User\+Info\+Except\+Start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Clear all messages except \char`\"{}\+Meting gestart\char`\"{}. 
+
+Clears all user messages except for \char`\"{}\+Meting gestart\char`\"{} if present. \mbox{\Hypertarget{class_display_manager_a9dd508777e9e36121cd9a918ccc5d224}\label{class_display_manager_a9dd508777e9e36121cd9a918ccc5d224}} 
+\index{DisplayManager@{DisplayManager}!getState@{getState}}
+\index{getState@{getState}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{getState()}{getState()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3ea}{Display\+Manager\+::\+Display\+State}} Display\+Manager\+::get\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get current display state. 
+
+Gets the current display state.
+
+\begin{DoxyReturn}{Returns}
+The current display state. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_display_manager_ad03df3c7aed0b35e03b8fd6012553158}\label{class_display_manager_ad03df3c7aed0b35e03b8fd6012553158}} 
+\index{DisplayManager@{DisplayManager}!setState@{setState}}
+\index{setState@{setState}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{setState()}{setState()}}
+{\footnotesize\ttfamily void Display\+Manager\+::set\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_display_manager_aeb1de54e39fc0be568de185df65fa3ea}{Display\+State}}}]{new\+State }\end{DoxyParamCaption})}
+
+
+
+Set the current display state. 
+
+Sets a new display state and logs the start time of the state.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+State} & The new state to transition into. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_display_manager_a69597019a1a7c5bb399272818e5f3b47}\label{class_display_manager_a69597019a1a7c5bb399272818e5f3b47}} 
+\index{DisplayManager@{DisplayManager}!showDateTimeInfo@{showDateTimeInfo}}
+\index{showDateTimeInfo@{showDateTimeInfo}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{showDateTimeInfo()}{showDateTimeInfo()}}
+{\footnotesize\ttfamily void Display\+Manager\+::show\+Date\+Time\+Info (\begin{DoxyParamCaption}\item[{const Date\+Time \&}]{dt }\end{DoxyParamCaption})}
+
+
+
+Show RTC date and time in message list. 
+
+Displays the date and time on the OLED screen.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dt} & The Date\+Time object containing current date and time. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_display_manager_af2d1fc79e1126c32b01839476339dd5c}\label{class_display_manager_af2d1fc79e1126c32b01839476339dd5c}} 
+\index{DisplayManager@{DisplayManager}!showGps@{showGps}}
+\index{showGps@{showGps}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{showGps()}{showGps()}}
+{\footnotesize\ttfamily void Display\+Manager\+::show\+Gps (\begin{DoxyParamCaption}\item[{Tiny\+GPSPlus \&}]{gps,  }\item[{int}]{time\+Zone\+Offset }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Draw GPS status screen. 
+
+Shows GPS status screen.
+
+
+\begin{DoxyParams}{Parameters}
+{\em gps} & Reference to Tiny\+GPSPlus object \\
+\hline
+{\em time\+Zone\+Offset} & Timezone offset to apply to displayed time \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_display_manager_ae77f747ea9c9d627d2d5a665b6689c33}\label{class_display_manager_ae77f747ea9c9d627d2d5a665b6689c33}} 
+\index{DisplayManager@{DisplayManager}!showIntro@{showIntro}}
+\index{showIntro@{showIntro}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{showIntro()}{showIntro()}}
+{\footnotesize\ttfamily void Display\+Manager\+::show\+Intro (\begin{DoxyParamCaption}\item[{const unsigned char $\ast$}]{logo }\end{DoxyParamCaption})}
+
+
+
+Intro screen with logo animation. 
+
+Shows animated intro with logo sliding across screen.
+
+
+\begin{DoxyParams}{Parameters}
+{\em logo} & Pointer to the logo bitmap array. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_display_manager_af040f8202b9eb5cc761151a6104d0f33}\label{class_display_manager_af040f8202b9eb5cc761151a6104d0f33}} 
+\index{DisplayManager@{DisplayManager}!showMenu@{showMenu}}
+\index{showMenu@{showMenu}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{showMenu()}{showMenu()}}
+{\footnotesize\ttfamily void Display\+Manager\+::show\+Menu (\begin{DoxyParamCaption}\item[{Tiny\+GPSPlus \&}]{gps,  }\item[{Date\+Time}]{rtc\+Now }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Draw the main menu. 
+
+Displays the main menu screen with system status and messages.
+
+
+\begin{DoxyParams}{Parameters}
+{\em gps} & Reference to Tiny\+GPSPlus object \\
+\hline
+{\em rtc\+Now} & Current time from RTC \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_display_manager_ac51deaefbb08ebe620d68a38ccc9a3e0}\label{class_display_manager_ac51deaefbb08ebe620d68a38ccc9a3e0}} 
+\index{DisplayManager@{DisplayManager}!showMessage@{showMessage}}
+\index{showMessage@{showMessage}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{showMessage()}{showMessage()}}
+{\footnotesize\ttfamily void Display\+Manager\+::show\+Message (\begin{DoxyParamCaption}\item[{const char $\ast$}]{message }\end{DoxyParamCaption})}
+
+
+
+Display a short message. 
+
+Displays a temporary message on the screen for one second.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to show \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_display_manager_a2c988307e31a87fa7929d1d9d7294236}\label{class_display_manager_a2c988307e31a87fa7929d1d9d7294236}} 
+\index{DisplayManager@{DisplayManager}!showSummaryScreen@{showSummaryScreen}}
+\index{showSummaryScreen@{showSummaryScreen}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{showSummaryScreen()}{showSummaryScreen()}}
+{\footnotesize\ttfamily void Display\+Manager\+::show\+Summary\+Screen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Show summary screen after logging. 
+
+Displays a short summary screen showing number of detections. \mbox{\Hypertarget{class_display_manager_a46a97fb3844b1ccba76e730c73b59ec3}\label{class_display_manager_a46a97fb3844b1ccba76e730c73b59ec3}} 
+\index{DisplayManager@{DisplayManager}!showTimeSetScreen@{showTimeSetScreen}}
+\index{showTimeSetScreen@{showTimeSetScreen}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{showTimeSetScreen()}{showTimeSetScreen()}}
+{\footnotesize\ttfamily void Display\+Manager\+::show\+Time\+Set\+Screen (\begin{DoxyParamCaption}\item[{int}]{time\+Fields\mbox{[}5\mbox{]},  }\item[{int}]{selected\+Field }\end{DoxyParamCaption})}
+
+
+
+Show time-\/setting interface. 
+
+Displays the time setting screen with navigation and selection.
+
+
+\begin{DoxyParams}{Parameters}
+{\em time\+Fields} & Array containing day, month, year, hour, and minute. \\
+\hline
+{\em selected\+Field} & Index of the field currently selected for editing. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_display_manager_a92affd392a08eccf99cee30e3a5b8c45}\label{class_display_manager_a92affd392a08eccf99cee30e3a5b8c45}} 
+\index{DisplayManager@{DisplayManager}!update@{update}}
+\index{update@{update}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Display\+Manager\+::update (\begin{DoxyParamCaption}\item[{Tiny\+GPSPlus \&}]{gps,  }\item[{int}]{time\+Zone\+Offset,  }\item[{Date\+Time}]{rtc\+Now }\end{DoxyParamCaption})}
+
+
+
+Main update handler. 
+
+Main update function, refreshes display based on current state and external statuses.
+
+
+\begin{DoxyParams}{Parameters}
+{\em gps} & Reference to Tiny\+GPSPlus object \\
+\hline
+{\em time\+Zone\+Offset} & Timezone offset in hours \\
+\hline
+{\em rtc\+Now} & Current time from RTC \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_display_manager_ad0f31b8af70a07dc170e49248d1b216f}\label{class_display_manager_ad0f31b8af70a07dc170e49248d1b216f}} 
+\index{DisplayManager@{DisplayManager}!updateDisplay@{updateDisplay}}
+\index{updateDisplay@{updateDisplay}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{updateDisplay()}{updateDisplay()}}
+{\footnotesize\ttfamily void Display\+Manager\+::update\+Display (\begin{DoxyParamCaption}\item[{Tiny\+GPSPlus \&}]{gps,  }\item[{int}]{time\+Zone\+Offset }\end{DoxyParamCaption})}
+
+
+
+Show current GPS data. 
+
+Updates the display with current GPS data and time.
+
+
+\begin{DoxyParams}{Parameters}
+{\em gps} & Reference to Tiny\+GPSPlus object \\
+\hline
+{\em time\+Zone\+Offset} & Timezone offset for displayed time \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_display_manager_a0d8dbb20d52bb75e747a48edfd1135c1}\label{class_display_manager_a0d8dbb20d52bb75e747a48edfd1135c1}} 
+\index{DisplayManager@{DisplayManager}!currentField@{currentField}}
+\index{currentField@{currentField}!DisplayManager@{DisplayManager}}
+\doxysubsubsection{\texorpdfstring{currentField}{currentField}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbe}{Time\+Field}} Display\+Manager\+::current\+Field = \mbox{\hyperlink{class_display_manager_a8fa3173741a0954a26f63b3b8ed62fbea5b1d59b5451c06afb65ab1bc2713cfb4}{Time\+Field\+::\+DAY}}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Currently selected time field in the clock-\/setting interface. 
+
+Used te track wich part datetime is being edited (e.\+g., day, month, year). 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/\mbox{\hyperlink{_display_manager_8h}{Display\+Manager.\+h}}\item 
+C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/\mbox{\hyperlink{_display_manager_8cpp}{Display\+Manager.\+cpp}}\end{DoxyCompactItemize}

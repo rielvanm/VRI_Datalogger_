@@ -1,0 +1,125 @@
+\hypertarget{class_gps_handler}{}\doxysection{Gps\+Handler Class Reference}
+\label{class_gps_handler}\index{GpsHandler@{GpsHandler}}
+
+
+Handles GPS data using the Tiny\+GPS++ library.  
+
+
+
+
+{\ttfamily \#include $<$Gps\+Handler.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_gps_handler_a9c67d2e218ec48fc47f0872f43b3cef1}{Gps\+Handler}} (int rx\+Pin, int \mbox{\hyperlink{class_gps_handler_afca760be0c3438faa27427028f6de92f}{tx\+Pin}}, int time\+Zone)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_gps_handler_ab7f9c41475e9fb47f0f514e10e715c18}{begin}} ()
+\begin{DoxyCompactList}\small\item\em Initialize the GPS serial connection. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_gps_handler_aea857a9d886bca0eab869fea808fc2b4}{update}} ()
+\begin{DoxyCompactList}\small\item\em Feed new GPS data from the serial stream to the parser. \end{DoxyCompactList}\item 
+Tiny\+GPSPlus \& \mbox{\hyperlink{class_gps_handler_a30764f7bfdcea970754231d3d547196c}{get\+Gps}} ()
+\begin{DoxyCompactList}\small\item\em Get a reference to the Tiny\+GPSPlus instance. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_gps_handler_a52d52ec5e53983adac743a917260da10}\label{class_gps_handler_a52d52ec5e53983adac743a917260da10}} 
+void {\bfseries print\+Data} ()
+\begin{DoxyCompactList}\small\item\em Print GPS location and time info to Serial (for debugging) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_gps_handler_ac35eb7d6ecd3b1d4dd6b69d569cbbd5a}\label{class_gps_handler_ac35eb7d6ecd3b1d4dd6b69d569cbbd5a}} 
+void {\bfseries print\+Digits} (int digits)
+\begin{DoxyCompactList}\small\item\em Print a number with leading zero if needed (helper function) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_gps_handler_af8a0cb4e035a7471930a72efeb842141}\label{class_gps_handler_af8a0cb4e035a7471930a72efeb842141}} 
+Tiny\+GPSPlus {\bfseries gps}
+\begin{DoxyCompactList}\small\item\em Parser object for incoming GPS-\/messages. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_gps_handler_a1d1ebdaf90da4f2d56db774309afd33a}\label{class_gps_handler_a1d1ebdaf90da4f2d56db774309afd33a}} 
+int {\bfseries rx\+Pin}
+\item 
+\mbox{\Hypertarget{class_gps_handler_afca760be0c3438faa27427028f6de92f}\label{class_gps_handler_afca760be0c3438faa27427028f6de92f}} 
+int {\bfseries tx\+Pin}
+\begin{DoxyCompactList}\small\item\em Hardware serial pin numbers. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_gps_handler_ac08b54a15ee3e32de31954733376933f}\label{class_gps_handler_ac08b54a15ee3e32de31954733376933f}} 
+int {\bfseries time\+Zone\+Offset}
+\begin{DoxyCompactList}\small\item\em Offset from UTC in hours for local time display. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Handles GPS data using the Tiny\+GPS++ library. 
+
+The \mbox{\hyperlink{class_gps_handler}{Gps\+Handler}} class manages serial communication with a GPS module, parses incoming NMEA sentences using Tiny\+GPS++, and provides access to GPS-\/derived data such as location, date, and time. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_gps_handler_a9c67d2e218ec48fc47f0872f43b3cef1}\label{class_gps_handler_a9c67d2e218ec48fc47f0872f43b3cef1}} 
+\index{GpsHandler@{GpsHandler}!GpsHandler@{GpsHandler}}
+\index{GpsHandler@{GpsHandler}!GpsHandler@{GpsHandler}}
+\doxysubsubsection{\texorpdfstring{GpsHandler()}{GpsHandler()}}
+{\footnotesize\ttfamily Gps\+Handler\+::\+Gps\+Handler (\begin{DoxyParamCaption}\item[{int}]{rx\+Pin,  }\item[{int}]{tx\+Pin,  }\item[{int}]{time\+Zone }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+\texorpdfstring{$<$}{<} Include Hardware\+Serial for ESP32 serial port usage
+
+
+\begin{DoxyParams}{Parameters}
+{\em rx\+Pin} & The RX pin to receive GPS data (from GPS TX) \\
+\hline
+{\em tx\+Pin} & The TX pin to send data (often unused) \\
+\hline
+{\em time\+Zone} & Time zone offset in hours (for display correction)\\
+\hline
+\end{DoxyParams}
+\texorpdfstring{$<$}{<} Include header for \mbox{\hyperlink{class_gps_handler}{Gps\+Handler}} class 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_gps_handler_ab7f9c41475e9fb47f0f514e10e715c18}\label{class_gps_handler_ab7f9c41475e9fb47f0f514e10e715c18}} 
+\index{GpsHandler@{GpsHandler}!begin@{begin}}
+\index{begin@{begin}!GpsHandler@{GpsHandler}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily void Gps\+Handler\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initialize the GPS serial connection. 
+
+Initializes serial communication with the GPS module.
+
+Sets up the UART interface using the provided RX and TX pins and starts communication at 9600 baud. \mbox{\Hypertarget{class_gps_handler_a30764f7bfdcea970754231d3d547196c}\label{class_gps_handler_a30764f7bfdcea970754231d3d547196c}} 
+\index{GpsHandler@{GpsHandler}!getGps@{getGps}}
+\index{getGps@{getGps}!GpsHandler@{GpsHandler}}
+\doxysubsubsection{\texorpdfstring{getGps()}{getGps()}}
+{\footnotesize\ttfamily Tiny\+GPSPlus \& Gps\+Handler\+::get\+Gps (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get a reference to the Tiny\+GPSPlus instance. 
+
+Returns a reference to the internal Tiny\+GPSPlus instance.
+
+\begin{DoxyReturn}{Returns}
+Reference to internal gps object
+
+Reference to Tiny\+GPSPlus object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_gps_handler_aea857a9d886bca0eab869fea808fc2b4}\label{class_gps_handler_aea857a9d886bca0eab869fea808fc2b4}} 
+\index{GpsHandler@{GpsHandler}!update@{update}}
+\index{update@{update}!GpsHandler@{GpsHandler}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Gps\+Handler\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Feed new GPS data from the serial stream to the parser. 
+
+Reads available characters from the GPS module and parses them.
+
+Continuously reads from the GPS serial buffer and passes the characters to the Tiny\+GPS++ parser. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/Gps\+Handler.\+h\item 
+C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/\mbox{\hyperlink{_gps_handler_8cpp}{Gps\+Handler.\+cpp}}\end{DoxyCompactItemize}

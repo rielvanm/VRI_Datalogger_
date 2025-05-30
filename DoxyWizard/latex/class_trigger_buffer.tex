@@ -1,0 +1,132 @@
+\hypertarget{class_trigger_buffer}{}\doxysection{Trigger\+Buffer Class Reference}
+\label{class_trigger_buffer}\index{TriggerBuffer@{TriggerBuffer}}
+
+
+Manages buffered trigger events detected via interrupts.  
+
+
+
+
+{\ttfamily \#include $<$Trigger\+Buffer.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_trigger_buffer_a8f894ab24e243f46bd1700c1f5ab4015}{add\+From\+ISR}} (Date\+Time time, unsigned long ms)
+\begin{DoxyCompactList}\small\item\em Called from ISR to store a trigger time (non-\/blocking). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_trigger_buffer_ae2659471e6e639962aad26afd360e3f7}{transfer\+Pending}} ()
+\begin{DoxyCompactList}\small\item\em Transfers all pending events from the ISR buffer to the main buffer. Should be called regularly from the main loop to flush the ISR buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_trigger_buffer_a6720f9c8fa8dfa0766d9eb836e45098a}{process\+Next}} (\mbox{\hyperlink{class_s_d_manager}{SDManager}} \&sd)
+\begin{DoxyCompactList}\small\item\em Processes and removes the oldest event from the buffer. Writes the event as a CSV line using \mbox{\hyperlink{class_s_d_manager}{SDManager}}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_trigger_buffer_ae6f86711044cff322f684391058f1906}{has\+Pending}} () const
+\begin{DoxyCompactList}\small\item\em Checks whether there are events waiting to be processed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_trigger_buffer_a5b93f075fad52e1d6c79c52a1ca7a712}\label{class_trigger_buffer_a5b93f075fad52e1d6c79c52a1ca7a712}} 
+\mbox{\hyperlink{struct_trigger_moment}{Trigger\+Moment}} {\bfseries isr\+Buffer} \mbox{[}\mbox{\hyperlink{class_trigger_buffer_ab323fedeb41f8f42cd384cd26bd1ef55}{MAX\+\_\+\+ISR\+\_\+\+BUFFER}}\mbox{]}
+\item 
+\mbox{\Hypertarget{class_trigger_buffer_ae4751aa8d6f6a22acff8a09c3e5110d1}\label{class_trigger_buffer_ae4751aa8d6f6a22acff8a09c3e5110d1}} 
+volatile int {\bfseries isr\+Index} = 0
+\begin{DoxyCompactList}\small\item\em Index into isr\+Buffer. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_trigger_buffer_aab687871bb63eab0692b1e4cd1869a78}\label{class_trigger_buffer_aab687871bb63eab0692b1e4cd1869a78}} 
+volatile bool {\bfseries pending} = false
+\begin{DoxyCompactList}\small\item\em Flag indicating new data is ready. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_trigger_buffer_a547949ac2f7e98a4866482ef0cbdd022}\label{class_trigger_buffer_a547949ac2f7e98a4866482ef0cbdd022}} 
+std\+::vector$<$ \mbox{\hyperlink{struct_trigger_moment}{Trigger\+Moment}} $>$ {\bfseries main\+Buffer}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_trigger_buffer_ab323fedeb41f8f42cd384cd26bd1ef55}\label{class_trigger_buffer_ab323fedeb41f8f42cd384cd26bd1ef55}} 
+static const int {\bfseries MAX\+\_\+\+ISR\+\_\+\+BUFFER} = 10
+\begin{DoxyCompactList}\small\item\em Size of the temporary ISR buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages buffered trigger events detected via interrupts. 
+
+Uses a small static array (ISR-\/safe) to capture triggers from an ISR and transfers them safely into a dynamic buffer (vector) for later processing. This separation ensures ISR safety and avoids heap usage inside the ISR. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_trigger_buffer_a8f894ab24e243f46bd1700c1f5ab4015}\label{class_trigger_buffer_a8f894ab24e243f46bd1700c1f5ab4015}} 
+\index{TriggerBuffer@{TriggerBuffer}!addFromISR@{addFromISR}}
+\index{addFromISR@{addFromISR}!TriggerBuffer@{TriggerBuffer}}
+\doxysubsubsection{\texorpdfstring{addFromISR()}{addFromISR()}}
+{\footnotesize\ttfamily void Trigger\+Buffer\+::add\+From\+ISR (\begin{DoxyParamCaption}\item[{Date\+Time}]{time,  }\item[{unsigned long}]{ms }\end{DoxyParamCaption})}
+
+
+
+Called from ISR to store a trigger time (non-\/blocking). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & The current time from RTC at moment of trigger. \\
+\hline
+{\em ms} & Millisecond value at the time of the event. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_trigger_buffer_ae6f86711044cff322f684391058f1906}\label{class_trigger_buffer_ae6f86711044cff322f684391058f1906}} 
+\index{TriggerBuffer@{TriggerBuffer}!hasPending@{hasPending}}
+\index{hasPending@{hasPending}!TriggerBuffer@{TriggerBuffer}}
+\doxysubsubsection{\texorpdfstring{hasPending()}{hasPending()}}
+{\footnotesize\ttfamily bool Trigger\+Buffer\+::has\+Pending (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Checks whether there are events waiting to be processed. 
+
+Checks whether there are any unprocessed trigger moments.
+
+\begin{DoxyReturn}{Returns}
+true if the main buffer is not empty.
+\end{DoxyReturn}
+
+
+\begin{DoxyReturn}{Returns}
+true if there is at least one event in the main buffer. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_trigger_buffer_a6720f9c8fa8dfa0766d9eb836e45098a}\label{class_trigger_buffer_a6720f9c8fa8dfa0766d9eb836e45098a}} 
+\index{TriggerBuffer@{TriggerBuffer}!processNext@{processNext}}
+\index{processNext@{processNext}!TriggerBuffer@{TriggerBuffer}}
+\doxysubsubsection{\texorpdfstring{processNext()}{processNext()}}
+{\footnotesize\ttfamily void Trigger\+Buffer\+::process\+Next (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_d_manager}{SDManager}} \&}]{sd }\end{DoxyParamCaption})}
+
+
+
+Processes and removes the oldest event from the buffer. Writes the event as a CSV line using \mbox{\hyperlink{class_s_d_manager}{SDManager}}. 
+
+Processes the oldest pending event by writing it to the SD card.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sd} & Reference to \mbox{\hyperlink{class_s_d_manager}{SDManager}} for file writing.\\
+\hline
+\end{DoxyParams}
+
+
+Converts the time to HH\+:\+MM\+:SS.\+mmm format and writes it to \char`\"{}metingen.\+csv\char`\"{}. Removes the event from the buffer after processing.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sd} & Reference to the \mbox{\hyperlink{class_s_d_manager}{SDManager}} used to write to the SD card. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_trigger_buffer_ae2659471e6e639962aad26afd360e3f7}\label{class_trigger_buffer_ae2659471e6e639962aad26afd360e3f7}} 
+\index{TriggerBuffer@{TriggerBuffer}!transferPending@{transferPending}}
+\index{transferPending@{transferPending}!TriggerBuffer@{TriggerBuffer}}
+\doxysubsubsection{\texorpdfstring{transferPending()}{transferPending()}}
+{\footnotesize\ttfamily void Trigger\+Buffer\+::transfer\+Pending (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Transfers all pending events from the ISR buffer to the main buffer. Should be called regularly from the main loop to flush the ISR buffer. 
+
+Transfers buffered data from the ISR-\/safe buffer to the main vector buffer.
+
+This function disables interrupts briefly to safely copy data. The temporary buffer avoids dynamic allocation during the no\+Interrupts() phase. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/Trigger\+Buffer.\+h\item 
+C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/Trigger\+Buffer.\+cpp\end{DoxyCompactItemize}

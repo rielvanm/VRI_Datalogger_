@@ -1,0 +1,143 @@
+\hypertarget{class_button_manager}{}\doxysection{Button\+Manager Class Reference}
+\label{class_button_manager}\index{ButtonManager@{ButtonManager}}
+
+
+Manages button input using software debouncing.  
+
+
+
+
+{\ttfamily \#include $<$Button\+Manager.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_button_manager_adcecc58a5498e83dba9503e3785d44ec}{Button\+Manager}} ()
+\begin{DoxyCompactList}\small\item\em Constructs the \mbox{\hyperlink{class_button_manager}{Button\+Manager}} and initializes button states. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_button_manager_a1da1e558b18e177c25adbee7164d402a}{begin}} ()
+\begin{DoxyCompactList}\small\item\em Initializes button input pins with internal pull-\/up resistors. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7}{Button\+Action}} \mbox{\hyperlink{class_button_manager_a0d0f6a7bb9f726d7c77007019367089a}{read\+Buttons}} ()
+\begin{DoxyCompactList}\small\item\em Reads button input and returns a primary Button\+Action. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7}{Button\+Action}} \mbox{\hyperlink{class_button_manager_a4b7268e7b22a0fc07c6fc8c9f42c8364}{read\+Second\+Buttons}} ()
+\begin{DoxyCompactList}\small\item\em Reads button input and returns a secondary Button\+Action (used in setting menus). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_button_manager_ab4164c0cfa491b372179165fc482aeec}\label{class_button_manager_ab4164c0cfa491b372179165fc482aeec}} 
+const int {\bfseries button\+Pins} \mbox{[}4\mbox{]} = \{6, 7, 8, 9\}
+\begin{DoxyCompactList}\small\item\em Pin numbers connected to buttons. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_button_manager_aa0bc82c4062b1f2e5506b22c9af98eb8}\label{class_button_manager_aa0bc82c4062b1f2e5506b22c9af98eb8}} 
+unsigned long {\bfseries last\+Debounce\+Time} \mbox{[}4\mbox{]}
+\begin{DoxyCompactList}\small\item\em Timestamps of last debounce events. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_button_manager_a8ec5db287b98e816edb44022c5e127e9}\label{class_button_manager_a8ec5db287b98e816edb44022c5e127e9}} 
+bool {\bfseries last\+Button\+State} \mbox{[}4\mbox{]}
+\begin{DoxyCompactList}\small\item\em Last read states of each button. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_button_manager_a166d814964d92d4014b4522efc62d616}\label{class_button_manager_a166d814964d92d4014b4522efc62d616}} 
+bool {\bfseries button\+State} \mbox{[}4\mbox{]}
+\begin{DoxyCompactList}\small\item\em Stable states after debounce. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_button_manager_aa758964836e84fc99237daf0a958972a}\label{class_button_manager_aa758964836e84fc99237daf0a958972a}} 
+unsigned long {\bfseries last\+Interrupt\+Time\+Display} = 0
+\begin{DoxyCompactList}\small\item\em Timestamp for display update timing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_button_manager_a69a8b224b5cb09b8077f95df6660082b}\label{class_button_manager_a69a8b224b5cb09b8077f95df6660082b}} 
+static const unsigned long {\bfseries debounce\+Delay} = 20
+\begin{DoxyCompactList}\small\item\em Debounce delay in milliseconds. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages button input using software debouncing. 
+
+The \mbox{\hyperlink{class_button_manager}{Button\+Manager}} class reads button states from hardware input pins, applies debouncing logic, and translates button presses into Button\+Action enums. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_button_manager_adcecc58a5498e83dba9503e3785d44ec}\label{class_button_manager_adcecc58a5498e83dba9503e3785d44ec}} 
+\index{ButtonManager@{ButtonManager}!ButtonManager@{ButtonManager}}
+\index{ButtonManager@{ButtonManager}!ButtonManager@{ButtonManager}}
+\doxysubsubsection{\texorpdfstring{ButtonManager()}{ButtonManager()}}
+{\footnotesize\ttfamily Button\+Manager\+::\+Button\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructs the \mbox{\hyperlink{class_button_manager}{Button\+Manager}} and initializes button states. 
+
+Constructs the \mbox{\hyperlink{class_button_manager}{Button\+Manager}} and initializes internal state. \texorpdfstring{$<$}{<} Timestamp of the last debounce event
+
+\texorpdfstring{$<$}{<} Last read state of the button
+
+\texorpdfstring{$<$}{<} Stable button state after debouncing
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_button_manager_a1da1e558b18e177c25adbee7164d402a}\label{class_button_manager_a1da1e558b18e177c25adbee7164d402a}} 
+\index{ButtonManager@{ButtonManager}!begin@{begin}}
+\index{begin@{begin}!ButtonManager@{ButtonManager}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily void Button\+Manager\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes button input pins with internal pull-\/up resistors. 
+
+Initializes all button pins as INPUT\+\_\+\+PULLUP. \mbox{\Hypertarget{class_button_manager_a0d0f6a7bb9f726d7c77007019367089a}\label{class_button_manager_a0d0f6a7bb9f726d7c77007019367089a}} 
+\index{ButtonManager@{ButtonManager}!readButtons@{readButtons}}
+\index{readButtons@{readButtons}!ButtonManager@{ButtonManager}}
+\doxysubsubsection{\texorpdfstring{readButtons()}{readButtons()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7}{Button\+Action}} Button\+Manager\+::read\+Buttons (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Reads button input and returns a primary Button\+Action. 
+
+Reads button states and returns a primary Button\+Action if pressed.
+
+\begin{DoxyReturn}{Returns}
+The detected Button\+Action or NONE.
+\end{DoxyReturn}
+
+
+Uses debounce logic to ensure stable input. Mapped to actions\+:
+\begin{DoxyItemize}
+\item Index 0\+: START
+\item Index 1\+: KLOK
+\item Index 2\+: SHOW\+\_\+\+GPS
+\item Index 3\+: STOP
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+Button\+Action representing the pressed button, or NONE if no action. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_button_manager_a4b7268e7b22a0fc07c6fc8c9f42c8364}\label{class_button_manager_a4b7268e7b22a0fc07c6fc8c9f42c8364}} 
+\index{ButtonManager@{ButtonManager}!readSecondButtons@{readSecondButtons}}
+\index{readSecondButtons@{readSecondButtons}!ButtonManager@{ButtonManager}}
+\doxysubsubsection{\texorpdfstring{readSecondButtons()}{readSecondButtons()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_button_manager_8h_afa717ac273a5a382f7c01ef7afba1ee7}{Button\+Action}} Button\+Manager\+::read\+Second\+Buttons (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Reads button input and returns a secondary Button\+Action (used in setting menus). 
+
+Reads button states and returns a secondary Button\+Action if pressed.
+
+\begin{DoxyReturn}{Returns}
+The detected Button\+Action or NONE.
+\end{DoxyReturn}
+
+
+Used in time-\/setting modes. Mapped to actions\+:
+\begin{DoxyItemize}
+\item Index 0\+: PLUS
+\item Index 1\+: NEXT
+\item Index 2\+: RETURN
+\item Index 3\+: MIN
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+Button\+Action representing the pressed button, or NONE if no action. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/\mbox{\hyperlink{_button_manager_8h}{Button\+Manager.\+h}}\item 
+C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/\mbox{\hyperlink{_button_manager_8cpp}{Button\+Manager.\+cpp}}\end{DoxyCompactItemize}

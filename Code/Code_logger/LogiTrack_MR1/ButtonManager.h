@@ -1,37 +1,68 @@
+/**
+ * @file ButtonManager.h
+ * @brief Handles input from buttons using debouncing and interprets them into user actions.
+ */
+
 #ifndef BUTTONMANAGER_H
 #define BUTTONMANAGER_H
 
 #include <Arduino.h>
 #include "DisplayManager.h"
 
-// Enumeration defining possible button actions
+/**
+ * @enum ButtonAction
+ * @brief Represents the different possible actions triggered by button inputs.
+ */
 enum ButtonAction {
-  NONE,      // No action
-  START,     // Start logging
-  KLOK,      // Enter clock/time setting
-  SHOW_GPS,  // Show GPS information
-  STOP,      // Stop logging
-  PLUS,      // Increment value (used in time setting)
-  MIN,       // Decrement value (used in time setting)
-  NEXT,      // Move to next field (used in time setting)
-  RETURN     // Confirm or return from current menu
+  NONE,      ///< No action detected
+  START,     ///< Start logging session
+  KLOK,      ///< Enter clock/time setting menu
+  SHOW_GPS,  ///< Show GPS status/info
+  STOP,      ///< Stop logging session
+  PLUS,      ///< Increment a value (e.g., date/time)
+  MIN,       ///< Decrement a value (e.g., date/time)
+  NEXT,      ///< Move to the next field (e.g., in time setting)
+  RETURN     ///< Confirm or exit menu
 };
 
-// Class for managing button inputs with debouncing logic
+/**
+ * @class ButtonManager
+ * @brief Manages button input using software debouncing.
+ *
+ * The ButtonManager class reads button states from hardware input pins,
+ * applies debouncing logic, and translates button presses into ButtonAction enums.
+ */
 class ButtonManager {
   public:
-    ButtonManager();                      // Constructor initializes button states
-    void begin();                         // Sets up button pins as inputs
-    ButtonAction readButtons();           // Reads primary button actions
-    ButtonAction readSecondButtons();     // Reads secondary button actions (e.g., setting modes)
+    /**
+     * @brief Constructs the ButtonManager and initializes button states.
+     */
+    ButtonManager();
+
+    /**
+     * @brief Initializes button input pins with internal pull-up resistors.
+     */
+    void begin();
+
+    /**
+     * @brief Reads button input and returns a primary ButtonAction.
+     * @return The detected ButtonAction or NONE.
+     */
+    ButtonAction readButtons();
+
+    /**
+     * @brief Reads button input and returns a secondary ButtonAction (used in setting menus).
+     * @return The detected ButtonAction or NONE.
+     */
+    ButtonAction readSecondButtons();
 
   private:
-    const int buttonPins[4] = {6, 7, 8, 9};           // Pins connected to buttons
-    unsigned long lastDebounceTime[4];                // Last debounce timestamps
-    bool lastButtonState[4];                          // Previous button states
-    bool buttonState[4];                              // Stable button states after debouncing
-    static const unsigned long debounceDelay = 20;    // Debounce delay in milliseconds
-    unsigned long lastInterruptTimeDisplay = 0;       // Timestamp for managing display interrupts
+    const int buttonPins[4] = {6, 7, 8, 9};                 ///< Pin numbers connected to buttons
+    unsigned long lastDebounceTime[4];                      ///< Timestamps of last debounce events
+    bool lastButtonState[4];                                ///< Last read states of each button
+    bool buttonState[4];                                    ///< Stable states after debounce
+    static const unsigned long debounceDelay = 20;          ///< Debounce delay in milliseconds
+    unsigned long lastInterruptTimeDisplay = 0;             ///< Timestamp for display update timing
 };
 
-#endif
+#endif // BUTTONMANAGER_H

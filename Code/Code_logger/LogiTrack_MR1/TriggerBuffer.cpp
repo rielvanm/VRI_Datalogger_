@@ -5,15 +5,7 @@
 
 extern SDManager sd;  // External instance of SDManager used for writing to SD card
 
-/**
- * @brief Called from an interrupt service routine (ISR) to store a detection timestamp.
- * 
- * The function buffers a time and millisecond offset in a lightweight array (isrBuffer).
- * If the buffer is full, new events are ignored to prevent overflow.
- * 
- * @param time DateTime of detection (from RTC)
- * @param ms   Millisecond offset from RTC second (typically from millis())
- */
+
 void TriggerBuffer::addFromISR(DateTime time, unsigned long ms) {
   if (isrIndex < MAX_ISR_BUFFER) {
     isrBuffer[isrIndex].time = time;

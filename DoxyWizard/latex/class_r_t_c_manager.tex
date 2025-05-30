@@ -1,0 +1,138 @@
+\hypertarget{class_r_t_c_manager}{}\doxysection{RTCManager Class Reference}
+\label{class_r_t_c_manager}\index{RTCManager@{RTCManager}}
+
+
+Manages timekeeping using a DS3231 RTC and internal timing logic.  
+
+
+
+
+{\ttfamily \#include $<$RTC.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_r_t_c_manager_a2d296aacd666e2077fb9850dcf69d26c}{begin}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the RTC module. Should be called in setup(). If no valid RTC is detected, the program will stop. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_r_t_c_manager_ac7c71a8a4b7053dc74d522048bcfcb75}{start}} ()
+\begin{DoxyCompactList}\small\item\em Starts the timer logic. Stores the current time and sets internal {\ttfamily running} flag to true. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_r_t_c_manager_a6aaf7d5792156edfc8f5b491b74aca70}{stop\+And\+Reset}} ()
+\begin{DoxyCompactList}\small\item\em Stops the timer and resets the time to 00\+:00\+:00. Also clears the {\ttfamily running} flag. \end{DoxyCompactList}\item 
+Date\+Time \mbox{\hyperlink{class_r_t_c_manager_a1e0f557bcd6981c092ead091e00a65bf}{now}} ()
+\begin{DoxyCompactList}\small\item\em Returns the current Date\+Time. If the timer is running, returns real-\/time from the RTC. If stopped, returns the saved start time. \end{DoxyCompactList}\item 
+unsigned long \mbox{\hyperlink{class_r_t_c_manager_aa67fec00b330090ead5d3a8ebfccb916}{elaps\+Millis}} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of milliseconds that have passed since {\ttfamily \mbox{\hyperlink{class_r_t_c_manager_ac7c71a8a4b7053dc74d522048bcfcb75}{start()}}} was called. If not running, this value will not change. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_r_t_c_manager_ae34bc34ceadf057ee823bf9e126e1970}{set\+Time}} (int year, int month, int day, int hour, int minute)
+\begin{DoxyCompactList}\small\item\em Manually sets the RTC to a specific date and time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_r_t_c_manager_a027236b8ee97b9981422f5c68715e24c}\label{class_r_t_c_manager_a027236b8ee97b9981422f5c68715e24c}} 
+RTC\+\_\+\+DS3231 {\bfseries rtc}
+\begin{DoxyCompactList}\small\item\em Instance of Adafruit DS3231 RTC. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_r_t_c_manager_ae875c22f020c9fcd20d67f0e602cf5c5}\label{class_r_t_c_manager_ae875c22f020c9fcd20d67f0e602cf5c5}} 
+unsigned long {\bfseries start\+Millis} = 0
+\begin{DoxyCompactList}\small\item\em Time in milliseconds when {\ttfamily \mbox{\hyperlink{class_r_t_c_manager_ac7c71a8a4b7053dc74d522048bcfcb75}{start()}}} was called. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_r_t_c_manager_ab48b5993959b1e2e801a0f873023fdd6}\label{class_r_t_c_manager_ab48b5993959b1e2e801a0f873023fdd6}} 
+bool {\bfseries running} = false
+\begin{DoxyCompactList}\small\item\em Whether the timer is actively running. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_r_t_c_manager_ae9bafcabb74a0537dcce25ae97f7fa50}\label{class_r_t_c_manager_ae9bafcabb74a0537dcce25ae97f7fa50}} 
+Date\+Time {\bfseries start\+Time}
+\begin{DoxyCompactList}\small\item\em Stores the time when {\ttfamily \mbox{\hyperlink{class_r_t_c_manager_ac7c71a8a4b7053dc74d522048bcfcb75}{start()}}} was called. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages timekeeping using a DS3231 RTC and internal timing logic. 
+
+This class wraps around an RTC\+\_\+\+DS3231 instance and adds functionality such as start/stop timers, elapsed time measurement, and manual time setting. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_r_t_c_manager_a2d296aacd666e2077fb9850dcf69d26c}\label{class_r_t_c_manager_a2d296aacd666e2077fb9850dcf69d26c}} 
+\index{RTCManager@{RTCManager}!begin@{begin}}
+\index{begin@{begin}!RTCManager@{RTCManager}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily void RTCManager\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes the RTC module. Should be called in setup(). If no valid RTC is detected, the program will stop. 
+
+Initializes the DS3231 RTC module. If the RTC is not found, the program will stop. Also checks for power loss and notifies the user. \mbox{\Hypertarget{class_r_t_c_manager_aa67fec00b330090ead5d3a8ebfccb916}\label{class_r_t_c_manager_aa67fec00b330090ead5d3a8ebfccb916}} 
+\index{RTCManager@{RTCManager}!elapsMillis@{elapsMillis}}
+\index{elapsMillis@{elapsMillis}!RTCManager@{RTCManager}}
+\doxysubsubsection{\texorpdfstring{elapsMillis()}{elapsMillis()}}
+{\footnotesize\ttfamily unsigned long RTCManager\+::elaps\+Millis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the number of milliseconds that have passed since {\ttfamily \mbox{\hyperlink{class_r_t_c_manager_ac7c71a8a4b7053dc74d522048bcfcb75}{start()}}} was called. If not running, this value will not change. 
+
+Calculates the milliseconds elapsed since \mbox{\hyperlink{class_r_t_c_manager_ac7c71a8a4b7053dc74d522048bcfcb75}{start()}} was called.
+
+\begin{DoxyReturn}{Returns}
+Elapsed milliseconds. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_r_t_c_manager_a1e0f557bcd6981c092ead091e00a65bf}\label{class_r_t_c_manager_a1e0f557bcd6981c092ead091e00a65bf}} 
+\index{RTCManager@{RTCManager}!now@{now}}
+\index{now@{now}!RTCManager@{RTCManager}}
+\doxysubsubsection{\texorpdfstring{now()}{now()}}
+{\footnotesize\ttfamily Date\+Time RTCManager\+::now (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the current Date\+Time. If the timer is running, returns real-\/time from the RTC. If stopped, returns the saved start time. 
+
+Returns current time from RTC. Note\+: In current implementation, always returns rtc.\+now().
+
+\begin{DoxyReturn}{Returns}
+Date\+Time representing the current time. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_r_t_c_manager_ae34bc34ceadf057ee823bf9e126e1970}\label{class_r_t_c_manager_ae34bc34ceadf057ee823bf9e126e1970}} 
+\index{RTCManager@{RTCManager}!setTime@{setTime}}
+\index{setTime@{setTime}!RTCManager@{RTCManager}}
+\doxysubsubsection{\texorpdfstring{setTime()}{setTime()}}
+{\footnotesize\ttfamily void RTCManager\+::set\+Time (\begin{DoxyParamCaption}\item[{int}]{year,  }\item[{int}]{month,  }\item[{int}]{day,  }\item[{int}]{hour,  }\item[{int}]{minute }\end{DoxyParamCaption})}
+
+
+
+Manually sets the RTC to a specific date and time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em year} & Full year (e.\+g. 2025) \\
+\hline
+{\em month} & Month (1–12) \\
+\hline
+{\em day} & Day (1–31) \\
+\hline
+{\em hour} & Hour (0–23) \\
+\hline
+{\em minute} & Minute (0–59) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_r_t_c_manager_ac7c71a8a4b7053dc74d522048bcfcb75}\label{class_r_t_c_manager_ac7c71a8a4b7053dc74d522048bcfcb75}} 
+\index{RTCManager@{RTCManager}!start@{start}}
+\index{start@{start}!RTCManager@{RTCManager}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily void RTCManager\+::start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Starts the timer logic. Stores the current time and sets internal {\ttfamily running} flag to true. 
+
+Starts the timer logic by saving current time from RTC and system clock. \mbox{\Hypertarget{class_r_t_c_manager_a6aaf7d5792156edfc8f5b491b74aca70}\label{class_r_t_c_manager_a6aaf7d5792156edfc8f5b491b74aca70}} 
+\index{RTCManager@{RTCManager}!stopAndReset@{stopAndReset}}
+\index{stopAndReset@{stopAndReset}!RTCManager@{RTCManager}}
+\doxysubsubsection{\texorpdfstring{stopAndReset()}{stopAndReset()}}
+{\footnotesize\ttfamily void RTCManager\+::stop\+And\+Reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Stops the timer and resets the time to 00\+:00\+:00. Also clears the {\ttfamily running} flag. 
+
+Stops the timer and resets the stored start time. Sets the internal running flag to false. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/RTC.\+h\item 
+C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/RTC.\+cpp\end{DoxyCompactItemize}

@@ -22,16 +22,7 @@ void RTCManager::begin() {
   }
 }
 
-/**
- * @brief Manually sets the date and time of the RTC.
- * Seconds are set to 0.
- * 
- * @param year   Full year (e.g., 2025)
- * @param month  Month (1–12)
- * @param day    Day of the month (1–31)
- * @param hour   Hour (0–23)
- * @param minute Minute (0–59)
- */
+
 void RTCManager::setTime(int year, int month, int day, int hour, int minute) {
   DateTime newTime(year, month, day, hour, minute, 0);
   rtc.adjust(newTime);

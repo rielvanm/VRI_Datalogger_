@@ -1,0 +1,52 @@
+\hypertarget{_gps_handler_8h_source}{}\doxysection{Gps\+Handler.\+h}
+\label{_gps_handler_8h_source}\index{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/GpsHandler.h@{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/GpsHandler.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/***}}
+\DoxyCodeLine{00002\ \textcolor{comment}{*\ @file\ GpsHandler.h}}
+\DoxyCodeLine{00003\ \textcolor{comment}{*\ @brief\ Declares\ the\ GpsHandler\ class\ for\ managing\ GPS\ comminucation\ and\ parsing.}}
+\DoxyCodeLine{00004\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ GPS\_HANDLER\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ GPS\_HANDLER\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <TinyGPS++.h>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <HardwareSerial.h>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ External\ declaration\ of\ the\ GPS\ serial\ object\ (usually\ Serial1\ on\ ESP32)}}
+\DoxyCodeLine{00012\ \textcolor{keyword}{extern}\ HardwareSerial\ GPS;}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ If\ you\ need\ to\ access\ a\ global\ instance\ of\ this\ class,\ you\ can\ uncomment\ this\ line:}}
+\DoxyCodeLine{00016\ \textcolor{comment}{extern\ class\ GpsHandler\ gpsHandler;}}
+\DoxyCodeLine{00017\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{//}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ GpsHandler\ class}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00022\ \textcolor{comment}{//\ Encapsulates\ configuration,\ reading,\ and\ access\ to\ GPS\ data\ using\ TinyGPS++}}
+\DoxyCodeLine{00023\ \textcolor{comment}{//\ Provides\ easy\ access\ to\ GPS\ values\ and\ optional\ serial\ output\ for\ debugging.}}
+\DoxyCodeLine{00024\ \textcolor{comment}{//}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_gps_handler}{GpsHandler}}\ \{}
+\DoxyCodeLine{00035\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{class_gps_handler}{GpsHandler}}(\textcolor{keywordtype}{int}\ rxPin,\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_gps_handler_afca760be0c3438faa27427028f6de92f}{txPin}},\ \textcolor{keywordtype}{int}\ timeZone);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_gps_handler_ab7f9c41475e9fb47f0f514e10e715c18}{begin}}();}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_gps_handler_aea857a9d886bca0eab869fea808fc2b4}{update}}();}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00058\ \ \ \ \ TinyGPSPlus\&\ \mbox{\hyperlink{class_gps_handler_a30764f7bfdcea970754231d3d547196c}{getGps}}();\ }
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_gps_handler_a52d52ec5e53983adac743a917260da10}{printData}}();}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00066\ \ \ \ \ TinyGPSPlus\ \mbox{\hyperlink{class_gps_handler_af8a0cb4e035a7471930a72efeb842141}{gps}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{int}\ rxPin,\ \mbox{\hyperlink{class_gps_handler_afca760be0c3438faa27427028f6de92f}{txPin}};\ \ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_gps_handler_ac08b54a15ee3e32de31954733376933f}{timeZoneOffset}};\ \ \ \ }
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_gps_handler_ac35eb7d6ecd3b1d4dd6b69d569cbbd5a}{printDigits}}(\textcolor{keywordtype}{int}\ digits);}
+\DoxyCodeLine{00074\ \};}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

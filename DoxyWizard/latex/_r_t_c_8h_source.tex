@@ -1,0 +1,33 @@
+\hypertarget{_r_t_c_8h_source}{}\doxysection{RTC.\+h}
+\label{_r_t_c_8h_source}\index{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/RTC.h@{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/RTC.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ RTC\_H\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//\ Include\ guard\ to\ prevent\ multiple\ inclusion}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ RTC\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <RTClib.h>}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Adafruit\ RTClib\ library\ for\ DS3231\ and\ compatible\ RTCs}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_r_t_c_manager}{RTCManager}}\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_r_t_c_manager_a2d296aacd666e2077fb9850dcf69d26c}{begin}}();}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00025\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_r_t_c_manager_ac7c71a8a4b7053dc74d522048bcfcb75}{start}}();}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00031\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_r_t_c_manager_a6aaf7d5792156edfc8f5b491b74aca70}{stopAndReset}}();}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00038\ \ \ DateTime\ \mbox{\hyperlink{class_r_t_c_manager_a1e0f557bcd6981c092ead091e00a65bf}{now}}();}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00044\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{class_r_t_c_manager_aa67fec00b330090ead5d3a8ebfccb916}{elapsMillis}}();}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00054\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_r_t_c_manager_ae34bc34ceadf057ee823bf9e126e1970}{setTime}}(\textcolor{keywordtype}{int}\ year,\ \textcolor{keywordtype}{int}\ month,\ \textcolor{keywordtype}{int}\ day,\ \textcolor{keywordtype}{int}\ hour,\ \textcolor{keywordtype}{int}\ minute);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00057\ \ \ RTC\_DS3231\ \mbox{\hyperlink{class_r_t_c_manager_a027236b8ee97b9981422f5c68715e24c}{rtc}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00058\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{class_r_t_c_manager_ae875c22f020c9fcd20d67f0e602cf5c5}{startMillis}}\ =\ 0;\ }
+\DoxyCodeLine{00059\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_r_t_c_manager_ab48b5993959b1e2e801a0f873023fdd6}{running}}\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00060\ \ \ DateTime\ \mbox{\hyperlink{class_r_t_c_manager_ae9bafcabb74a0537dcce25ae97f7fa50}{startTime}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00061\ \};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

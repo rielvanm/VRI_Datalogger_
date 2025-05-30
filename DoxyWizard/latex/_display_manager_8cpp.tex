@@ -1,0 +1,44 @@
+\hypertarget{_display_manager_8cpp}{}\doxysection{C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/\+Display\+Manager.cpp File Reference}
+\label{_display_manager_8cpp}\index{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/DisplayManager.cpp@{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/DisplayManager.cpp}}
+
+
+Implementation of the \mbox{\hyperlink{class_display_manager}{Display\+Manager}} class for handling OLED output and display states.  
+
+
+{\ttfamily \#include \char`\"{}Display\+Manager.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Utils.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$RTClib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}RTC.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$SD.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_display_manager_8cpp_a9885a007def27c91dd1720fb65d55f87}\label{_display_manager_8cpp_a9885a007def27c91dd1720fb65d55f87}} 
+\#define {\bfseries OLED\+\_\+\+WIDTH}~128
+\begin{DoxyCompactList}\small\item\em Width OLED display in Pixels. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_display_manager_8cpp_a149f081665424602c8c0f90a6e935f3b}\label{_display_manager_8cpp_a149f081665424602c8c0f90a6e935f3b}} 
+\#define {\bfseries OLED\+\_\+\+HEIGHT}~64
+\begin{DoxyCompactList}\small\item\em Height OLED display in Pixels. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_display_manager_8cpp_a04d57a6c18b2d5e81f31093e58ed0c62}\label{_display_manager_8cpp_a04d57a6c18b2d5e81f31093e58ed0c62}} 
+\#define {\bfseries SD\+\_\+\+CS\+\_\+\+PIN}~4
+\begin{DoxyCompactList}\small\item\em Chip select pin for the SD card module. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_display_manager_8cpp_a18f465739f27d321f5486101919a72f8}\label{_display_manager_8cpp_a18f465739f27d321f5486101919a72f8}} 
+\#define {\bfseries SENSOR\+\_\+\+PIN}~5
+\begin{DoxyCompactList}\small\item\em GPIO pin connected to the sensor trigger. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_display_manager_8cpp_a144af7c7e2c87af1ba322b8352f9c30f}\label{_display_manager_8cpp_a144af7c7e2c87af1ba322b8352f9c30f}} 
+\mbox{\hyperlink{class_r_t_c_manager}{RTCManager}} {\bfseries rtc\+Manager}
+\begin{DoxyCompactList}\small\item\em RTC-\/manager object for access to time and date. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_display_manager_8cpp_a87cd655a219f51a851eda4a1719b4bde}\label{_display_manager_8cpp_a87cd655a219f51a851eda4a1719b4bde}} 
+volatile uint32\+\_\+t {\bfseries interrupt\+Counter}
+\begin{DoxyCompactList}\small\item\em Counts the number of hardware interrupts on the sensor pin. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_display_manager_8cpp_ae8ec797f30cf6b57a0ceae0e6116890c}\label{_display_manager_8cpp_ae8ec797f30cf6b57a0ceae0e6116890c}} 
+uint32\+\_\+t {\bfseries trip\+Counter}
+\begin{DoxyCompactList}\small\item\em Keeps track of the number of detected trips or detection cycles. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of the \mbox{\hyperlink{class_display_manager}{Display\+Manager}} class for handling OLED output and display states. 
+

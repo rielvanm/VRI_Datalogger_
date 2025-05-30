@@ -1,0 +1,58 @@
+\hypertarget{_utils_8h}{}\doxysection{C\+:/\+VRI\+\_\+\+Datalogger/\+Code/\+Code\+\_\+logger/\+Logi\+Track\+\_\+\+MR1/\+Utils.h File Reference}
+\label{_utils_8h}\index{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/Utils.h@{C:/VRI\_Datalogger/Code/Code\_logger/LogiTrack\_MR1/Utils.h}}
+
+
+Utility functions used across the datalogger project.  
+
+
+{\ttfamily \#include $<$Print.\+h$>$}\newline
+{\ttfamily \#include $<$RTClib.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{_utils_8h_a84999914d8cf212855a2c64039048dbc}{print\+Digits}} (Print \&output, int digits)
+\begin{DoxyCompactList}\small\item\em Print a two-\/digit number with leading zero if needed. This is typically used for formatting time values like \char`\"{}09\+:05\char`\"{}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_utils_8h_a6e56aacc26e944c7ed0050ae9d093ff6}{print\+Date\+Time\+To\+Serial}} (const Date\+Time \&dt)
+\begin{DoxyCompactList}\small\item\em Print a formatted date and time to Serial in Dutch-\/style layout. Format\+: \char`\"{}\+Datum\+: yyyy-\/mm-\/dd\char`\"{} and \char`\"{}\+Tijd\+: hh\+:mm\+:ss\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Utility functions used across the datalogger project. 
+
+Utility functions for consistent time and date formatting.
+
+This header contains helper functions that are shared between multiple modules.
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_utils_8h_a6e56aacc26e944c7ed0050ae9d093ff6}\label{_utils_8h_a6e56aacc26e944c7ed0050ae9d093ff6}} 
+\index{Utils.h@{Utils.h}!printDateTimeToSerial@{printDateTimeToSerial}}
+\index{printDateTimeToSerial@{printDateTimeToSerial}!Utils.h@{Utils.h}}
+\doxysubsubsection{\texorpdfstring{printDateTimeToSerial()}{printDateTimeToSerial()}}
+{\footnotesize\ttfamily void print\+Date\+Time\+To\+Serial (\begin{DoxyParamCaption}\item[{const Date\+Time \&}]{dt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Print a formatted date and time to Serial in Dutch-\/style layout. Format\+: \char`\"{}\+Datum\+: yyyy-\/mm-\/dd\char`\"{} and \char`\"{}\+Tijd\+: hh\+:mm\+:ss\char`\"{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dt} & A Date\+Time object from RTClib (e.\+g., DS3231 or similar). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_utils_8h_a84999914d8cf212855a2c64039048dbc}\label{_utils_8h_a84999914d8cf212855a2c64039048dbc}} 
+\index{Utils.h@{Utils.h}!printDigits@{printDigits}}
+\index{printDigits@{printDigits}!Utils.h@{Utils.h}}
+\doxysubsubsection{\texorpdfstring{printDigits()}{printDigits()}}
+{\footnotesize\ttfamily void print\+Digits (\begin{DoxyParamCaption}\item[{Print \&}]{output,  }\item[{int}]{digits }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Print a two-\/digit number with leading zero if needed. This is typically used for formatting time values like \char`\"{}09\+:05\char`\"{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em output} & Reference to a Print-\/compatible object (e.\+g., Serial or display). \\
+\hline
+{\em digits} & The number to print (0–99). \\
+\hline
+\end{DoxyParams}

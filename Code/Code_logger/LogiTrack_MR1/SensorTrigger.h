@@ -1,3 +1,12 @@
+/**
+ * @file SensorTrigger.h
+ * @brief Declaration of the SensorTrigger class for hardware interrupt-based sensor input.
+ *
+ * This class is designed to handle digital sensor triggers using external interrupts on 
+ * platforms such as the ESP32 or Arduino. It includes a basic software debounce mechanism 
+ * to reduce false triggers caused by signal bouncing.
+ */
+
 #ifndef SENSORTRIGGER_H
 #define SENSORTRIGGER_H
 
@@ -11,6 +20,13 @@
 // from the main loop without missing interrupts.
 //
 
+/**
+* @class SensorTrigger
+* @brief class for handling sensor input via hardware interrupts.
+* 
+* This class provides functionality to initialize a sensor pin
+* and handle trigger events using interrupts.
+*/
 class SensorTrigger {
 public:
   /**

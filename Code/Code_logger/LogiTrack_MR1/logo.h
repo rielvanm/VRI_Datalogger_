@@ -15,7 +15,7 @@
  *   display.drawBitmap(0, 0, arduino_icon, 128, 64, WHITE);
  */
 
-// Declaration of the bitmap array (defined elsewhere, usually in logo.cpp)
+/// @brief Extern declaration of 128x64 Arduino logo bitmap.
 extern const unsigned char arduino_icon[];
 
 #endif
