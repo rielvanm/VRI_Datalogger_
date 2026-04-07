@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <RTClib.h>
+#include <TinyGPS++.h>
 #include "SDManager.h"
 
 /**
@@ -49,7 +50,7 @@ public:
    * 
    * @param sd Reference to SDManager for file writing.
    */
-  void processNext(SDManager& sd);
+  void processNext(SDManager& sd, TinyGPSPlus* gps = nullptr);
 
   /**
    * @brief Checks whether there are events waiting to be processed.

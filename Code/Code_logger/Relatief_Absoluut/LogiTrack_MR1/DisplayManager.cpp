@@ -185,7 +185,7 @@ void DisplayManager::showIntro(const unsigned char* logo) {
     oled.setTextSize(1);
     oled.setTextColor(WHITE);
     oled.setCursor(0, 52);
-    oled.print(F("v1.1 | LogiTrack MR1"));
+    oled.print(F("v2.1 | LogiTrack MR1"));
     oled.display();
     delay(10);
   }
@@ -271,20 +271,39 @@ void DisplayManager::showMenu(TinyGPSPlus& gps, DateTime rtcNow) {
   oled.drawFastVLine(64, 54, 10, WHITE);
   oled.drawFastVLine(96, 54, 10, WHITE);
 
+  // Snelheid bovenaan links (y=0, GPS update ~1Hz)
+  oled.setCursor(0, 0);
+  if (gps.speed.isValid()) {
+    oled.print(F("SPD:"));
+    oled.print((int)gps.speed.kmph());
+    oled.print(F("km/h"));
+  } else {
+    oled.print(F("SPD:--km/h"));
+  }
+
   for (int i = 0; i < MAX_MESSAGES; i++) {
     oled.setCursor(0, 10 + i * 10);
     oled.print(userMessages[i]);
   }
 
-  oled.setCursor(100, 0); oled.print(F("SD:"));
+  oled.setCursor(100, 0); oled.print(F("sd:"));
   oled.print(sdAvailable ? (writable ? "O" : "X") : "X");
 
-  oled.setCursor(100, 10); oled.print(F("IR:"));
+  oled.setCursor(100, 10); oled.print(F("ir:"));
   oled.print(interruptDetected ? "O" : "X");
 
-  oled.setCursor(100, 24); oled.print(F("Rit:"));
-  oled.setTextSize(2);
-  oled.setCursor(100, 35);
+  // Satellietaantal i.p.v. O/X — geeft fix-kwaliteit aan
+  oled.setCursor(98, 20); oled.print(F("gp:"));
+  if (gps.satellites.isValid() && gps.satellites.value() > 0) {
+    uint8_t sats = gps.satellites.value();
+    if (sats < 10) oled.print('0');
+    oled.print(sats);
+  } else {
+    oled.print(F("--"));
+  }
+
+  oled.setCursor(100, 30); oled.print(F("Rit:"));
+  oled.setCursor(100, 42);
   if (tripCounter < 10) oled.print("0");
   oled.print(tripCounter);
 

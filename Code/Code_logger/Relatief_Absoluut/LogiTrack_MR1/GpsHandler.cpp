@@ -8,8 +8,8 @@
 
 
 GpsHandler::GpsHandler(int rxPin, int txPin, int timeZone) {
-  rxPin = rxPin;
-  txPin = txPin;
+  this->rxPin = rxPin;
+  this->txPin = txPin;
   timeZoneOffset = timeZone;
 }
 
@@ -43,7 +43,6 @@ void GpsHandler::update() {
   }
 }
 
-/*
 // Debugging utility: Print GPS data to Serial monitor
 void GpsHandler::printData() {
   if (gps.location.isValid()) {
@@ -101,4 +100,3 @@ void GpsHandler::printDigits(int digits) {
     Serial.print('0');
   Serial.print(digits);
 }
-*/

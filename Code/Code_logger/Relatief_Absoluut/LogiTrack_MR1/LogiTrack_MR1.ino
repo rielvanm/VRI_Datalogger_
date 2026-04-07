@@ -30,6 +30,7 @@
 // --- Global Variables ---
 bool loggingStarted = false;                     ///< Indicates if logging is active
 bool loggingStopped = false;                     ///< Indicates if logging is stopped
+bool gpsSyncDone = false;                        ///< True after first GPS→RTC time sync
 uint32_t tripCounter = 0;                        ///< Counts full logging sessions
 volatile uint32_t interruptCounter = 0;          ///< Interrupt detection counter
 TriggerBuffer triggerBuffer;                    ///< Buffer for sensor triggers
@@ -119,6 +120,21 @@ void setup() {
 void loop() {
   handleSdFailureDuringLogging();///< Check and handle SD card errors
 
+  gpsHandler.update(); ///< Feed incoming GPS serial data to the parser
+
+  // Eenmalige GPS→RTC tijdssync zodra een geldige fix beschikbaar is
+  if (!gpsSyncDone && !loggingStarted) {
+    TinyGPSPlus& gps = gpsHandler.getGps();
+    if (gps.date.isValid() && gps.time.isValid() && gps.date.year() >= 2024) {
+      int syncHour = gps.time.hour() + timeZoneOffset;
+      if (syncHour >= 24) syncHour -= 24;
+      rtcManager.setTime(gps.date.year(), gps.date.month(), gps.date.day(),
+                         syncHour, gps.time.minute());
+      gpsSyncDone = true;
+      displayManager.addUserMessage("GPS->RTC gesync");
+    }
+  }
+
   // Update display with current GPS and time info
   displayManager.update(gpsHandler.getGps(), timeZoneOffset, rtcManager.now());
 
@@ -126,7 +142,7 @@ void loop() {
 if (loggingStarted) {
   triggerBuffer.transferPending();
   while (triggerBuffer.hasPending()) {
-    triggerBuffer.processNext(sd);
+    triggerBuffer.processNext(sd, &gpsHandler.getGps());
   }
 }
 
@@ -136,7 +152,12 @@ if (loggingStarted) {
     lastButtonCheck = now;
 
     // Handle clock-setting mode
-    if (displayManager.getState() == DisplayManager::DisplayState::TimeSet) {
+    if (displayManager.getState() == DisplayManager::DisplayState::GpsDisplay) {
+      ButtonAction action = buttons.readButtons();
+      if (action != NONE) {
+        displayManager.setState(DisplayManager::DisplayState::Menu);
+      }
+    } else if (displayManager.getState() == DisplayManager::DisplayState::TimeSet) {
       ButtonAction clkAction = buttons.readSecondButtons();
       if (clkAction != NONE) {
         switch (clkAction) {
@@ -212,6 +233,7 @@ if (loggingStarted) {
 
               Serial.println(header);
               sd.writeLine("metingen.csv", header);
+              sd.writeLine("metingen.csv", "UTC tijd;timer(s);lat;lng;snelheid(km/h)");
             } else {
               displayManager.addUserMessage("Meting loopt");
             }
@@ -236,7 +258,7 @@ if (loggingStarted) {
             if (loggingStarted) {
               displayManager.addUserMessage("Niet beschikbaar");
             } else {
-              displayManager.addUserMessage("Nog geen GPS");
+              displayManager.setState(DisplayManager::DisplayState::GpsDisplay);
             }
             break;
 
@@ -249,7 +271,7 @@ if (loggingStarted) {
     if (loggingStarted) {
       triggerBuffer.transferPending();
       while (triggerBuffer.hasPending()) {
-        triggerBuffer.processNext(sd);
+        triggerBuffer.processNext(sd, &gpsHandler.getGps());
       }
     }
 
